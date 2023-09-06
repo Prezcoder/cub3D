@@ -1,0 +1,8 @@
+*.o
+*.ini
+*.plist
+*.a
+*SYM/
+cub3d
+.vscode/
+.DS_Store
