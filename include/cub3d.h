@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/07 14:38:09 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/07 15:10:24 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_data
 	t_texture		texture;
 	t_image			image;
 	t_image			old_image;
+	char			**map;
 }			t_data;
 
 #endif
