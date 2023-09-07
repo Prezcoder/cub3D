@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/07 15:30:08 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/07 16:49:41 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,17 @@
 # define WINWIDTH 2048
 # define WINHEIGHT 1280
 
-//----------//----------error message
+////////////----------error message
 #define ERRARGC "Usage : ./cub3D <map.cub>\n"
 
-//----------//----------temp
+////////////----------temp
 # define TEMPMAP "./graphics/bellebriquewow.png"
 
 //----------include
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include <math.h>
 # include "../srcs/libft/libft.h"
 # include "../srcs/MLX42/include/MLX42/MLX42.h"

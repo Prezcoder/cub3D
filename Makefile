@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+         #
+#    By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 10:27:08 by emlamoth          #+#    #+#              #
-#    Updated: 2023/09/07 15:21:26 by fbouchar         ###   ########.fr        #
+#    Updated: 2023/09/07 17:22:55 by emlamoth         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ $(NAME): $(OBJS)
 leak: CFLAGS += -g
 leak: all
 	@reset
-	valgrind --leak-check=full --show-leak-kinds=all --suppressions=supp.txt ./cub3D
+	valgrind --leak-check=full --show-leak-kinds=all ./cub3D ./maps/map01.cub
 		
 clean:
 	@$(MAKE) clean -C $(LIBFT_DIR)
