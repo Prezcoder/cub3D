@@ -6,7 +6,7 @@
 /*   By: emman <emman@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/07 20:19:38 by emman            ###   ########.fr       */
+/*   Updated: 2023/09/11 15:18:58 by emman            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_player
 	int				pos_y;
 }			t_player;
 
-typedef struct s_base_param
+typedef struct s_param
 {
 	char			*north;
 	char			*south;
@@ -57,7 +57,8 @@ typedef struct s_base_param
 	char			*west;
 	char			*cell;
 	char			*floor;
-}			t_base_param;
+	int				nbline;
+}			t_param;
 
 typedef struct s_image
 {
@@ -67,6 +68,8 @@ typedef struct s_image
 	mlx_image_t		*west;
 	mlx_image_t		*cell;
 	mlx_image_t		*floor;
+	mlx_image_t		*miniwall;
+	mlx_image_t		*minifloor;
 }			t_image;
 
 typedef struct s_texture
@@ -82,11 +85,12 @@ typedef struct s_texture
 typedef struct s_data
 {
 	mlx_t			*mlx;
-	t_base_param	visual;
+	t_param	param;
 	t_texture		texture;
 	t_image			image;
 	t_image			old_image;
 	char			**map;
+	
 }			t_data;
 
 #endif
