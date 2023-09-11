@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emman <emman@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/07 16:49:41 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/07 20:19:38 by emman            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 # define CUB3D_H
 
 //----------define
-# define WINWIDTH 2048
-# define WINHEIGHT 1280
+# define WINWIDTH 1024
+# define WINHEIGHT 768
 
 ////////////----------error message
-#define ERRARGC "Usage : ./cub3D <map.cub>\n"
+# define ERRARGC "Usage : ./cub3D <map.cub>\n"
+# define ERRMAP	 "Invalid map file\n"
+
 
 ////////////----------temp
 # define TEMPMAP "./graphics/bellebriquewow.png"

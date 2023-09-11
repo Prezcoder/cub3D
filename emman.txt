@@ -13,3 +13,17 @@ checker que on a toute les parametre NO SO EA WE C F 1 0
 change espace pour un si besoin --??--
 GNL la map dans un array
 
+
+cree map 2d
+rayon qui touche vertuval
+checker opengl si on en a de besoin
+cehcker kes instance
+
+
+etape
+recuperer la map dans un double array
+faire le parsing
+imprimer map en 2d a l'ecran
+imprimer joueur
+imprimer les ray casting selon si le y ou le x plus curt
+
