@@ -29,6 +29,7 @@ t_data	*init_data(t_data *data, char **argv)
 int main(int argc, char **argv)
 {
 	t_data data;
+	//allo
 	
 	if(argc != 2)
 		return(errhandler(ERRARGC));
