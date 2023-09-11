@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emman <emman@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/07 15:30:08 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/07 20:19:38 by emman            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,22 @@
 # define CUB3D_H
 
 //----------define
-# define WINWIDTH 2048
-# define WINHEIGHT 1280
+# define WINWIDTH 1024
+# define WINHEIGHT 768
 
-//----------//----------error message
-#define ERRARGC "Usage : ./cub3D <map.cub>\n"
+////////////----------error message
+# define ERRARGC "Usage : ./cub3D <map.cub>\n"
+# define ERRMAP	 "Invalid map file\n"
 
-//----------//----------temp
+
+////////////----------temp
 # define TEMPMAP "./graphics/bellebriquewow.png"
 
 //----------include
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include <math.h>
 # include "../srcs/libft/libft.h"
 # include "../srcs/MLX42/include/MLX42/MLX42.h"
