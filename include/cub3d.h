@@ -20,10 +20,13 @@
 ////////////----------error message
 # define ERRARGC "Usage : ./cub3D <map.cub>\n"
 # define ERRMAP	 "Invalid map file\n"
+# define ERRIMG "Invalid image\n"
+# define ERRCOLOR "Invalid color\n"
 
 
 ////////////----------temp
 # define TEMPMAP "./graphics/bellebriquewow.png"
+# define TEMPCOLOR "220,100,0"
 
 //----------include
 # include <unistd.h>
@@ -55,8 +58,8 @@ typedef struct s_param
 	char			*south;
 	char			*east;
 	char			*west;
-	char			*cell;
-	char			*floor;
+	uint32_t		ceil;
+	uint32_t		floor;
 	int				nbline;
 }			t_param;
 
@@ -66,7 +69,7 @@ typedef struct s_image
 	mlx_image_t		*south;
 	mlx_image_t		*east;
 	mlx_image_t		*west;
-	mlx_image_t		*cell;
+	mlx_image_t		*ceil;
 	mlx_image_t		*floor;
 	mlx_image_t		*miniwall;
 	mlx_image_t		*minifloor;
@@ -78,7 +81,7 @@ typedef struct s_texture
 	mlx_texture_t	*south;
 	mlx_texture_t	*east;
 	mlx_texture_t	*west;
-	mlx_texture_t	*cell;
+	mlx_texture_t	*ceil;
 	mlx_texture_t	*floor;
 }			t_texture;
 
@@ -92,5 +95,8 @@ typedef struct s_data
 	char			**map;
 	
 }			t_data;
+
+int		errhandler(char *msg);
+void	parsing(t_data *data);
 
 #endif

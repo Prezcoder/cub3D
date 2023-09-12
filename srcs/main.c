@@ -30,6 +30,7 @@ int	init_map(t_data *data, char *path)
 {
 	int fd;
 	int i;
+	int	len;
 	char *temp;
 
 	i = 0;
@@ -52,8 +53,21 @@ int	init_map(t_data *data, char *path)
 		return(errhandler(ERRMAP));
 	i = 0;
 	data->map[i] = get_next_line(fd);
+	len = ft_strlen(data->map[i]);
+	ft_printf("%d", len);
+	if (data->map[i][len - 1] == '\n')
+		data->map[i][len - 1] = 0;
+	// ft_printf("%c", data->map[i][len - 1]);
 	while(data->map[i++])
+	{
 		data->map[i] = get_next_line(fd);
+		if(data->map[i])
+		{		
+			len = ft_strlen(data->map[i]);
+			if (data->map[i][len - 1] == '\n')
+			data->map[i][len - 1] = 0;
+		}
+	}	
 	//--------print la map-------//
 	i = 0;
 	while(data->map[i])
@@ -88,7 +102,6 @@ void	make_tiles(mlx_image_t *square, uint32_t color)
 	}
 }
 
-			// write(1, "test", 4);
 mlx_image_t	*ft_set_img(char c, t_data *data)
 {
 	if (c == '1')
@@ -139,12 +152,12 @@ int main(int argc, char **argv)
 	init_data(&data, argv);
 	if(init_map(&data, argv[1]) == -1)
 		return(-1);
-	//parsing
+	parsing(&data);
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
 	data.image.minifloor = mlx_new_image(data.mlx, 8, 8);
 	data.image.miniwall = mlx_new_image(data.mlx, 8, 8);
-	make_tiles(data.image.minifloor, 0xFFFF00FF);
-	make_tiles(data.image.miniwall, 0xFF00FFFF);
+	make_tiles(data.image.minifloor, data.param.floor);
+	make_tiles(data.image.miniwall, data.param.ceil);
 	// image1 = mlx_new_image(data.mlx, 50, 50);
 
 	// data.texture.east = mlx_load_png(TEMPMAP);
