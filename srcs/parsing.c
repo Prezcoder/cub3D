@@ -89,9 +89,11 @@ void	parsing(t_data *data)
 {
 	int	x;
 	int	y;
+	int start;
 
 	x = 0;
 	y = 0;
+	start = 0;
 	while (data->map[y])
 	{
 		x = 0;
@@ -134,10 +136,14 @@ void	parsing(t_data *data)
 			}
 			else if (data->map[y][x] == '1')
 			{
-				parse_map(data, y);
+				start = y;
+				break;
 			}
 			x++;
 		}
+		if (data->map[y][x] == '1')
+			break;
 		y++;
 	}
+	parse_map(data, start);
 }
