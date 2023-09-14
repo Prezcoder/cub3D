@@ -6,7 +6,7 @@
 /*   By: emman <emman@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/14 08:40:59 by emman            ###   ########.fr       */
+/*   Updated: 2023/09/14 10:30:29 by emman            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,41 +23,39 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 {
 	t_data *data;
 	(void) keydata;
-	
+
 	data = param;
 	if(mlx_is_key_down(data->mlx, MLX_KEY_W))
 	{
-		
-		ft_printf("w");
+		data->player.pos_y -= 5;
+		// ft_printf("w");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_A))
 	{
-		
-		ft_printf("a");
+		data->player.pos_x -= 5;
+		// ft_printf("a");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_S))
 	{
-		
-		ft_printf("s");
+		data->player.pos_y += 5;
+		// ft_printf("s");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_D))
 	{
-		
-		ft_printf("d");
+		data->player.pos_x += 5;
+		// ft_printf("d");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 	{
-		
-		ft_printf("(RIGHT)");
+		// ft_printf("(RIGHT)");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 	{
-		
-		ft_printf("(LEFT)");
+		// ft_printf("(LEFT)");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 	{
-		ft_printf("(ESCAPE)");
+		// ft_printf("(ESCAPE)");
 		mlx_close_window(data->mlx);
 	}
 }
@@ -85,10 +83,8 @@ mlx_image_t	*ft_set_img(char c, t_data *data)
 {
 	if (c == '1')
 		return (data->image.miniwall);
-	else if (c == '0')
+	else if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
 		return (data->image.minifloor);
-	else if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-		return (data->image.miniplayer);
 	else if (c == ' ')
 		return (NULL);
 	else
@@ -107,9 +103,9 @@ void	mini_image(t_data *data)
 	data->image.minifloor = mlx_new_image(data->mlx, MINITILES, MINITILES);
 	data->image.miniwall = mlx_new_image(data->mlx, MINITILES, MINITILES);
 	data->image.miniplayer = mlx_new_image(data->mlx, MINITILES / 2, MINITILES / 2);
-	make_tiles(data->image.minifloor, 0xFFFF0030, MINITILES);
-	make_tiles(data->image.miniwall, 0xFF00FF30, MINITILES);
-	make_tiles(data->image.miniplayer, 0xFF88FFFF, MINITILES / 2);
+	make_tiles(data->image.minifloor, 0xFFFF00FF, MINITILES);
+	make_tiles(data->image.miniwall, 0xFF00FFFF, MINITILES);
+	make_tiles(data->image.miniplayer, 0xFF9900FF, MINITILES / 2);
 }
 
 void	ft_img_to_win(t_data *data)
@@ -137,6 +133,7 @@ void	ft_img_to_win(t_data *data)
 		}
 		y++;
 	}
+	mlx_image_to_window(data->mlx, data->image.miniplayer, data->player.pos_x , data->player.pos_y);
 }
 
 void	render(void *param)
@@ -169,6 +166,7 @@ int main(int argc, char **argv)
 	// data.image.east = mlx_texture_to_image(data.mlx, data.texture.east);
 	// mlx_new_image()
 	// mlx_image_to_window(data.mlx, data.image.east, 0, 0);
+	
 	mlx_key_hook(data.mlx, &key_hook, &data);
 	mlx_loop_hook(data.mlx, &render, &data);
 	mlx_loop(data.mlx);

@@ -4,6 +4,11 @@ t_data	*init_data(t_data *data, char **argv)
 {
 	if(!argv)
 		return(data);
+	data->player.pos_x = 60;
+	data->player.pos_y = 700;
+	ft_bzero(data, sizeof(t_data));
+	data->player.map_x = -1;
+	data->player.map_y = -1;
 	return(data);
 }
 

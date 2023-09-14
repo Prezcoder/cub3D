@@ -29,12 +29,60 @@ int	color_decoder(char *str, uint32_t *surface)
 	return (1);
 }
 
-int	check_path(char *str, char *wall)
+char	*check_path(char *str)
 {
+	char *wall;
 	wall = ft_strtrim(str, " ");
 	if (access(wall, F_OK) == -1)
-		return (errhandler(ERRIMG));
-	return (1);
+	{
+		errhandler(ERRIMG);
+		exit(-1);
+	}
+	return (wall);
+}
+
+void	parse_map(t_data *data, int y)
+{	
+	int x;
+
+	while(data->map[y])
+	{
+		x = 0;
+		while(data->map[y][x])
+		{
+			if(data->map[y][x] == '1' || data->map[y][x] == '0' || data->map[y][x] == ' ')
+				x++;
+			else if (data->map[y][x] == 'N' || data->map[y][x] == 'S' || data->map[y][x] == 'W' || data->map[y][x] == 'E')
+			{
+				ft_printf("\n%d-%d\n", y, x);
+				ft_printf("test");
+				if(data->player.map_y == -1)
+				{
+					data->player.map_x = x;
+					data->player.map_y = y;
+					ft_printf("\n%d\n", data->player.map_y);
+					ft_printf("\n%d\n", data->player.map_x);
+					x++;
+				}
+				else
+				{
+					errhandler(ERRPLAYER);
+					exit(-1);
+				}
+			}
+			else
+			{
+				errhandler(ERRCHAR);
+				exit(-1);
+			}
+		}
+		y++;
+	}
+	if(data->player.map_x == -1 || data->player.map_x == -1)
+	{
+		errhandler(ERRNOPLAYER);
+		exit(-1);
+	}
 }
 
 void	parsing(t_data *data)
@@ -55,28 +103,39 @@ void	parsing(t_data *data)
 				break;
 			if (ft_strncmp(&data->map[y][x], "NO ", 3) == 0)
 			{	
-				if (check_path(&data->map[y][x + 3], data->param.north) == -1)
-					exit(-1);
+				data->param.north = check_path(&data->map[y][x + 3]);
 			}
 			else if (ft_strncmp(&data->map[y][x], "SO ", 3) == 0)
 			{	
-				if (check_path(&data->map[y][x + 3], data->param.south) == -1)
-					exit(-1);
+				data->param.south = check_path(&data->map[y][x + 3]);
 			}
 			else if (ft_strncmp(&data->map[y][x], "WE ", 3) == 0)
 			{	
-				if (check_path(&data->map[y][x + 3], data->param.west) == -1)
-					exit(-1);
+				data->param.west = check_path(&data->map[y][x + 3]);
 			}
 			else if (ft_strncmp(&data->map[y][x], "EA ", 3) == 0)
 			{	
-				if (check_path(&data->map[y][x + 3], data->param.east) == -1)
-					exit(-1);
+				data->param.east = check_path(&data->map[y][x + 3]);
 			}
 			else if (ft_strncmp(&data->map[y][x], "F ", 2) == 0)
+			{
 				color_decoder(&data->map[y][x + 2], &data->param.floor);
+				data->param.flgfloor = 1;
+			}
 			else if (ft_strncmp(&data->map[y][x], "C ", 2) == 0)
+			{
 				color_decoder(&data->map[y][x + 2], &data->param.ceil);
+				data->param.flgceil = 1;
+			}
+			else if (data->map[y][x] == '1' && ((!data->param.north) || (!data->param.south) || (!data->param.west) || (!data->param.east) || (data->param.flgceil == 0) || (data->param.flgfloor == 0)))
+			{
+				errhandler(ERRPARSE);
+				exit(-1);
+			}
+			else if (data->map[y][x] == '1')
+			{
+				parse_map(data, y);
+			}
 			x++;
 		}
 		y++;

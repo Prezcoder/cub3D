@@ -6,7 +6,7 @@
 /*   By: emman <emman@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/14 08:33:52 by emman            ###   ########.fr       */
+/*   Updated: 2023/09/14 12:35:59 by emman            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,17 @@
 //----------define
 # define WINWIDTH 1024
 # define WINHEIGHT 768
-# define MINITILES 8
+# define MINITILES 40
 
 ////////////----------error message
 # define ERRARGC "Usage : ./cub3D <map.cub>\n"
 # define ERRMAP	 "Invalid map file\n"
 # define ERRIMG "Invalid image\n"
 # define ERRCOLOR "Invalid color\n"
+# define ERRPARSE "Informations are missing\n"
+# define ERRPLAYER "Too many players\n"
+# define ERRNOPLAYER "No player detected\n"
+# define ERRCHAR "Wrong chars detected\n"
 
 
 ////////////----------temp
@@ -51,6 +55,8 @@ typedef struct s_player
 {
 	int				pos_x;
 	int				pos_y;
+	int				map_x;
+	int				map_y;
 }			t_player;
 
 typedef struct s_param
@@ -61,6 +67,8 @@ typedef struct s_param
 	char			*west;
 	uint32_t		ceil;
 	uint32_t		floor;
+	int				flgfloor;
+	int				flgceil;
 	int				nbline;
 }			t_param;
 
@@ -94,6 +102,7 @@ typedef struct s_data
 	t_texture		texture;
 	t_image			image;
 	t_image			old_image;
+	t_player		player;
 	char			**map;
 	
 }			t_data;
