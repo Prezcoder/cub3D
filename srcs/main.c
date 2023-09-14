@@ -6,7 +6,7 @@
 /*   By: emman <emman@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/12 13:01:02 by emman            ###   ########.fr       */
+/*   Updated: 2023/09/14 08:40:59 by emman            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,61 +19,6 @@ int	errhandler(char *msg)
 	return(-1);
 }
 
-t_data	*init_data(t_data *data, char **argv)
-{
-	if(!argv)
-		return(data);
-	return(data);
-}
-
-int	init_map(t_data *data, char *path)
-{
-	int fd;
-	int i;
-	int	len;
-	char *temp;
-
-	i = 0;
-	(void) data;
-	fd = open(path, O_RDONLY);
-	if(fd == -1)
-		return(errhandler(ERRMAP));
-	temp = get_next_line(fd);
-	while(temp)
-	{
-		ft_freenull(&temp);
-		temp = get_next_line(fd);
-		i++;
-	}
-	data->param.nbline = i;
-	close(fd);
-	data->map = ft_calloc(i + 1, sizeof(char *));
-	fd = open(path, O_RDONLY);
-	if(fd == -1)
-		return(errhandler(ERRMAP));
-	i = 0;
-	data->map[i] = get_next_line(fd);
-	len = ft_strlen(data->map[i]);
-	ft_printf("%d", len);
-	if (data->map[i][len - 1] == '\n')
-		data->map[i][len - 1] = 0;
-	// ft_printf("%c", data->map[i][len - 1]);
-	while(data->map[i++])
-	{
-		data->map[i] = get_next_line(fd);
-		if(data->map[i])
-		{		
-			len = ft_strlen(data->map[i]);
-			if (data->map[i][len - 1] == '\n')
-			data->map[i][len - 1] = 0;
-		}
-	}	
-	//--------print la map-------//
-	i = 0;
-	while(data->map[i])
-		ft_printf("%s", data->map[i++]);
-	return(0);
-}
 void	key_hook(mlx_key_data_t keydata, void *param)
 {
 	t_data *data;
@@ -142,21 +87,30 @@ mlx_image_t	*ft_set_img(char c, t_data *data)
 		return (data->image.miniwall);
 	else if (c == '0')
 		return (data->image.minifloor);
+	else if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+		return (data->image.miniplayer);
 	else if (c == ' ')
 		return (NULL);
 	else
 		exit(1);
 }
 
-// void	image_laping()
-// {
-	
-	
-// 	data.image.minifloor = mlx_new_image(data.mlx, 8, 8);
-// 	data.image.miniwall = mlx_new_image(data.mlx, 8, 8);
-// 	make_tiles(data.image.minifloor, 0xFFFF0001, 8);
-// 	make_tiles(data.image.miniwall, 0xFF00FF01, 8);
-// }
+void	del_old_img(t_data *data)
+{
+	mlx_delete_image(data->mlx, data->old_image.minifloor);
+	mlx_delete_image(data->mlx, data->old_image.miniwall);
+	mlx_delete_image(data->mlx, data->old_image.miniplayer);
+}
+
+void	mini_image(t_data *data)
+{
+	data->image.minifloor = mlx_new_image(data->mlx, MINITILES, MINITILES);
+	data->image.miniwall = mlx_new_image(data->mlx, MINITILES, MINITILES);
+	data->image.miniplayer = mlx_new_image(data->mlx, MINITILES / 2, MINITILES / 2);
+	make_tiles(data->image.minifloor, 0xFFFF0030, MINITILES);
+	make_tiles(data->image.miniwall, 0xFF00FF30, MINITILES);
+	make_tiles(data->image.miniplayer, 0xFF88FFFF, MINITILES / 2);
+}
 
 void	ft_img_to_win(t_data *data)
 {
@@ -165,10 +119,9 @@ void	ft_img_to_win(t_data *data)
 	mlx_image_t *temp_img;
 
 	y = 7;
-	// data->old_image = data->image;
-
-	// mlx_delete_image(data->mlx, data->old_image.minifloor);
-	// mlx_delete_image(data->mlx, data->old_image.miniwall);
+	del_old_img(data);
+	data->old_image = data->image;
+	mini_image(data);
 	while (data->map[y])
 	{
 		x = 0;
@@ -178,7 +131,7 @@ void	ft_img_to_win(t_data *data)
 			if(temp_img)
 			{
 				mlx_image_to_window(data->mlx,
-					temp_img, x * 8 + 10, (y * 8) + (WINHEIGHT - (data->param.nbline * 8 + 10)));
+					temp_img, x * MINITILES + 10, (y * MINITILES) + (WINHEIGHT - (data->param.nbline * MINITILES + 10)));
 			}
 			x++;
 		}
@@ -206,10 +159,10 @@ int main(int argc, char **argv)
 		return(-1);
 	parsing(&data);
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
-	data.image.minifloor = mlx_new_image(data.mlx, 8, 8);
-	data.image.miniwall = mlx_new_image(data.mlx, 8, 8);
-	make_tiles(data.image.minifloor, 0xFFFF0003, 8);
-	make_tiles(data.image.miniwall, 0xFF00FF03, 8);
+	// data.image.minifloor = mlx_new_image(data.mlx, 8, 8);
+	// data.image.miniwall = mlx_new_image(data.mlx, 8, 8);
+	// make_tiles(data.image.minifloor, 0xFFFF0003, 8);
+	// make_tiles(data.image.miniwall, 0xFF00FF03, 8);
 	// image1 = mlx_new_image(data.mlx, 50, 50);
 
 	// data.texture.east = mlx_load_png(TEMPMAP);

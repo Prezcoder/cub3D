@@ -6,7 +6,7 @@
 /*   By: emman <emman@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/11 15:18:58 by emman            ###   ########.fr       */
+/*   Updated: 2023/09/14 08:33:52 by emman            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 //----------define
 # define WINWIDTH 1024
 # define WINHEIGHT 768
+# define MINITILES 8
 
 ////////////----------error message
 # define ERRARGC "Usage : ./cub3D <map.cub>\n"
@@ -73,6 +74,7 @@ typedef struct s_image
 	mlx_image_t		*floor;
 	mlx_image_t		*miniwall;
 	mlx_image_t		*minifloor;
+	mlx_image_t		*miniplayer;
 }			t_image;
 
 typedef struct s_texture
@@ -98,5 +100,9 @@ typedef struct s_data
 
 int		errhandler(char *msg);
 void	parsing(t_data *data);
+
+//----------init.c
+t_data	*init_data(t_data *data, char **argv);
+int		init_map(t_data *data, char *path);
 
 #endif
