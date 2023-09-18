@@ -54,14 +54,12 @@ void	parse_map(t_data *data, int y)
 				x++;
 			else if (data->map[y][x] == 'N' || data->map[y][x] == 'S' || data->map[y][x] == 'W' || data->map[y][x] == 'E')
 			{
-				ft_printf("\n%d-%d\n", y, x);
-				ft_printf("test");
 				if(data->player.map_y == -1)
 				{
-					data->player.map_x = x;
-					data->player.map_y = y;
-					ft_printf("\n%d\n", data->player.map_y);
-					ft_printf("\n%d\n", data->player.map_x);
+					data->player.map_x = x * MINITILES;
+					data->player.map_y = (y) * MINITILES;
+					data->player.pos_x = data->player.map_x;
+					data->player.pos_y = data->player.map_y;
 					x++;
 				}
 				else
@@ -136,7 +134,7 @@ void	parsing(t_data *data)
 			}
 			else if (data->map[y][x] == '1')
 			{
-				start = y;
+				data->player.start_map = y;
 				break;
 			}
 			x++;
@@ -145,5 +143,5 @@ void	parsing(t_data *data)
 			break;
 		y++;
 	}
-	parse_map(data, start);
+	parse_map(data, data->player.start_map);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emman <emman@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/14 10:30:29 by emman            ###   ########.fr       */
+/*   Updated: 2023/09/18 09:30:20 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	ft_img_to_win(t_data *data)
 	int	y;
 	mlx_image_t *temp_img;
 
-	y = 7;
+	y = data->player.start_map;
 	del_old_img(data);
 	data->old_image = data->image;
 	mini_image(data);
@@ -127,7 +127,7 @@ void	ft_img_to_win(t_data *data)
 			if(temp_img)
 			{
 				mlx_image_to_window(data->mlx,
-					temp_img, x * MINITILES + 10, (y * MINITILES) + (WINHEIGHT - (data->param.nbline * MINITILES + 10)));
+					temp_img, x * MINITILES, (y * MINITILES));
 			}
 			x++;
 		}
