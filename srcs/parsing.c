@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/18 09:41:56 by fbouchar          #+#    #+#             */
+/*   Updated: 2023/09/18 09:50:47 by fbouchar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -56,10 +67,10 @@ void	parse_map(t_data *data, int y)
 			{
 				if(data->player.map_y == -1)
 				{
-					data->player.map_x = x * MINITILES;
-					data->player.map_y = (y) * MINITILES;
-					data->player.pos_x = data->player.map_x;
-					data->player.pos_y = data->player.map_y;
+					data->player.map_x = x;
+					data->player.map_y = y;
+					data->player.pos_x = data->player.map_x * MINITILES;
+					data->player.pos_y = data->player.map_y * MINITILES;
 					x++;
 				}
 				else

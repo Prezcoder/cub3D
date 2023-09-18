@@ -2,16 +2,16 @@ remplacer les espace par des 1
 une map peu avoir plusieur isolé
 
 parsing
-cheker si player (N S E W)
-cheker si murré (floodfill)
-checker caratere valide
-checker .cub
-checker que le .cub existe
-checker acces png
-checker couleur valide (0-255)
-checker que on a toute les parametre NO SO EA WE C F 1 0
+checker si player (N S E W) DONE
+checker si murré (floodfill) DONE
+checker caratere valide DONE
+checker .cub DONE
+checker que le .cub existe DONE
+checker acces png DONE
+checker couleur valide (0-255) DONE
+checker que on a toute les parametre NO SO EA WE C F 1 0 <espace> DONE
 change espace pour un si besoin --??--
-GNL la map dans un array
+GNL la map dans un array DONE
 
 
 cree map 2d

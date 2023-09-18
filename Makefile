@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emman <emman@student.42.fr>                +#+  +:+       +#+         #
+#    By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 10:27:08 by emlamoth          #+#    #+#              #
-#    Updated: 2023/09/12 14:10:00 by emman            ###   ########.fr        #
+#    Updated: 2023/09/18 09:42:50 by fbouchar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =	main.c					\
 		parsing.c				\
 		init.c					\
+		flood_fill.c			\
 
 SRCS_DIR = ./srcs/
 OBJS_DIR = ./srcs/objs_cub3D/

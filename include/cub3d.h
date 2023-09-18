@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/18 08:59:55 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/18 09:54:03 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_data
 
 int		errhandler(char *msg);
 void	parsing(t_data *data);
+void	wall_check(t_data *data);
 
 //----------init.c
 t_data	*init_data(t_data *data, char **argv);

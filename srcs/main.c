@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/18 09:30:20 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/18 11:27:48 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,10 +151,13 @@ int main(int argc, char **argv)
 
 	if(argc != 2)
 		return(errhandler(ERRARGC));
+	if (ft_strncmp(&argv[1][ft_strlen(argv[1]) - 4], ".cub", 4))
+		return (ft_printf("Error\nThe file format isn't good.\n"));
 	init_data(&data, argv);
 	if(init_map(&data, argv[1]) == -1)
 		return(-1);
 	parsing(&data);
+	wall_check(&data);
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
 	// data.image.minifloor = mlx_new_image(data.mlx, 8, 8);
 	// data.image.miniwall = mlx_new_image(data.mlx, 8, 8);
