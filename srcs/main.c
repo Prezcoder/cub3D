@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/18 15:34:53 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/18 17:13:41 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,21 @@ void	mini_image(t_data *data)
 	make_tiles(data->image.miniplayer, 0xFF9900FF, MINITILES / 2);
 }
 
+void	drawline(t_image *image, t_coor start, t_coor end, u_int32_t color)
+{
+	int i;
+	int	dx;
+	int	dy;
+
+	dx = end.x - start.x;
+	dy = end.y - start.y;
+	abs
+	
+	while(i--)
+	{
+		mlx_put_pixel();
+	}
+}
 void	ft_img_to_win(t_data *data)
 {
 	int	x;

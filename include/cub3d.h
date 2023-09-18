@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/18 14:41:44 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/18 15:59:56 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@
 # include "../srcs/MLX42/include/MLX42/MLX42.h"
 
 //----------struct
+typedef struct s_coor
+{
+	u_int32_t x;
+	u_int32_t y;
+}				t_coor
+
+
 typedef struct s_flood
 {
 	char			**map;
