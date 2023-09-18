@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/18 11:27:48 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/18 15:34:53 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,22 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	data = param;
 	if(mlx_is_key_down(data->mlx, MLX_KEY_W))
 	{
-		data->player.pos_y -= 5;
+		data->image.miniplayer->instances->y -= 2.5;
 		// ft_printf("w");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_A))
 	{
-		data->player.pos_x -= 5;
+		data->image.miniplayer->instances->x -= 2.5;
 		// ft_printf("a");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_S))
 	{
-		data->player.pos_y += 5;
+		data->image.miniplayer->instances->y += 2.5;
 		// ft_printf("s");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_D))
 	{
-		data->player.pos_x += 5;
+		data->image.miniplayer->instances->x += 2.5;
 		// ft_printf("d");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
@@ -115,8 +115,6 @@ void	ft_img_to_win(t_data *data)
 	mlx_image_t *temp_img;
 
 	y = data->player.start_map;
-	del_old_img(data);
-	data->old_image = data->image;
 	mini_image(data);
 	while (data->map[y])
 	{
@@ -144,21 +142,24 @@ void	render(void *param)
 	// mlx_delete_image(data->mlx, data->image.minifloor);
 	// mlx_delete_image(data->mlx, data->image.miniwall);
 
-	ft_img_to_win(data);
+	
 }
 int main(int argc, char **argv)
 {	t_data data;
 
-	if(argc != 2)
+	if (argc != 2)
 		return(errhandler(ERRARGC));
+	if (ft_strlen(argv[1]) < 12)
+		return (ft_printf("Error\nThe file format isn't good.\n"));
 	if (ft_strncmp(&argv[1][ft_strlen(argv[1]) - 4], ".cub", 4))
 		return (ft_printf("Error\nThe file format isn't good.\n"));
 	init_data(&data, argv);
-	if(init_map(&data, argv[1]) == -1)
+	if (init_map(&data, argv[1]) == -1)
 		return(-1);
 	parsing(&data);
 	wall_check(&data);
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
+	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	// data.image.minifloor = mlx_new_image(data.mlx, 8, 8);
 	// data.image.miniwall = mlx_new_image(data.mlx, 8, 8);
 	// make_tiles(data.image.minifloor, 0xFFFF0003, 8);
@@ -169,9 +170,9 @@ int main(int argc, char **argv)
 	// data.image.east = mlx_texture_to_image(data.mlx, data.texture.east);
 	// mlx_new_image()
 	// mlx_image_to_window(data.mlx, data.image.east, 0, 0);
-	
+	ft_img_to_win(&data);
 	mlx_key_hook(data.mlx, &key_hook, &data);
-	mlx_loop_hook(data.mlx, &render, &data);
+	// mlx_loop_hook(data.mlx, &render, &data);
 	mlx_loop(data.mlx);
 	// mlx_delete_image(data.mlx, data.image.east);
 	// mlx_delete_texture(data.texture.east);

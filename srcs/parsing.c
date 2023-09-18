@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:41:56 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/18 09:50:47 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/18 15:27:50 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*check_path(char *str)
 {
 	char *wall;
 	wall = ft_strtrim(str, " ");
-	if (access(wall, F_OK) == -1)
+	if (open(wall, O_RDONLY) == -1)
 	{
 		errhandler(ERRIMG);
 		exit(-1);
@@ -108,7 +108,7 @@ void	parsing(t_data *data)
 		x = 0;
 		while (data->map[y][x])
 		{
-			while (data->map[y][x] == ' ' && data->map[y][x])
+			while (data->map[y][x] == ' ' && data->map[y][x] == '\t' && data->map[y][x])
 				x++;
 			if (data->map[y][x] == '\0')
 				break;

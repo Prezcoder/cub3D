@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/18 09:54:03 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/18 14:41:44 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # define WINWIDTH 1024
 # define WINHEIGHT 768
 # define MINITILES 40
+# define PI 3.14159265359
+# define DEGRE 0.01745329251
 
 ////////////----------error message
 # define ERRARGC "Usage : ./cub3D <map.cub>\n"
@@ -75,12 +77,8 @@ typedef struct s_param
 
 typedef struct s_image
 {
-	mlx_image_t		*north;
-	mlx_image_t		*south;
-	mlx_image_t		*east;
-	mlx_image_t		*west;
-	mlx_image_t		*ceil;
-	mlx_image_t		*floor;
+	
+	mlx_image_t		*window;
 	mlx_image_t		*miniwall;
 	mlx_image_t		*minifloor;
 	mlx_image_t		*miniplayer;
