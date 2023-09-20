@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/18 15:34:53 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/19 15:20:23 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,22 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	data = param;
 	if(mlx_is_key_down(data->mlx, MLX_KEY_W))
 	{
-		data->image.miniplayer->instances->y -= 2.5;
+		data->image.miniplayer->instances->y -= 3;
 		// ft_printf("w");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_A))
 	{
-		data->image.miniplayer->instances->x -= 2.5;
+		data->image.miniplayer->instances->x -= 3;
 		// ft_printf("a");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_S))
 	{
-		data->image.miniplayer->instances->y += 2.5;
+		data->image.miniplayer->instances->y += 3;
 		// ft_printf("s");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_D))
 	{
-		data->image.miniplayer->instances->x += 2.5;
+		data->image.miniplayer->instances->x += 3;
 		// ft_printf("d");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
@@ -108,12 +108,29 @@ void	mini_image(t_data *data)
 	make_tiles(data->image.miniplayer, 0xFF9900FF, MINITILES / 2);
 }
 
+void clear_img(mlx_image_t *image, int width, int height)
+{
+	int	x;
+
+	while(height)
+	{
+		x = width;
+		while(x)
+		{
+			mlx_put_pixel(image, x - 1, height - 1, 0x00000000);
+			x--;
+		}
+		height--;
+	}
+}
+
+
 void	ft_img_to_win(t_data *data)
 {
 	int	x;
 	int	y;
 	mlx_image_t *temp_img;
-
+	
 	y = data->player.start_map;
 	mini_image(data);
 	while (data->map[y])
@@ -136,13 +153,19 @@ void	ft_img_to_win(t_data *data)
 
 void	render(void *param)
 {
+	// double pos_x;
+	double pos_y;
 	t_data *data;
 	data = param;
 	(void) data;
-	// mlx_delete_image(data->mlx, data->image.minifloor);
-	// mlx_delete_image(data->mlx, data->image.miniwall);
 
-	
+	// pos_x = 0.0;
+	pos_y = 0.0;
+	clear_img(data->image.window, WINWIDTH, WINHEIGHT);
+	mlx_image_to_window(data->mlx, data->image.window, 0, 0);
+	trouve_murx(data);
+	// trouve_mury(data);
+	dda_algorithm(data->image.miniplayer->instances->x + (MINITILES / 4), data->image.miniplayer->instances->y + (MINITILES / 4), data->ray.pos_x, data->ray.pos_y, data->image.window);
 }
 int main(int argc, char **argv)
 {	t_data data;
@@ -160,19 +183,9 @@ int main(int argc, char **argv)
 	wall_check(&data);
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
-	// data.image.minifloor = mlx_new_image(data.mlx, 8, 8);
-	// data.image.miniwall = mlx_new_image(data.mlx, 8, 8);
-	// make_tiles(data.image.minifloor, 0xFFFF0003, 8);
-	// make_tiles(data.image.miniwall, 0xFF00FF03, 8);
-	// image1 = mlx_new_image(data.mlx, 50, 50);
-
-	// data.texture.east = mlx_load_png(TEMPMAP);
-	// data.image.east = mlx_texture_to_image(data.mlx, data.texture.east);
-	// mlx_new_image()
-	// mlx_image_to_window(data.mlx, data.image.east, 0, 0);
 	ft_img_to_win(&data);
 	mlx_key_hook(data.mlx, &key_hook, &data);
-	// mlx_loop_hook(data.mlx, &render, &data);
+	mlx_loop_hook(data.mlx, &render, &data);
 	mlx_loop(data.mlx);
 	// mlx_delete_image(data.mlx, data.image.east);
 	// mlx_delete_texture(data.texture.east);

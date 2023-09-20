@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/18 14:41:44 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/19 14:49:38 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@
 # include "../srcs/MLX42/include/MLX42/MLX42.h"
 
 //----------struct
+typedef struct s_coor
+{
+	int	x;
+	int y;
+}				t_coor;
+
 typedef struct s_flood
 {
 	char			**map;
@@ -61,6 +67,14 @@ typedef struct s_player
 	int				map_y;
 	int				start_map;
 }			t_player;
+
+typedef struct s_ray
+{
+	double				pos_x;
+	double				pos_y;
+	double				map_x;
+	double				map_y;
+}			t_ray;
 
 typedef struct s_param
 {
@@ -102,6 +116,7 @@ typedef struct s_data
 	t_image			image;
 	t_image			old_image;
 	t_player		player;
+	t_ray			ray;
 	char			**map;
 	
 }			t_data;
@@ -113,5 +128,9 @@ void	wall_check(t_data *data);
 //----------init.c
 t_data	*init_data(t_data *data, char **argv);
 int		init_map(t_data *data, char *path);
+
+void	dda_algorithm(double x1, double y1, double x2, double y2, mlx_image_t *drawline);
+void	trouve_murx(t_data *data);
+void	trouve_mury(t_data *data);
 
 #endif
