@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/19 14:49:38 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/20 11:07:45 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ typedef struct s_player
 
 typedef struct s_ray
 {
-	double				pos_x;
-	double				pos_y;
-	double				map_x;
-	double				map_y;
+	double			pos_x;
+	double			pos_y;
+	double			map_x;
+	double			map_y;
 }			t_ray;
 
 typedef struct s_param
@@ -117,6 +117,7 @@ typedef struct s_data
 	t_image			old_image;
 	t_player		player;
 	t_ray			ray;
+	int				angle;
 	char			**map;
 	
 }			t_data;
@@ -129,7 +130,7 @@ void	wall_check(t_data *data);
 t_data	*init_data(t_data *data, char **argv);
 int		init_map(t_data *data, char *path);
 
-void	dda_algorithm(double x1, double y1, double x2, double y2, mlx_image_t *drawline);
+void	dda_algorithm(double x1, double y1, double x2, double y2, t_data *data, mlx_image_t *drawline);
 void	trouve_murx(t_data *data);
 void	trouve_mury(t_data *data);
 
