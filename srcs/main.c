@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/19 17:20:38 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/20 18:52:39 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,16 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 	{
-		data->angle -= 5;
+		data->angle += 2.5;
+		if(data->angle >= 360 )
+			data->angle -= 360;
 		// ft_printf("(RIGHT)");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 	{
-		data->angle += 5;
+		data->angle -= 2.5;
+		if(data->angle <= 0)
+			data->angle += 360;
 		// ft_printf("(LEFT)");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
@@ -105,9 +109,9 @@ void	mini_image(t_data *data)
 	data->image.minifloor = mlx_new_image(data->mlx, MINITILES, MINITILES);
 	data->image.miniwall = mlx_new_image(data->mlx, MINITILES, MINITILES);
 	data->image.miniplayer = mlx_new_image(data->mlx, MINITILES / 2, MINITILES / 2);
-	make_tiles(data->image.minifloor, 0xFFFF00FF, MINITILES);
-	make_tiles(data->image.miniwall, 0xFF00FFFF, MINITILES);
-	make_tiles(data->image.miniplayer, 0xFF9900FF, MINITILES / 2);
+	make_tiles(data->image.minifloor, 0x18DA47FF, MINITILES);
+	make_tiles(data->image.miniwall, 0x744603FF, MINITILES);
+	make_tiles(data->image.miniplayer, 0xDFB155FF, MINITILES / 2);
 }
 
 // void	drawline(t_image *image, t_coor start, t_coor end, u_int32_t color)
@@ -142,13 +146,13 @@ void	ft_img_to_win(t_data *data)
 			if(temp_img)
 			{
 				mlx_image_to_window(data->mlx,
-					temp_img, x * MINITILES, (y * MINITILES));
+					temp_img, x * MINITILES, ((y - data->player.start_map)* MINITILES));
 			}
 			x++;
 		}
 		y++;
 	}
-	mlx_image_to_window(data->mlx, data->image.miniplayer, data->player.pos_x , data->player.pos_y);
+	mlx_image_to_window(data->mlx, data->image.miniplayer, data->player.pos_x , data->player.pos_y - (data->player.start_map * MINITILES));
 }
 
 void	clear_img(mlx_image_t *image, int width, int height)
@@ -175,10 +179,15 @@ void	render(void *param)
 	(void) data;
 	// mlx_delete_image(data->mlx, data->image.minifloor);
 	// mlx_delete_image(data->mlx, data->image.miniwall);
-	clear_img(data->image.window, WINWIDTH, WINHEIGHT);
-	dda_algorithm(200, 200, data->angle, data->image.window);
+	mlx_delete_image(data->mlx, data->image.window);
+	data->image.window = mlx_new_image(data->mlx, WINWIDTH, WINHEIGHT);
+	// clear_img(data->image.window, WINWIDTH, WINHEIGHT);
+	dda_algorithm(data->image.miniplayer->instances->x + (MINITILES / 4), data->image.miniplayer->instances->y + (MINITILES / 4), data->angle, data->image.window);
 	mlx_image_to_window(data->mlx, data->image.window, 0, 0);
-	
+	printf("W %d\n", data->image.miniwall->count);
+	printf("F %d\n", data->image.minifloor->count);
+	printf("WIN %d\n", data->image.window->count);
+	printf("P %d\n", data->image.miniplayer->count);
 }
 int main(int argc, char **argv)
 {	t_data data;
