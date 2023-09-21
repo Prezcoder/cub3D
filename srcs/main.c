@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/21 12:36:47 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/21 13:27:50 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	if(mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 	{
 		data->angle += 2.5;
-		if(data->angle >= 360 )
+		if(data->angle >= 360)
 			data->angle -= 360;
 		// ft_printf("(RIGHT)");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 	{
 		data->angle -= 2.5;
-		if(data->angle <= 0)
+		if(data->angle < 0)
 			data->angle += 360;
 		// ft_printf("(LEFT)");
 	}
