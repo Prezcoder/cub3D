@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/20 11:07:45 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/21 10:03:40 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # define WINWIDTH 1024
 # define WINHEIGHT 768
 # define MINITILES 40
-# define PI 3.14159265359
 # define DEGRE 0.01745329251
 
 ////////////----------error message
@@ -47,9 +46,10 @@
 //----------struct
 typedef struct s_coor
 {
-	int	x;
-	int y;
+	double	x;
+	double	y;
 }				t_coor;
+
 
 typedef struct s_flood
 {
@@ -70,10 +70,9 @@ typedef struct s_player
 
 typedef struct s_ray
 {
-	double			pos_x;
-	double			pos_y;
-	double			map_x;
-	double			map_y;
+	int		angle;
+	int 	dir;
+
 }			t_ray;
 
 typedef struct s_param
@@ -108,6 +107,7 @@ typedef struct s_texture
 	mlx_texture_t	*floor;
 }			t_texture;
 
+
 typedef struct s_data
 {
 	mlx_t			*mlx;
@@ -116,7 +116,6 @@ typedef struct s_data
 	t_image			image;
 	t_image			old_image;
 	t_player		player;
-	t_ray			ray;
 	int				angle;
 	char			**map;
 	
@@ -129,9 +128,8 @@ void	wall_check(t_data *data);
 //----------init.c
 t_data	*init_data(t_data *data, char **argv);
 int		init_map(t_data *data, char *path);
-
-void	dda_algorithm(double x1, double y1, double x2, double y2, t_data *data, mlx_image_t *drawline);
-void	trouve_murx(t_data *data);
-void	trouve_mury(t_data *data);
+int		find_end_p(t_data *data, int x, int y, double delta);
+int		find_wall(int coor, int direction);
+void	dda_algorithm(double x1, double y1, double angle, mlx_image_t *drawline);
 
 #endif

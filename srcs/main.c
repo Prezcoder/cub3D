@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/20 13:28:20 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/21 10:02:40 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,35 +27,35 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	data = param;
 	if(mlx_is_key_down(data->mlx, MLX_KEY_W))
 	{
-		data->image.miniplayer->instances->y -= 3;
+		data->image.miniplayer->instances[0].y -= 2.5;
 		// ft_printf("w");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_A))
 	{
-		data->image.miniplayer->instances->x -= 3;
+		data->image.miniplayer->instances[0].x -= 2.5;
 		// ft_printf("a");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_S))
 	{
-		data->image.miniplayer->instances->y += 3;
+		data->image.miniplayer->instances[0].y += 2.5;
 		// ft_printf("s");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_D))
 	{
-		data->image.miniplayer->instances->x += 3;
+		data->image.miniplayer->instances[0].x += 2.5;
 		// ft_printf("d");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 	{
-		data->angle += 5;
-		if (data->angle >= 360)
+		data->angle += 2.5;
+		if(data->angle >= 360 )
 			data->angle -= 360;
 		// ft_printf("(RIGHT)");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 	{
-		data->angle -= 5;
-		if (data->angle <= 0)
+		data->angle -= 2.5;
+		if(data->angle <= 0)
 			data->angle += 360;
 		// ft_printf("(LEFT)");
 	}
@@ -109,28 +109,26 @@ void	mini_image(t_data *data)
 	data->image.minifloor = mlx_new_image(data->mlx, MINITILES, MINITILES);
 	data->image.miniwall = mlx_new_image(data->mlx, MINITILES, MINITILES);
 	data->image.miniplayer = mlx_new_image(data->mlx, MINITILES / 2, MINITILES / 2);
-	make_tiles(data->image.minifloor, 0x3D6648FF, MINITILES);
-	make_tiles(data->image.miniwall, 0x5C1625, MINITILES);
-	make_tiles(data->image.miniplayer, 0xFF9900FF, MINITILES / 2);
+	make_tiles(data->image.minifloor, 0x18DA47FF, MINITILES);
+	make_tiles(data->image.miniwall, 0x744603FF, MINITILES);
+	make_tiles(data->image.miniplayer, 0xDFB155FF, MINITILES / 2);
 }
 
-void clear_img(mlx_image_t *image, int width, int height)
-{
-	int	x;
+// void	drawline(t_image *image, t_coor start, t_coor end, u_int32_t color)
+// {
+// 	int i;
+// 	int	dx;
+// 	int	dy;
 
-	while(height)
-	{
-		x = width;
-		while(x)
-		{
-			mlx_put_pixel(image, x - 1, height - 1, 0x00000000);
-			x--;
-		}
-		height--;
-	}
-}
-
-
+// 	dx = end.x - start.x;
+// 	dy = end.y - start.y;
+// 	abs
+	
+// 	while(i--)
+// 	{
+// 		mlx_put_pixel();
+// 	}
+// }
 void	ft_img_to_win(t_data *data)
 {
 	int	x;
@@ -148,30 +146,30 @@ void	ft_img_to_win(t_data *data)
 			if(temp_img)
 			{
 				mlx_image_to_window(data->mlx,
-					temp_img, x * MINITILES, (y * MINITILES));
+					temp_img, x * MINITILES, ((y - data->player.start_map)* MINITILES));
 			}
 			x++;
 		}
 		y++;
 	}
-	mlx_image_to_window(data->mlx, data->image.miniplayer, data->player.pos_x , data->player.pos_y);
+	mlx_image_to_window(data->mlx, data->image.miniplayer, data->player.pos_x , data->player.pos_y - (data->player.start_map * MINITILES));
 }
 
 void	render(void *param)
 {
 	// double pos_x;
-	double pos_y;
+	// double pos_y;
 	t_data *data;
 	data = param;
 	(void) data;
-
-	// pos_x = 0.0;
-	pos_y = 0.0;
-	clear_img(data->image.window, WINWIDTH, WINHEIGHT);
+	mlx_delete_image(data->mlx, data->image.window);
+	data->image.window = mlx_new_image(data->mlx, WINWIDTH, WINHEIGHT);
+	dda_algorithm(data->image.miniplayer->instances->x + (MINITILES / 4), data->image.miniplayer->instances->y + (MINITILES / 4), data->angle, data->image.window);
 	mlx_image_to_window(data->mlx, data->image.window, 0, 0);
-	trouve_murx(data);
-	// trouve_mury(data);
-	dda_algorithm(data->image.miniplayer->instances->x + (MINITILES / 4), data->image.miniplayer->instances->y + (MINITILES / 4), data->ray.pos_x, data->ray.pos_y, data, data->image.window);
+	printf("W %d\n", data->image.miniwall->count);
+	printf("F %d\n", data->image.minifloor->count);
+	printf("WIN %d\n", data->image.window->count);
+	printf("P %d\n", data->image.miniplayer->count);
 }
 int main(int argc, char **argv)
 {	t_data data;
@@ -189,6 +187,7 @@ int main(int argc, char **argv)
 	wall_check(&data);
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
+	
 	ft_img_to_win(&data);
 	mlx_key_hook(data.mlx, &key_hook, &data);
 	mlx_loop_hook(data.mlx, &render, &data);

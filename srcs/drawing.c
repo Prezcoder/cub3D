@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 09:30:07 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/20 13:43:05 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/21 10:03:33 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,55 +21,131 @@
 // 	return (coor);
 // }
 
-// void	find_end_p(int x, int y, double delta)
+// int	find_end_p(t_data *data, int x, int y, double delta)
 // {
 // 	int dx;
-// 	int dy;
+// 	(void) delta;
+// 	dx = 1;
 
 // 	if(dx == 1)
 // 	{
 // 		x = find_wall(x, dx);
-// 		if(data.map)
+// 		if(data->map[y][x / MINITILES] == '1')
+// 			return (x);
+// 		else
+// 			find_wall(x, dx);
 // 	}
+// 	return (0);
+// }
+// int	direction(t_data *data)
+// {
+// 	if(data->angle <= 45 && data->angle >= 271);
 // }
 
-void	dda_algorithm(double x1, double y1, double x2, double y2, t_data *data, mlx_image_t *drawline)
+
+int	distance(int coor, int dir_coor)
+{
+	while(coor % MINITILES != 0)
+		coor += dir_coor;
+	return(coor);
+}
+// delta_x = x2 - x1
+
+// # Calcul de la différence en y
+// delta_y = delta_x * math.tan(angle_radians)
+
+// # Calcul de y2
+// y2 = y1 + delta_y
+
+int	find_y(int x1, int y1, int x2, double angle)
+{
+	double del_x;
+	double del_y;
+	int y2;
+
+	del_x = x2 - x1;
+	del_y = del_x * tan(angle * DEGRE);
+	y2 = y1 + del_y;
+	return(y2);
+}
+
+int	find_x(int x1, int y1, int y2, double angle)
+{
+	double del_x;
+	double del_y;
+	int x2;
+
+	del_y = y2 - y1;
+	del_x = del_y / tan(angle * DEGRE);
+	x2 = x1 + del_x;
+	return(x2);
+}
+
+int		find_next_wall(int coor, int dir)
+{
+	while(coor % MINITILES != 0)
+		coor += dir;
+	return(coor);
+}
+
+void	calc_coor(t_coor *coor, double angle)
+{
+		int dist;
+		
+		dist = 1;
+		double tile_s;
+		tile_s = MINITILES;
+		// (void) coor;
+		
+		while(dist < 10)
+		{
+			coor->x = coor->x + (dist * cos(angle * DEGRE));
+			coor->y = coor->y + (dist * sin(angle * DEGRE));
+			dist++;
+		}
+}
+
+void	dda_algorithm(double x1, double y1, double angle, mlx_image_t *drawline)
 {
 	int	i;
+	int	steps;
 	double	dx;
 	double	dy;
-	double	dist;
-	double	steps;
 	double	xinc;
 	double	yinc;
-
+	int x2;
+	int y2;
+	x2 = 0;
+	y2 = 0;
+	// calc_coor(&end_coor, angle);
 	i = 1;
 	steps = 0;
-	if (y2 > x2)
+	if(angle >  315 || angle <= 45)
 	{
-		if (y2 > y1)
-			dist = y2 - y1;
-		else
-			dist = y1 - y2;
+		x2 = find_next_wall(x1, -1);
+		dx =  x2 - x1;		// dx = x2 - x1
+		dy = find_y(x1, y1, x2, angle) - y1;		//dy = y2 - y1
 	}
-	if (x2 > y2)
+	if(angle >  135 && angle <= 225)
 	{
-		if (x2 > x1)
-			dist = x2 - x1;
-		else
-			dist = x1 - x2;
+		x2 = find_next_wall(x1, 1);
+		dx =  x2 - x1;		// dx = x2 - x1
+		dy = find_y(x1, y1, x2, angle) - y1;		//dy = y2 - y1
 	}
-	
-	x2 = x2 + (dist * cos(data->angle * DEGRE));
-	y2 = y2 + (dist * sin(data->angle * DEGRE));
-	if (y2 > y1)
-		dy = y2 - y1;
-	else
-		dy = y1 - y2;
-	if (x2 > x1)
-		dx = x2 - x1;
-	else
-		dx = x1 - x2;
+	if(angle >  45 && angle <= 135)
+	{
+		y2 = find_next_wall(y1, -1);
+		dx =  find_x(x1, y1, y2, angle) - x1;		// dx = x2 - x1
+		dy =  y2 - y1;		//dy = y2 - y1
+	}
+	if(angle >  225 && angle <= 315)
+	{
+		y2 = find_next_wall(y1, 1);
+		dx =  find_x(x1, y1, y2, angle) - x1;		// dx = x2 - x1
+		dy =  y2 - y1;		//dy = y2 - y1
+	}
+	printf("X %d\n", x2);
+	printf("ANGLE %f\n", angle);
 	if (fabs(dx) > fabs(dy))
 		steps = fabs(dx);
 	else
@@ -80,45 +156,8 @@ void	dda_algorithm(double x1, double y1, double x2, double y2, t_data *data, mlx
 	printf("%f", yinc);
 	while (i++ <= steps && x1 != 0 && y1 != 0)
 	{
-		mlx_put_pixel(drawline, x1, y1, 0x000000FF);
+		mlx_put_pixel(drawline, x1, y1, 0xFF0000FF);
 		x1 = x1 + xinc;
 		y1 = y1 + yinc;
 	}
-}
-
-void	trouve_murx(t_data *data)
-{
-	int	x;
-	int	y;
-	
-	printf("%d\n", data->angle);
-	data->ray.pos_x = data->image.miniplayer->instances->x;
-	data->ray.pos_y = data->image.miniplayer->instances->y;
-	while (data->ray.pos_x < WINWIDTH && data->ray.pos_x > 0 && data->ray.pos_y > 0 && data->ray.pos_y < WINHEIGHT)
-	{
-		data->ray.pos_x = data->ray.pos_x  + cos(data->angle * DEGRE);
-		data->ray.pos_y = data->ray.pos_y - sin(data->angle * DEGRE);
-		// data->ray.pos_y--;
-		if (data->map[(int)fabs(data->ray.pos_y / MINITILES)][(int)fabs(data->ray.pos_x / MINITILES)] == '1')
-			break;
-	}
-	// data->ray.pos_y = y * MINITILES;
-}
-void	trouve_mury(t_data *data)
-{
-	int	x;
-	int	y;
-
-	x = data->image.miniplayer->instances->x / MINITILES;
-	data->ray.pos_x = data->image.miniplayer->instances->x;
-	y = data->image.miniplayer->instances->y / MINITILES;
-	data->ray.pos_y = data->image.miniplayer->instances->y;
-	while (WINWIDTH && WINHEIGHT > 0)
-	{
-		data->ray.pos_x--;
-		data->ray.pos_y++;
-		if (data->map[(int)fabs(data->ray.pos_y / MINITILES)][((int)fabs(data->ray.pos_x / MINITILES))] == '1')
-			break;
-	}
-	// data->ray.pos_x =  x * MINITILES;
 }
