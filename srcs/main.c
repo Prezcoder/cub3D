@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/21 13:27:50 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/25 12:25:56 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,29 @@ int	errhandler(char *msg)
 
 void	key_hook(mlx_key_data_t keydata, void *param)
 {
+	int movespeed = 4;
 	t_data *data;
 	(void) keydata;
 
 	data = param;
 	if(mlx_is_key_down(data->mlx, MLX_KEY_W))
 	{
-		data->image.miniplayer->instances[0].y -= 2.5;
+		data->player.pos_y -= movespeed;
 		// ft_printf("w");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_A))
 	{
-		data->image.miniplayer->instances[0].x -= 2.5;
+		data->player.pos_x -= movespeed;
 		// ft_printf("a");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_S))
 	{
-		data->image.miniplayer->instances[0].y += 2.5;
+		data->player.pos_y += movespeed;
 		// ft_printf("s");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_D))
 	{
-		data->image.miniplayer->instances[0].x += 2.5;
+		data->player.pos_x += movespeed;
 		// ft_printf("d");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
@@ -66,93 +67,45 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	}
 }
 
-void	make_tiles(mlx_image_t *square, uint32_t color, int size)
+void draw_filled_circle(mlx_image_t *image, int centerX, int centerY, int radius, uint32_t color)
 {
-	int x;
-	int y;
+    int x = centerX - radius;
+    while (x <= centerX + radius)
+    {
+        int y = centerY - radius;
+        while (y <= centerY + radius)
+        {
+            int dx = x - centerX;
+            int dy = y - centerY;
+            if (dx * dx + dy * dy <= radius * radius)
+            {
+                mlx_put_pixel(image, x, y, color);
+            }
+            y++;
+        }
+        x++;
+    }
+}
+
+void	draw_minimap(mlx_image_t *image, char **map)
+{
+	int pix_x;
+	int pix_y = 0;
 	
-	x = 0;
-	y = 0;
-	while(y < size)
+	pix_y = 0;
+	while(map[pix_y / MINITILES])
 	{
-		x = 0;
-		while(x < size)
+		pix_x = 0;
+		while(map[pix_y / MINITILES][pix_x / MINITILES])
 		{
-			mlx_put_pixel(square, x, y, color);
-			x++;
+			if(map[pix_y / MINITILES][pix_x / MINITILES] == '1')
+				mlx_put_pixel(image, pix_x, pix_y, 0x000000FF);
+			else
+				mlx_put_pixel(image, pix_x, pix_y, 0x00FF00FF);
+			pix_x++;
 		}
-		y++;
+		pix_y++;
 	}
-}
-
-mlx_image_t	*ft_set_img(char c, t_data *data)
-{
-	if (c == '1')
-		return (data->image.miniwall);
-	else if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
-		return (data->image.minifloor);
-	else if (c == ' ')
-		return (NULL);
-	else
-		exit(1);
-}
-
-void	del_old_img(t_data *data)
-{
-	mlx_delete_image(data->mlx, data->old_image.minifloor);
-	mlx_delete_image(data->mlx, data->old_image.miniwall);
-	mlx_delete_image(data->mlx, data->old_image.miniplayer);
-}
-
-void	mini_image(t_data *data)
-{
-	data->image.minifloor = mlx_new_image(data->mlx, MINITILES, MINITILES);
-	data->image.miniwall = mlx_new_image(data->mlx, MINITILES, MINITILES);
-	data->image.miniplayer = mlx_new_image(data->mlx, MINITILES / 2, MINITILES / 2);
-	make_tiles(data->image.minifloor, 0x18DA47FF, MINITILES);
-	make_tiles(data->image.miniwall, 0x744603FF, MINITILES);
-	make_tiles(data->image.miniplayer, 0xDFB155FF, MINITILES / 2);
-}
-
-// void	drawline(t_image *image, t_coor start, t_coor end, u_int32_t color)
-// {
-// 	int i;
-// 	int	dx;
-// 	int	dy;
-
-// 	dx = end.x - start.x;
-// 	dy = end.y - start.y;
-// 	abs
-	
-// 	while(i--)
-// 	{
-// 		mlx_put_pixel();
-// 	}
-// }
-void	ft_img_to_win(t_data *data)
-{
-	int	x;
-	int	y;
-	mlx_image_t *temp_img;
-
-	y = data->player.start_map;
-	mini_image(data);
-	while (data->map[y])
-	{
-		x = 0;
-		while (data->map[y][x] != '\n' && data->map[y][x])
-		{
-			temp_img = ft_set_img(data->map[y][x], data);
-			if(temp_img)
-			{
-				mlx_image_to_window(data->mlx,
-					temp_img, x * MINITILES, y * MINITILES);
-			}
-			x++;
-		}
-		y++;
-	}
-	mlx_image_to_window(data->mlx, data->image.miniplayer, data->player.pos_x , data->player.pos_y);
 }
 
 void	render(void *param)
@@ -160,18 +113,17 @@ void	render(void *param)
 	t_data *data;
 	data = param;
 	(void) data;
-	mlx_delete_image(data->mlx, data->image.window);
-	data->image.window = mlx_new_image(data->mlx, WINWIDTH, WINHEIGHT);
-	dda_algorithm(data, data->image.miniplayer->instances->x + (MINITILES / 4), data->image.miniplayer->instances->y + (MINITILES / 4), data->image.window);
-	mlx_image_to_window(data->mlx, data->image.window, 0, 0);
-	// printf("W %d\n", data->image.miniwall->count);
-	// printf("F %d\n", data->image.minifloor->count);
-	// printf("WIN %d\n", data->image.window->count);
-	// printf("P %d\n", data->image.miniplayer->count);
+	int playerRadius = 10;
+
+	draw_minimap(data->image.minimap, data->map);
+	draw_filled_circle(data->image.minimap, data->player.pos_x + (MINITILES / 4), data->player.pos_y + (MINITILES / 4), playerRadius, 0x0000FFFF);
+
 }
+
 int main(int argc, char **argv)
 {	t_data data;
 
+	char **map_temp;
 	if (argc != 2)
 		return(errhandler(ERRARGC));
 	if (ft_strlen(argv[1]) < 12)
@@ -183,10 +135,13 @@ int main(int argc, char **argv)
 		return(-1);
 	parsing(&data);
 	wall_check(&data);
+	map_temp = ft_tabdup(&data.map[data.player.start_map]);
+    ft_freeall(data.map);
+    data.map = map_temp;
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
-	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
-	
-	ft_img_to_win(&data);
+	data.image.minimap = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
+	mlx_image_to_window(data.mlx, data.image.minimap, 0, 100);
+	// mlx_image_to_window(data.mlx, data.image.miniplayer, 0, 0);
 	mlx_key_hook(data.mlx, &key_hook, &data);
 	mlx_loop_hook(data.mlx, &render, &data);
 	mlx_loop(data.mlx);

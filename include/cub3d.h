@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/21 11:21:40 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/25 12:21:46 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define WINHEIGHT 768
 # define MINITILES 40
 # define DEGRE 0.01745329251
+# define MOVESPEED 0.5
 
 ////////////----------error message
 # define ERRARGC "Usage : ./cub3D <map.cub>\n"
@@ -100,6 +101,7 @@ typedef struct s_image
 	mlx_image_t		*miniwall;
 	mlx_image_t		*minifloor;
 	mlx_image_t		*miniplayer;
+	mlx_image_t		*minimap;
 }			t_image;
 
 typedef struct s_texture
