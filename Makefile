@@ -6,7 +6,7 @@
 #    By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 10:27:08 by emlamoth          #+#    #+#              #
-#    Updated: 2023/09/19 09:30:58 by fbouchar         ###   ########.fr        #
+#    Updated: 2023/09/25 08:56:45 by fbouchar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SRCS =	main.c			\
 		init.c			\
 		flood_fill.c	\
 		drawing.c		\
+		line_draw.c
 
 SRCS_DIR = ./srcs/
 OBJS_DIR = ./srcs/objs_cub3D/

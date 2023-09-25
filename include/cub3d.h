@@ -6,11 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/09/21 10:03:40 by fbouchar         ###   ########.fr       */
-=======
-/*   Updated: 2023/09/21 11:21:40 by emlamoth         ###   ########.fr       */
->>>>>>> master
+/*   Updated: 2023/09/25 09:05:43 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +65,7 @@ typedef struct s_player
 	int				pos_y;
 	int				map_x;
 	int				map_y;
+	float			angle;
 	int				start_map;
 }			t_player;
 
@@ -142,5 +139,8 @@ int		find_wall(int coor, int direction);
 void	dda_algorithm(t_data *data, double x1, double y1, mlx_image_t *drawline);
 void	calc_ray_x(t_data *data, t_ray *ray_x);
 void	calc_ray_y(t_data *data, t_ray *ray_y);
+
+
+void ft_hook(void *param);
 
 #endif
