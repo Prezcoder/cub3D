@@ -6,7 +6,11 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/09/21 10:03:40 by fbouchar         ###   ########.fr       */
+=======
+/*   Updated: 2023/09/21 11:21:40 by emlamoth         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +74,13 @@ typedef struct s_player
 
 typedef struct s_ray
 {
-	int		angle;
-	int 	dir;
+	double		x1;
+	double		y1;
+	double		x2;
+	double		y2;
+	double		dx;
+	double		dy;
+	int 		steps;
 
 }			t_ray;
 
@@ -116,7 +125,7 @@ typedef struct s_data
 	t_image			image;
 	t_image			old_image;
 	t_player		player;
-	int				angle;
+	double			angle;
 	char			**map;
 	
 }			t_data;
@@ -130,6 +139,8 @@ t_data	*init_data(t_data *data, char **argv);
 int		init_map(t_data *data, char *path);
 int		find_end_p(t_data *data, int x, int y, double delta);
 int		find_wall(int coor, int direction);
-void	dda_algorithm(double x1, double y1, double angle, mlx_image_t *drawline);
+void	dda_algorithm(t_data *data, double x1, double y1, mlx_image_t *drawline);
+void	calc_ray_x(t_data *data, t_ray *ray_x);
+void	calc_ray_y(t_data *data, t_ray *ray_y);
 
 #endif
