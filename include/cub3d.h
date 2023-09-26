@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/25 12:21:46 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/26 12:28:42 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 //----------define
 # define WINWIDTH 1024
 # define WINHEIGHT 768
-# define MINITILES 40
-# define DEGRE 0.01745329251
+# define MINITILES 32
+# define DEGRE M_PI / 180.0
 # define MOVESPEED 0.5
 
 ////////////----------error message
@@ -45,20 +45,6 @@
 # include "../srcs/MLX42/include/MLX42/MLX42.h"
 
 //----------struct
-typedef struct s_coor
-{
-	double	x;
-	double	y;
-}				t_coor;
-
-
-typedef struct s_flood
-{
-	char			**map;
-	int				collect;
-	int				exit;
-	int				done;
-}			t_flood;
 
 typedef struct s_player
 {
@@ -98,9 +84,6 @@ typedef struct s_image
 {
 	
 	mlx_image_t		*window;
-	mlx_image_t		*miniwall;
-	mlx_image_t		*minifloor;
-	mlx_image_t		*miniplayer;
 	mlx_image_t		*minimap;
 }			t_image;
 
@@ -118,10 +101,9 @@ typedef struct s_texture
 typedef struct s_data
 {
 	mlx_t			*mlx;
-	t_param	param;
+	t_param			param;
 	t_texture		texture;
 	t_image			image;
-	t_image			old_image;
 	t_player		player;
 	double			angle;
 	char			**map;
@@ -135,10 +117,6 @@ void	wall_check(t_data *data);
 //----------init.c
 t_data	*init_data(t_data *data, char **argv);
 int		init_map(t_data *data, char *path);
-int		find_end_p(t_data *data, int x, int y, double delta);
-int		find_wall(int coor, int direction);
-void	dda_algorithm(t_data *data, double x1, double y1, mlx_image_t *drawline);
-void	calc_ray_x(t_data *data, t_ray *ray_x);
-void	calc_ray_y(t_data *data, t_ray *ray_y);
+
 
 #endif

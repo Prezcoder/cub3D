@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/25 15:26:04 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/26 12:16:58 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,35 +24,40 @@ int	errhandler(char *msg)
 	return(-1);
 }
 
+// int is_collision(t_data *data, int playerX, int playerY, int playerRadius)
+// {
+// 	int	gridX;
+// 	int	gridY;
+// 	int	dx;
+// 	int	dy;
+// 	int	squaredDist;
+// 	int	maxSquaredDist;
+
+// 	gridX = playerX / MINITILES;
+// 	gridY = playerY / MINITILES;
+// 	if (data->map[gridY] && data->map[gridY][gridX] == '1')
+// 	{
+// 		dx = playerX - (gridX * MINITILES + MINITILES / 2);
+// 		dy = playerY - (gridY * MINITILES + MINITILES / 2);
+// 		squaredDist = dx * dx + dy * dy;
+// 		maxSquaredDist = (playerRadius + MINITILES / 2) * (playerRadius + MINITILES / 2);
+// 		return (squaredDist <= maxSquaredDist);
+// 	}
+// 	return (0);
+// }
+
 int is_collision(t_data *data, int playerX, int playerY, int playerRadius)
 {
-// write(1, "test1\n", 5);
-	int	gridX;
-	int	gridY;
-	int	dx;
-	int	dy;
-	int	squaredDist;
-	int	maxSquaredDist;
-	// Convert player's pixel coordinates to grid coordinates
+	(void)playerRadius;
+	int gridX;
+	int gridY;
+	
 	gridX = playerX / MINITILES;
 	gridY = playerY / MINITILES;
-
-	// Check if the player's grid cell contains a wall ('1')
-	// write(1, "test2\n", 5);
-	if (data->map[gridY] && data->map[gridY][gridX] == '1')
-	{
-		dx = playerX - (gridX * MINITILES + MINITILES / 2);
-		dy = playerY - (gridY * MINITILES + MINITILES / 2);
-		squaredDist = dx * dx + dy * dy;
-
-		// Calculate the maximum squared distance allowed for collision
-		maxSquaredDist = (playerRadius + MINITILES / 2) * (playerRadius + MINITILES / 2);
-
-		// Collision detected if the squared distance is less than or equal to the allowed maximum
-		return (squaredDist <= maxSquaredDist);
-	}
-
-	// No collision
+	// TODO ajuster
+	if (gridX >= 0 && gridX < 25 && gridY >= 0 && gridY < 7)
+		if (data->map[gridY] && data->map[gridY][gridX] == '1')
+			return (1);
 	return (0);
 }
 
@@ -133,7 +138,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	if(mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 	{
 		data->angle -= 2.5;
-		if(data->angle < 0)
+		if(data->angle <= 0)
 			data->angle += 360;
 		// ft_printf("(LEFT)");
 	}
@@ -143,7 +148,6 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 		mlx_close_window(data->mlx);
 	}
 }
-
 
 void draw_line_from_angle_stop_on_collision2(t_data *data, mlx_image_t *image, int playerX, int playerY, float playerAngle, uint32_t color)
 {
@@ -158,92 +162,52 @@ void draw_line_from_angle_stop_on_collision2(t_data *data, mlx_image_t *image, i
 	(void)image;
 	(void)color;
 
-	// Convert playerAngle from degrees to radians
 	angleRad = playerAngle * DEGRE;
-	// Calculate the endpoint coordinates
-	lineLength = 100;
+	lineLength = 1000;
 	lineEndX = playerX + (int)(lineLength * cos(angleRad));
 	lineEndY = playerY + (int)(lineLength * sin(angleRad));
 	lineEndRadius = 15;
-	// printf("lineendx = %i\n", lineEndX);
-	// printf("lineendy = %i\n", lineEndY);
-
-	// Step size for drawing the line
 	int step = 1;
-
-	// Determine the direction of the line (positive or negative step)
 	if (lineEndX < playerX)
 		step = -1;
-	// Calculate the slope of the line
 	slope = (float)(lineEndY - playerY) / (float)(lineEndX - playerX);
 
 	x = playerX;
 	y = playerY;
 
-	while ((step ==  1 && x <= lineEndX) || (step == -1 && x >= lineEndX))
+	while ((step ==  1 && x < lineEndX) || (step == -1 && x > lineEndX))
 	{
-		// if (x < 0 || x > 1023 || y < 0 || y > 767)
-		// {	
-		// 	ft_printf("ALLO\n");
-		// 	break; // Stop drawing if outside boundaries
-		// }
-		// Check for collision at the current position
-		if (is_collision(data, x, y, lineEndRadius)) // Assuming playerRadius is 10 for collision check
-			break; // Stop drawing if a collision is detected
-
-		// Check if the current position is outside the minimap boundaries
-
-
-		// Draw the pixel at the current position
-		if (x >= 0 && x < WINWIDTH && y >= 0 && y < WINHEIGHT)
+		// TODO changer largeur et hauteur
+		if (x >= 0 && x < WINWIDTH && y >= 0 && y < 224)
+		{
+			if (is_collision(data, x, y, lineEndRadius))
+				break;
 			mlx_put_pixel(image, x, y, color);
+		}
 		else
-			return ;
-		// Calculate the next position
+			break ;
 		x += step;
 		y = playerY + (int)(slope * (x - playerX));
 	}
-
 	step = 1;
-
-	// Determine the direction of the line (positive or negative step)
 	if (lineEndY < playerY)
 		step = -1;
-
-	// Calculate the slope of the line
 	slope = (float)(lineEndX - playerX) / (float)(lineEndY - playerY);
-
 	x = playerX;
 	y = playerY;
-
-
-	while ((step ==  1 && y <= lineEndY) || (step == -1 && y >= lineEndY))
+	while ((step ==  1 && y < lineEndY) || (step == -1 && y > lineEndY))
 	{
-		// if (x < 0 || x > 1023 || y < 0 || y > 767)
-		// {	
-		// 	ft_printf("ALLO2\n");
-		// 	break; // Stop drawing if outside boundaries
-		// }
-		// Check for collision at the current position
-		if (is_collision(data, x, y, lineEndRadius)) // Assuming playerRadius is 10 for collision check
+		if (x >= 0 && x < WINWIDTH && y >= 0 && y < 224)
 		{
-			break; // Stop drawing if a collision is detected
-		}
-
-		// Check if the current position is outside the minimap boundaries
-
-
-		// Draw the pixel at the current position
-		if (x >= 0 && x < WINWIDTH && y >= 0 && y < WINHEIGHT)
+			if (is_collision(data, x, y, lineEndRadius))
+				break;
 			mlx_put_pixel(image, x, y, color);
+		}
 		else
-			return ;
-
-		// Calculate the next position
+			break ;
 		y += step;
 		x = playerX + (int)(slope * (y - playerY));
 	}
-
 }
 
 void draw_raycast_on_minimap(t_data *data, mlx_image_t *image, int playerX, int playerY)
@@ -256,7 +220,7 @@ void draw_raycast_on_minimap(t_data *data, mlx_image_t *image, int playerX, int 
 	int		i;
 
 	i = 0;
-	numRays = WINWIDTH;
+	numRays = 60;
 	fovAngle = 60;
 	angleIncrement = (float)fovAngle / (float)(numRays - 1);
 	startAngle = data->angle - (float)(fovAngle / 2);
@@ -268,7 +232,7 @@ void draw_raycast_on_minimap(t_data *data, mlx_image_t *image, int playerX, int 
 		currentAngle = startAngle + i * angleIncrement;
 		// Call draw_line_from_angle_stop_on_collision for the current ray
 		draw_line_from_angle_stop_on_collision2(data, image, playerX, playerY, currentAngle,ft_color(255,0,0,255));
-		i++;
+		i += 2;
 	}
 }
 
@@ -329,6 +293,7 @@ void	render(void *param)
 	draw_minimap(data->image.minimap, data->map);
 	draw_filled_circle(data->image.minimap, data->player.pos_x, data->player.pos_y, playerRadius, 0x0000FFFF);
 	draw_raycast_on_minimap(data, data->image.minimap, data->player.pos_x, data->player.pos_y);
+	// dda_algorithm(data, data->player.pos_x, data->player.pos_y, data->image.minimap);
 	// printf("%f\n", data->angle);
 }
 
