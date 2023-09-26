@@ -1,80 +1,101 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Raycast.c                                          :+:      :+:    :+:   */
+/*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/26 15:13:38 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:08:13 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
+int map[20][20] = {
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1},
+		{1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+
 void	init_game(t_data *data)
 {
-	data->ray.pos.x = 4;
-	data->ray.pos.y = 18;
-
-	//TODO: attributes the correct orientation per the data->map (N, W, S, E)
-	// iniiral direction vector (where the player looks)
-	data->ray.dir.x = -1;
-	data->ray.dir.y = 0;
+	data->game->pl_pos.x = 2;
+	data->game->pl_pos.y = 7;
+	data->game->pl_dir.x = 1;
+	data->game->pl_dir.y = 0;
 	// cam plane
-	data->ray.plane.y = 0.66;
-	data->ray.plane.x = 0;
-	data->ray.cam_x = 0;
-	data->ray.side_dist.x = 0;
-	data->ray.side_dist.y = 0;
-	data->ray.delta_dist.x = 0;
-	data->ray.delta_dist.y = 0;
-	data->ray.step.x = 1;
-	data->ray.step.y = 1;
+	data->game->plane.y = -0.66;
+	data->game->plane.x = 0;
+
+	data->game->cam_x = 0;
+	data->game->side_dist.x = 0;
+	data->game->side_dist.y = 0;
+	data->game->delta_dist.x = 0;
+	data->game->delta_dist.y = 0;
+
+	data->game->step.x = 1;
+	data->game->step.y = 1;
 }
 
 void	set_data(t_data *data)
 {
 	//set ray dir
-	data->ray.ray_dir.x = data->ray.dir.x + \
-		data->ray.plane.x * data->ray.cam_x;
-	data->ray.ray_dir.y = data->ray.dir.y + \
-		data->ray.plane.y * data->ray.cam_x;
+	data->game->ray_dir.x = data->game->pl_dir.x + \
+		data->game->plane.x * data->game->cam_x;
+	data->game->ray_dir.y = data->game->pl_dir.y + \
+		data->game->plane.y * data->game->cam_x;
 	
-	//set data->map pos
-	data->ray.coord.x = data->ray.pos.x;
-	data->ray.coord.y = data->ray.pos.y;
+	//set map pos
+	data->game->coord.x = data->game->pl_pos.x;
+	data->game->coord.y = data->game->pl_pos.y;
 
 	//set delta dist
-	data->ray.delta_dist.x = fabs(1 / data->ray.ray_dir.x);
-	data->ray.delta_dist.y = fabs(1 / data->ray.ray_dir.y);
+	data->game->delta_dist.x = fabs(1 / data->game->ray_dir.x);
+	data->game->delta_dist.y = fabs(1 / data->game->ray_dir.y);
 }
 
 void	set_side_dist(t_data *data)
 {
-	if(data->ray.ray_dir.x < 0)
+	if(data->game->ray_dir.x < 0)
 	{
-		data->ray.step.x = -0.01;
-		data->ray.side_dist.x = (data->ray.pos.x - \
-			data->ray.coord.x) * data->ray.delta_dist.x;
+		data->game->step.x = -0.01;
+		data->game->side_dist.x = (data->game->pl_pos.x - \
+			data->game->coord.x) * data->game->delta_dist.x;
 	}
 	else
 	{
-		data->ray.step.x = 0.01;
-		data->ray.side_dist.x = (data->ray.coord.x + 1.0 - \
-			data->ray.pos.x) * data->ray.delta_dist.x;
+		data->game->step.x = 0.01;
+		data->game->side_dist.x = (data->game->coord.x + 1.0 - \
+			data->game->pl_pos.x) * data->game->delta_dist.x;
 	}
-	if(data->ray.ray_dir.y < 0)
+	if(data->game->ray_dir.y < 0)
 	{
-		data->ray.step.y = -0.01;
-		data->ray.side_dist.y = (data->ray.pos.y - \
-			data->ray.coord.y) * data->ray.delta_dist.y;
+		data->game->step.y = -0.01;
+		data->game->side_dist.y = (data->game->pl_pos.y - \
+			data->game->coord.y) * data->game->delta_dist.y;
 	}
 	else
 	{
-		data->ray.step.y = 0.01;
-		data->ray.side_dist.y = (data->ray.coord.y + 1.0 - \
-			data->ray.pos.y) * data->ray.delta_dist.y;
+		data->game->step.y = 0.01;
+		data->game->side_dist.y = (data->game->coord.y + 1.0 - \
+			data->game->pl_pos.y) * data->game->delta_dist.y;
 	}
 }
 
@@ -82,62 +103,64 @@ void	dda(t_data *data)
 {
 	while(1)
 	{
-		if(data->ray.side_dist.x < data->ray.side_dist.y)
+		
+		if(data->game->side_dist.x < data->game->side_dist.y)
 		{
-			data->ray.side_dist.x += data->ray.delta_dist.x;
-			data->ray.coord.x += data->ray.step.x;
+			data->game->side_dist.x += data->game->delta_dist.x;
+			data->game->coord.x += data->game->step.x;
 			//keep in case of norm too tough on set_side_dist
-			// if(data->ray.ray_dir.x < 0)
-			// 	data->ray.coord.x -= 0.01;
+			// if(data->game->ray_dir.x < 0)
+			// 	data->game->coord.x -= 0.01;
 			// else
-			// 	data->ray.coord.x += 0.01;
+			// 	data->game->coord.x += 0.01;
 
-			data->ray.side = 0;
+			data->game->side = 0;
 		}
 		else
 		{
-			data->ray.side_dist.y += data->ray.delta_dist.y;
-			data->ray.coord.y += data->ray.step.y;
+			data->game->side_dist.y += data->game->delta_dist.y;
+			data->game->coord.y += data->game->step.y;
 			//keep in case of norm too tough on set_side_dist
-			// if(data->ray.ray_dir.y < 0)
-			// 	data->ray.coord.y -= 0.01; 
+			// if(data->game->ray_dir.y < 0)
+			// 	data->game->coord.y -= 0.01; 
 			// else
-			// 	data->ray.coord.y += 0.01;
+			// 	data->game->coord.y += 0.01;
 
-			data->ray.side = 1;
+			data->game->side = 1;
 		}
-		if(data->map[(int)data->ray.coord.x][(int)data->ray.coord.y])
+		if(map[(int)data->game->coord.y][(int)data->game->coord.x])
 			break;
 	}
-	if(data->ray.side == 0)
-		data->ray.perp_wall_dist = (data->ray.side_dist.x - data->ray.delta_dist.x);
+	if(data->game->side == 0)
+		data->game->perp_wall_dist = (data->game->side_dist.x - data->game->delta_dist.x);
 	else
-		data->ray.perp_wall_dist = (data->ray.side_dist.y - data->ray.delta_dist.y);
+		data->game->perp_wall_dist = (data->game->side_dist.y - data->game->delta_dist.y);
 }
+
 
 void	set_draw_range(t_data *data)
 {
-	data->ray.line_height = (int)((WINHEIGHT * 125) / data->ray.perp_wall_dist); //add to add multiply HEIGHT by 125 to smooth mvt
-	data->ray.draw_start = -data->ray.line_height * 0.5 + WINHEIGHT * 0.5;
-	if (data->ray.draw_start < 0)
-		data->ray.draw_start = 0;
-	data->ray.draw_end = data->ray.line_height * 0.5 + WINHEIGHT * 0.5;
-	if (data->ray.draw_end >= WINHEIGHT)
-		data->ray.draw_end = WINHEIGHT - 1;
+	data->game->line_height = (int)((WINHEIGHT * 125) / data->game->perp_wall_dist); //add to add multiply HEIGHT by 125 to smooth mvt
+	data->game->draw_start = -data->game->line_height * 0.5 + WINHEIGHT * 0.5;
+	if (data->game->draw_start < 0)
+		data->game->draw_start = 0;
+	data->game->draw_end = data->game->line_height * 0.5 + WINHEIGHT * 0.5;
+	if (data->game->draw_end >= WINHEIGHT)
+		data->game->draw_end = WINHEIGHT - 1;
 }
 
-void	draw_vertline(t_data *data, u_int32_t x)
+void	draw_vertline(t_data *data, int x)
 {
-	u_int32_t	y;
+	int	y;
 	
 	y = 0;
-	printf("%d", data->ray.draw_end);
-	while((int)y < data->ray.draw_start)
-		mlx_put_pixel(data->image.window, x, y++, ft_color(0,0,0,255)); //ceiling color (Black)
-	while((int)y < data->ray.draw_end)
-		mlx_put_pixel(data->image.window, x, y++, ft_color(255,0,0,255)); // red
+	printf("%d\n", data->game->draw_end);
+	while((int)y < data->game->draw_start)
+		mlx_put_pixel(data->image.window, x, y++, ft_color(255, 0, 255, 255)); //ceiling color (Black)
+	while((int)y < data->game->draw_end)
+		mlx_put_pixel(data->image.window, x, y++, ft_color(255, 255, 0, 255)); // red
 	while((int)y < WINHEIGHT)
-		mlx_put_pixel(data->image.window, x, y++, ft_color(255,255,0,255)); //floor color (white)
+		mlx_put_pixel(data->image.window, x, y++, ft_color(255, 255, 255, 255)); //floor color (white)
 }
 
 void	rotate_vector(double *x, double *y, double angle) 
@@ -151,22 +174,22 @@ void	rotate_vector(double *x, double *y, double angle)
 
 void	move_player(t_data *data, double move_speed) 
 {
-    // Move along X direction
-    if(data->map[(int)(data->ray.pos.x + data->ray.dir.x * move_speed)][(int)data->ray.pos.y] == 0)
-        data->ray.pos.x += data->ray.dir.x * move_speed;
+   if(map[(int)(data->game->pl_pos.x + data->game->pl_dir.x * move_speed)][(int)data->game->pl_pos.y] == 0)
+        data->game->pl_pos.x += data->game->pl_dir.x * move_speed;
     
     // Move along Y direction
-    if(data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y + data->ray.dir.y * move_speed)] == 0)
-        data->ray.pos.y += data->ray.dir.y * move_speed;
+    if(map[(int)data->game->pl_pos.x][(int)(data->game->pl_pos.y + data->game->pl_dir.y * move_speed)] == 0)
+        data->game->pl_pos.y += data->game->pl_dir.y * move_speed;
 }
 
 void strafe_player(t_data *data, double strafe_speed) 
 {
-    if(data->map[(int)(data->ray.pos.x + data->ray.dir.y * strafe_speed)][(int)data->ray.pos.y] == 0)
-        data->ray.pos.x += data->ray.dir.y * strafe_speed;
+    if(map[(int)(data->game->pl_pos.x + data->game->pl_dir.y * strafe_speed)][(int)data->game->pl_pos.y] == 0)
+        data->game->pl_pos.x += data->game->pl_dir.y * strafe_speed;
     
-    if(data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y - data->ray.dir.x * strafe_speed)] == 0)
-        data->ray.pos.y -= data->ray.dir.x * strafe_speed;
+    // Strafe along Y direction (perpendicular to direction of facing, so we use -pl_dir.x)
+    if(map[(int)data->game->pl_pos.x][(int)(data->game->pl_pos.y - data->game->pl_dir.x * strafe_speed)] == 0)
+        data->game->pl_pos.y -= data->game->pl_dir.x * strafe_speed;
 }
 
 void	key_binding(t_data *data)
@@ -186,18 +209,17 @@ void	key_binding(t_data *data)
 
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT)) 
 	{
-		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, -ROTATE_SPEED);
-		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, -ROTATE_SPEED);
+		rotate_vector(&data->game->pl_dir.x, &data->game->pl_dir.y, -ROTATE_SPEED);
+		rotate_vector(&data->game->plane.x, &data->game->plane.y, -ROTATE_SPEED);
 	}
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT)) 
 	{
-		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, ROTATE_SPEED);
-		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, ROTATE_SPEED);
+		rotate_vector(&data->game->pl_dir.x, &data->game->pl_dir.y, ROTATE_SPEED);
+		rotate_vector(&data->game->plane.x, &data->game->plane.y, ROTATE_SPEED);
 	}
 }
 void	loop(void *param)
 {
-	(void)param;
 	t_data		*data;
 	int	x;
 
@@ -205,7 +227,7 @@ void	loop(void *param)
 	x = -1;
 	while(++x < WINWIDTH)
 	{
-		data->ray.cam_x = 2 * x / (double)WINWIDTH - 1;
+		data->game->cam_x = 2 * x / (double)WINWIDTH - 1;
 		set_data(data);
 		set_side_dist(data);
 		dda(data);
@@ -230,8 +252,8 @@ void	loop(void *param)
 //             double cameraX = 2 * x / (double)WINWIDTH - 1; // x-coordinate in camera space
 //             double rayDirX = dirX + planeX * cameraX;
 //             double rayDirY = dirY + planeY * cameraX;
-//             int data->mapX = (int)posX;
-//             int data->mapY = (int)posY;
+//             int mapX = (int)posX;
+//             int mapY = (int)posY;
 
 //             double sideDistX;
 //             double sideDistY;
@@ -247,30 +269,30 @@ void	loop(void *param)
 //             int side; // was a NS or an EW wall hit?
 //             if (rayDirX < 0) {
 //                 stepX = -1;
-//                 sideDistX = (posX - data->mapX) * deltaDistX;
+//                 sideDistX = (posX - mapX) * deltaDistX;
 //             } else {
 //                 stepX = 1;
-//                 sideDistX = (data->mapX + 1.0 - posX) * deltaDistX;
+//                 sideDistX = (mapX + 1.0 - posX) * deltaDistX;
 //             }
 //             if (rayDirY < 0) {
 //                 stepY = -1;
-//                 sideDistY = (posY - data->mapY) * deltaDistY;
+//                 sideDistY = (posY - mapY) * deltaDistY;
 //             } else {
 //                 stepY = 1;
-//                 sideDistY = (data->mapY + 1.0 - posY) * deltaDistY;
+//                 sideDistY = (mapY + 1.0 - posY) * deltaDistY;
 //             }
 //             // perform DDA
 //             while (hit == 0) {
 //                 if (sideDistX < sideDistY) {
 //                     sideDistX += deltaDistX;
-//                     data->mapX += stepX;
+//                     mapX += stepX;
 //                     side = 0;
 //                 } else {
 //                     sideDistY += deltaDistY;
-//                     data->mapY += stepY;
+//                     mapY += stepY;
 //                     side = 1;
 //                 }
-//                 if (data->data->map[data->mapX][data->mapY] > 0) hit = 1;
+//                 if (data->map[mapX][mapY] > 0) hit = 1;
 //             }
 
 //             if (side == 0) perpWallDist = (sideDistX - deltaDistX);
@@ -284,7 +306,7 @@ void	loop(void *param)
 //             if (drawEnd >= WINHEIGHT) drawEnd = WINHEIGHT - 1;
 
 //             ColorRGB color;
-//             switch (data->data->map[data->mapX][data->mapY]) {
+//             switch (data->map[mapX][mapY]) {
 //                 case 1:  color = RGB_Red;    break; // red
 //                 case 2:  color = RGB_Green;  break; // green
 //                 case 3:  color = RGB_Blue;   break; // blue
@@ -302,12 +324,12 @@ void	loop(void *param)
 //         double rotSpeed = frameTime * 3.0; // the constant value is in radians/second
 //         readKeys();
 //         if (keyDown(SDLK_UP)) {
-//             if (data->data->map[(int)(posX + dirX * moveSpeed)][(int)posY] == 0) posX += dirX * moveSpeed;
-//             if (data->data->map[(int)posX][(int)(posY + dirY * moveSpeed)] == 0) posY += dirY * moveSpeed;
+//             if (data->map[(int)(posX + dirX * moveSpeed)][(int)posY] == 0) posX += dirX * moveSpeed;
+//             if (data->map[(int)posX][(int)(posY + dirY * moveSpeed)] == 0) posY += dirY * moveSpeed;
 //         }
 //         if (keyDown(SDLK_DOWN)) {
-//             if (data->data->map[(int)(posX - dirX * moveSpeed)][(int)posY] == 0) posX -= dirX * moveSpeed;
-//             if (data->data->map[(int)posX][(int)(posY - dirY * moveSpeed)] == 0) posY -= dirY * moveSpeed;
+//             if (data->map[(int)(posX - dirX * moveSpeed)][(int)posY] == 0) posX -= dirX * moveSpeed;
+//             if (data->map[(int)posX][(int)(posY - dirY * moveSpeed)] == 0) posY -= dirY * moveSpeed;
 //         }
 //         if (keyDown(SDLK_RIGHT)) {
 //             double oldDirX = dirX;

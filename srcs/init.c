@@ -5,6 +5,7 @@ t_data	*init_data(t_data *data, char **argv)
 	if(!argv)
 		return(data);
 	ft_bzero(data, sizeof(t_data));
+	data->game = ft_calloc(1, sizeof(t_game));
 	data->player.map_x = -1;
 	data->player.map_y = -1;
 	return(data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/26 15:05:14 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:06:02 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@
 # define MINITILES 32
 # define DEGRE M_PI / 180.0
 # define MOVESPEED 0.5
-# define MOVE_SPEED 0.00003
-# define ROTATE_SPEED 0.000015
-
+# define MOVE_SPEED 0.5
+# define ROTATE_SPEED M_PI / 180.0
 ////////////----------error message
 # define ERRARGC "Usage : ./cub3D <map.cub>\n"
 # define ERRMAP	 "Invalid map file\n"
@@ -65,23 +64,22 @@ typedef	struct s_vect
 	double y;
 }	t_vect;
 
-typedef struct s_ray
-{
-	t_vect			pos;
-	t_vect			dir;
-	t_vect			plane;
-	double			cam_x;
-	t_vect			ray_dir;
-	t_vect			coord;
-	t_vect			side_dist;
-	t_vect			delta_dist;
-	t_vect			step;
-	int				side;
-	double			perp_wall_dist;
-	int				line_height;
-	int				draw_start;
-	int				draw_end;
-}			t_ray;
+typedef struct s_game {
+	t_vect	pl_pos;
+	t_vect	pl_dir;
+	t_vect	plane;
+	double	cam_x;
+	t_vect	ray_dir;
+	t_vect	coord;
+	t_vect	side_dist;
+	t_vect	delta_dist;
+	t_vect	step;
+	int		side;
+	double	perp_wall_dist;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+}	t_game;
 
 typedef struct s_param
 {
@@ -121,7 +119,7 @@ typedef struct s_data
 	t_texture		texture;
 	t_image			image;
 	t_player		player;
-	t_ray			ray;
+	t_game			*game;
 	double			angle;
 	char			**map;
 	
