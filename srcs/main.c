@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/26 12:32:43 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/26 14:58:02 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,13 +317,16 @@ int main(int argc, char **argv)
 	map_temp = ft_tabdup(&data.map[data.player.start_map]);
 	ft_freeall(data.map);
 	data.map = map_temp;
-	data.angle = 180;
+	// data.angle = 180;
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
-	data.image.minimap = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
-	mlx_image_to_window(data.mlx, data.image.minimap, 0, 0);
+	// data.image.minimap = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
+	// mlx_image_to_window(data.mlx, data.image.minimap, 0, 0);
+	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
+	mlx_image_to_window(data.mlx, data.image.window, 0, 0);
 	// mlx_image_to_window(data.mlx, data.image.miniplayer, 0, 0);
-	mlx_key_hook(data.mlx, &key_hook, &data);
-	mlx_loop_hook(data.mlx, &render, &data);
+	// mlx_key_hook(data.mlx, &key_hook, &data);
+	// mlx_loop_hook(data.mlx, &render, &data);
+	mlx_loop_hook(data.mlx, &loop, &data);
 	mlx_loop(data.mlx);
 	// mlx_delete_image(data.mlx, data.image.east);
 	// mlx_delete_texture(data.texture.east);
