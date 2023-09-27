@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/27 09:57:36 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/27 10:05:08 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,7 +315,7 @@ int main(int argc, char **argv)
 		return(-1);
 	parsing(&data);
 	wall_check(&data);
-	map_temp = ft_tabdup(&data.map[data.player.start_map]);
+	map_temp = ft_tabdup(&(data.map[data.player.start_map]));
 	ft_freeall(data.map);
 	data.map = map_temp;
 	data.angle = 270;

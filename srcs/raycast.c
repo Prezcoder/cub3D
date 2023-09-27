@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/27 09:21:41 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/27 10:07:54 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@ void	init_game(t_data *data)
 	data->ray.dir.x = -1;
 	data->ray.dir.y = 0;
 	// cam plane
-	data->ray.plane.y = 0.66;
+	data->ray.plane.y = -0.66;
 	data->ray.plane.x = 0;
+
 	data->ray.cam_x = 0;
 	data->ray.side_dist.x = 0;
 	data->ray.side_dist.y = 0;
 	data->ray.delta_dist.x = 0;
 	data->ray.delta_dist.y = 0;
+
 	data->ray.step.x = 1;
 	data->ray.step.y = 1;
 }
@@ -41,7 +43,7 @@ void	set_data(t_data *data)
 	data->ray.ray_dir.y = data->ray.dir.y + \
 		data->ray.plane.y * data->ray.cam_x;
 	
-	//set data->map pos
+	//set map pos
 	data->ray.coord.x = data->ray.pos.x;
 	data->ray.coord.y = data->ray.pos.y;
 
@@ -82,6 +84,7 @@ void	dda(t_data *data)
 {
 	while(1)
 	{
+		
 		if(data->ray.side_dist.x < data->ray.side_dist.y)
 		{
 			data->ray.side_dist.x += data->ray.delta_dist.x;
@@ -116,6 +119,7 @@ void	dda(t_data *data)
 			data->ray.perp_wall_dist = (data->ray.side_dist.y - data->ray.delta_dist.y);
 }
 
+
 void	set_draw_range(t_data *data)
 {
 	data->ray.line_height = (int)((WINHEIGHT * 125) / data->ray.perp_wall_dist); //add to add multiply HEIGHT by 125 to smooth mvt
@@ -127,9 +131,9 @@ void	set_draw_range(t_data *data)
 		data->ray.draw_end = WINHEIGHT - 1;
 }
 
-void	draw_vertline(t_data *data, u_int32_t x)
+void	draw_vertline(t_data *data, int x)
 {
-	u_int32_t	y;
+	int	y;
 	
 	y = 0;
 	// printf("%d", data->ray.draw_end);
@@ -198,7 +202,6 @@ void	key_binding(t_data *data)
 }
 void	loop(void *param)
 {
-	(void)param;
 	t_data		*data;
 	int	x;
 
@@ -231,8 +234,8 @@ void	loop(void *param)
 //             double cameraX = 2 * x / (double)WINWIDTH - 1; // x-coordinate in camera space
 //             double rayDirX = dirX + planeX * cameraX;
 //             double rayDirY = dirY + planeY * cameraX;
-//             int data->mapX = (int)posX;
-//             int data->mapY = (int)posY;
+//             int mapX = (int)posX;
+//             int mapY = (int)posY;
 
 //             double sideDistX;
 //             double sideDistY;
@@ -248,30 +251,30 @@ void	loop(void *param)
 //             int side; // was a NS or an EW wall hit?
 //             if (rayDirX < 0) {
 //                 stepX = -1;
-//                 sideDistX = (posX - data->mapX) * deltaDistX;
+//                 sideDistX = (posX - mapX) * deltaDistX;
 //             } else {
 //                 stepX = 1;
-//                 sideDistX = (data->mapX + 1.0 - posX) * deltaDistX;
+//                 sideDistX = (mapX + 1.0 - posX) * deltaDistX;
 //             }
 //             if (rayDirY < 0) {
 //                 stepY = -1;
-//                 sideDistY = (posY - data->mapY) * deltaDistY;
+//                 sideDistY = (posY - mapY) * deltaDistY;
 //             } else {
 //                 stepY = 1;
-//                 sideDistY = (data->mapY + 1.0 - posY) * deltaDistY;
+//                 sideDistY = (mapY + 1.0 - posY) * deltaDistY;
 //             }
 //             // perform DDA
 //             while (hit == 0) {
 //                 if (sideDistX < sideDistY) {
 //                     sideDistX += deltaDistX;
-//                     data->mapX += stepX;
+//                     mapX += stepX;
 //                     side = 0;
 //                 } else {
 //                     sideDistY += deltaDistY;
-//                     data->mapY += stepY;
+//                     mapY += stepY;
 //                     side = 1;
 //                 }
-//                 if (data->data->map[data->mapX][data->mapY] > 0) hit = 1;
+//                 if (data->map[mapX][mapY] > 0) hit = 1;
 //             }
 
 //             if (side == 0) perpWallDist = (sideDistX - deltaDistX);
@@ -285,7 +288,7 @@ void	loop(void *param)
 //             if (drawEnd >= WINHEIGHT) drawEnd = WINHEIGHT - 1;
 
 //             ColorRGB color;
-//             switch (data->data->map[data->mapX][data->mapY]) {
+//             switch (data->map[mapX][mapY]) {
 //                 case 1:  color = RGB_Red;    break; // red
 //                 case 2:  color = RGB_Green;  break; // green
 //                 case 3:  color = RGB_Blue;   break; // blue
@@ -303,12 +306,12 @@ void	loop(void *param)
 //         double rotSpeed = frameTime * 3.0; // the constant value is in radians/second
 //         readKeys();
 //         if (keyDown(SDLK_UP)) {
-//             if (data->data->map[(int)(posX + dirX * moveSpeed)][(int)posY] == 0) posX += dirX * moveSpeed;
-//             if (data->data->map[(int)posX][(int)(posY + dirY * moveSpeed)] == 0) posY += dirY * moveSpeed;
+//             if (data->map[(int)(posX + dirX * moveSpeed)][(int)posY] == 0) posX += dirX * moveSpeed;
+//             if (data->map[(int)posX][(int)(posY + dirY * moveSpeed)] == 0) posY += dirY * moveSpeed;
 //         }
 //         if (keyDown(SDLK_DOWN)) {
-//             if (data->data->map[(int)(posX - dirX * moveSpeed)][(int)posY] == 0) posX -= dirX * moveSpeed;
-//             if (data->data->map[(int)posX][(int)(posY - dirY * moveSpeed)] == 0) posY -= dirY * moveSpeed;
+//             if (data->map[(int)(posX - dirX * moveSpeed)][(int)posY] == 0) posX -= dirX * moveSpeed;
+//             if (data->map[(int)posX][(int)(posY - dirY * moveSpeed)] == 0) posY -= dirY * moveSpeed;
 //         }
 //         if (keyDown(SDLK_RIGHT)) {
 //             double oldDirX = dirX;

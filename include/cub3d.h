@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/27 09:39:59 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/27 10:06:38 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,22 @@ typedef	struct s_vect
 	double y;
 }	t_vect;
 
-typedef struct s_ray
-{
-	t_vect			pos;
-	t_vect			dir;
-	t_vect			plane;
-	double			cam_x;
-	t_vect			ray_dir;
-	t_vect			coord;
-	t_vect			side_dist;
-	t_vect			delta_dist;
-	t_vect			step;
-	int				side;
-	double			perp_wall_dist;
-	int				line_height;
-	int				draw_start;
-	int				draw_end;
-}			t_ray;
+typedef struct s_ray {
+	t_vect	pos;
+	t_vect	dir;
+	t_vect	plane;
+	double	cam_x;
+	t_vect	ray_dir;
+	t_vect	coord;
+	t_vect	side_dist;
+	t_vect	delta_dist;
+	t_vect	step;
+	int		side;
+	double	perp_wall_dist;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+}	t_ray;
 
 typedef struct s_param
 {
