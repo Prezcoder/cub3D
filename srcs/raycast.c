@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Raycast.c                                          :+:      :+:    :+:   */
+/*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/27 13:42:32 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:21:16 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,7 @@ void	init_game(t_data *data)
 
 	//TODO: attributes the correct orientation per the data->map (N, W, S, E)
 	// iniiral direction vector (where the player looks)
-	data->ray.dir.x = -1;
-	data->ray.dir.y = 0;
 	// cam plane
-	data->ray.plane.y = 0.66;
-	data->ray.plane.x = 0;
 
 	data->ray.cam_x = 0;
 	data->ray.side_dist.x = 0;
@@ -156,10 +152,10 @@ void	rotate_vector(double *x, double *y, double angle)
 
 void	move_player(t_data *data, double move_speed) 
 {
-	double checkRadius = 0.2;
+	double checkRadius = 0.3;
     // Move along X direction
 	if (move_speed < 0)
-		checkRadius = -0.2;
+		checkRadius = -0.3;
     if(data->map[(int)(data->ray.pos.x + data->ray.dir.x * (move_speed + checkRadius))][(int)data->ray.pos.y] == '0')
         data->ray.pos.x += data->ray.dir.x * move_speed;
     
@@ -170,9 +166,9 @@ void	move_player(t_data *data, double move_speed)
 
 void strafe_player(t_data *data, double strafe_speed) 
 {
-	double checkRadius = 0.2;
+	double checkRadius = 0.3;
 	if (strafe_speed < 0)
-		checkRadius = -0.2;
+		checkRadius = -0.3;
     if(data->map[(int)(data->ray.pos.x + data->ray.dir.y * (strafe_speed + checkRadius))][(int)data->ray.pos.y] == '0')
         data->ray.pos.x += data->ray.dir.y * strafe_speed;
     

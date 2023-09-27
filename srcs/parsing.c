@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:41:56 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/27 10:54:48 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:33:57 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,42 @@ char	*check_path(char *str)
 	return (wall);
 }
 
+void	set_dir2(t_data *data, char c)
+{
+	if (c == 'S')
+	{
+		data->ray.dir.x = 1;
+		data->ray.dir.y = 0;
+		data->ray.plane.x = 0;
+		data->ray.plane.y = -0.66;
+	}
+	if (c == 'N')
+	{
+		data->ray.dir.x = -1;
+		data->ray.dir.y = 0;
+		data->ray.plane.x = 0;
+		data->ray.plane.y = 0.66;
+	}
+}
+void	set_dir(t_data *data, char c)
+{
+	if (c == 'W')
+	{
+		data->ray.dir.x = 0;
+		data->ray.dir.y = -1;
+		data->ray.plane.x = -0.66;
+		data->ray.plane.y = 0;
+	}
+	if (c == 'E')
+	{
+		data->ray.dir.x = 0;
+		data->ray.dir.y = 1;
+		data->ray.plane.x = 0.66;
+		data->ray.plane.y = 0;
+	}
+	else
+		(set_dir2(data, c));
+}
 void	parse_map(t_data *data, int y)
 {	
 	int x;
@@ -71,6 +107,8 @@ void	parse_map(t_data *data, int y)
 					data->player.map_y = y;
 					data->player.pos_x = data->player.map_x * MINITILES;
 					data->player.pos_y = data->player.map_y * MINITILES - (data->player.start_map * MINITILES);
+					set_dir(data, data->map[y][x]);
+					data->map[y][x] = '0';
 					x++;
 				}
 				else

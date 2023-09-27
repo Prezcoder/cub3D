@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/27 13:32:44 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:38:04 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # define MINITILES 8
 # define DEGRE M_PI / 180.0
 # define MOVESPEED 5
-# define MOVE_SPEED 0.00003
-# define ROTATE_SPEED 0.000015
+# define MOVE_SPEED 0.00007
+# define ROTATE_SPEED 0.000040
 
 ////////////----------error message
 # define ERRARGC "Usage : ./cub3D <map.cub>\n"
