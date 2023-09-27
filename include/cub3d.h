@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/27 14:38:04 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/27 16:41:21 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define WINWIDTH 1024
 # define WINHEIGHT 768
 # define MINITILES 8
+# define TEXTSIZE 
 # define DEGRE M_PI / 180.0
 # define MOVESPEED 5
 # define MOVE_SPEED 0.00007
@@ -88,6 +89,7 @@ typedef struct s_param
 	char			*south;
 	char			*east;
 	char			*west;
+	uint32_t		wall;
 	uint32_t		ceil;
 	uint32_t		floor;
 	int				flgfloor;
@@ -100,6 +102,7 @@ typedef struct s_image
 	
 	mlx_image_t		*window;
 	mlx_image_t		*minimap;
+	mlx_image_t		*test;
 }			t_image;
 
 typedef struct s_texture

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/27 10:05:08 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/27 17:19:26 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 
 	data = param;
 	int playerRadius = 5;
-    float moveSpeed = 4.0; // Adjust the movement speed as needed
+    float moveSpeed = 5; // Adjust the movement speed as needed
 
     if (mlx_is_key_down(data->mlx, MLX_KEY_W))
     {
@@ -130,14 +130,14 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 
 	if(mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 	{
-		data->angle += 6.5;
+		data->angle += 10;
 		if(data->angle >= 360)
 			data->angle -= 360;
 		// ft_printf("(RIGHT)");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 	{
-		data->angle -= 6.5;
+		data->angle -= 10;
 		if(data->angle <= 0)
 			data->angle += 360;
 		// ft_printf("(LEFT)");
@@ -163,7 +163,7 @@ void draw_line_from_angle_stop_on_collision2(t_data *data, mlx_image_t *image, i
 	(void)color;
 
 	angleRad = playerAngle * DEGRE;
-	lineLength = 12;
+	lineLength = 15;
 	lineEndX = playerX + (int)(lineLength * cos(angleRad));
 	lineEndY = playerY + (int)(lineLength * sin(angleRad));
 	lineEndRadius = 15;
@@ -282,6 +282,29 @@ void	draw_minimap(mlx_image_t *image, char **map)
 		pix_y++;
 	}
 }
+void	texture_test(t_data *data)
+{
+	uint32_t x = 0;
+	uint32_t y = 0;
+	uint32_t i = 0;
+
+
+	
+	
+	while(y < data->texture.nord->height / 2)
+	{
+		x = 0;
+		while(x < data->texture.nord->width / 2)
+		{
+			mlx_put_pixel(data->image.test, x, y, ft_color(data->texture.nord->pixels[i], data->texture.nord->pixels[i + 1], data->texture.nord->pixels[i + 2], data->texture.nord->pixels[i + 3]));
+			i += 8;
+			x++;
+		}
+		i += data->texture.nord->width * 4;
+		y++;
+	}
+	
+}
 
 void	render(void *param)
 {
@@ -290,14 +313,15 @@ void	render(void *param)
 	t_data *data;
 	data = param;
 	(void) data;
-	int playerRadius = 5;
-
-	draw_minimap(data->image.minimap, data->map);
-	draw_filled_circle(data->image.minimap, data->player.pos_x, data->player.pos_y, playerRadius, 0x0000FFFF);
-	draw_raycast_on_minimap(data, data->image.minimap, data->player.pos_x, data->player.pos_y);
+	// int playerRadius = 5;
+	// draw_minimap(data->image.minimap, data->map);
+	// draw_filled_circle(data->image.minimap, data->player.pos_x, data->player.pos_y, playerRadius, 0x0000FFFF);
+	// draw_raycast_on_minimap(data, data->image.minimap, data->player.pos_x, data->player.pos_y);
 	// dda_algorithm(data, data->player.pos_x, data->player.pos_y, data->image.minimap);
 	// printf("%f\n", data->angle);
+	texture_test(data);
 }
+
 
 int main(int argc, char **argv)
 {
@@ -318,19 +342,24 @@ int main(int argc, char **argv)
 	map_temp = ft_tabdup(&(data.map[data.player.start_map]));
 	ft_freeall(data.map);
 	data.map = map_temp;
-	data.angle = 270;
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	mlx_image_to_window(data.mlx, data.image.window, 0, 0);
 	// data.image.minimap = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	// mlx_image_to_window(data.mlx, data.image.minimap, 0, 0);
 	// mlx_key_hook(data.mlx, &key_hook, &data);
-	// mlx_loop_hook(data.mlx, &render, &data);
-	init_game(&data);
-	mlx_loop_hook(data.mlx, &loop, &data);
+	//-------------------------------------
+	data.image.test = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
+	data.texture.nord = mlx_load_png(data.param.north);
+	mlx_image_to_window(data.mlx, data.image.test, 0, 0);
+	
+	mlx_loop_hook(data.mlx, &render, &data);
+	//*----------------------------
+	// init_game(&data);
+	// mlx_loop_hook(data.mlx, &loop, &data);
 	mlx_loop(data.mlx);
-	// mlx_delete_image(data.mlx, data.image.east);
-	// mlx_delete_texture(data.texture.east);
-	mlx_terminate(data.mlx);
-	ft_freeall(data.map);
+	// // mlx_delete_image(data.mlx, data.image.east);
+	// // mlx_delete_texture(data.texture.east);
+	// mlx_terminate(data.mlx);
+	// ft_freeall(data.map);
 }

@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/27 14:21:16 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:34:50 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	dda(t_data *data)
 			// 	data->ray.coord.x -= 0.01;
 			// else
 			// 	data->ray.coord.x += 0.01;
-
 			data->ray.side = 0;
 		}
 		else
@@ -136,7 +135,7 @@ void	draw_vertline(t_data *data, int x)
 	while((int)y < data->ray.draw_start)
 		mlx_put_pixel(data->image.window, x, y++, data->param.ceil); //ceiling color (Black)ft_color(48,127,207,255
 	while((int)y < data->ray.draw_end)
-		mlx_put_pixel(data->image.window, x, y++, ft_color(71,24,10,255)); // red
+		mlx_put_pixel(data->image.window, x, y++, data->param.wall); // red
 	while((int)y < WINHEIGHT)
 		mlx_put_pixel(data->image.window, x, y++, data->param.floor); //floor color (white)ft_color(30,30,30,255)
 }
@@ -201,7 +200,21 @@ void	key_binding(t_data *data)
 		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, ROTATE_SPEED);
 		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, ROTATE_SPEED);
 	}
+	// printf("X %f\n", data->ray.dir.x);
+	// printf("Y %f\n", data->ray.dir.y);
 }
+void	wall_color(t_data *data)
+{
+	if(data->ray.side == 1 && data->ray.ray_dir.y > 0)
+		data->param.wall = ft_color(127, 255, 255, 255);
+	if(data->ray.side == 1 && data->ray.ray_dir.y < 0)
+		data->param.wall = ft_color(255, 127, 255, 255);
+	if(data->ray.side == 0 && data->ray.ray_dir.x > 0)
+		data->param.wall = ft_color(255, 255, 127, 255);
+	if(data->ray.side == 0 && data->ray.ray_dir.x < 0)
+		data->param.wall = ft_color(127, 127, 255, 255);
+}
+
 void	loop(void *param)
 {
 	t_data		*data;
@@ -216,121 +229,9 @@ void	loop(void *param)
 		set_side_dist(data);
 		dda(data);
 		set_draw_range(data);
+		wall_color(data);
 		draw_vertline(data, x);
 		key_binding(data);
 	}
 }
-// void	raycast(t_data *data)
-// {
-// 	double posX = 22, posY = 12;  // x and y start position
-// 	double dirX = -1, dirY = 0; // initial direction vector
-// 	double planeX = 0, planeY = 0.66; // the 2d raycaster version of camera plane
 
-// 	double time = 0; // time of current frame
-// 	double oldTime = 0; // time of previous frame
-
-//     screen(WINWIDTH, WINHEIGHT, 0, "Raycaster");
-//     while (1)
-// 	{
-//         for (int x = 0; x < WINWIDTH; x++) {
-//             double cameraX = 2 * x / (double)WINWIDTH - 1; // x-coordinate in camera space
-//             double rayDirX = dirX + planeX * cameraX;
-//             double rayDirY = dirY + planeY * cameraX;
-//             int mapX = (int)posX;
-//             int mapY = (int)posY;
-
-//             double sideDistX;
-//             double sideDistY;
-//             double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
-//             double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
-
-//             double perpWallDist;
-
-//             int stepX;
-//             int stepY;
-
-//             int hit = 0; // was there a wall hit?
-//             int side; // was a NS or an EW wall hit?
-//             if (rayDirX < 0) {
-//                 stepX = -1;
-//                 sideDistX = (posX - mapX) * deltaDistX;
-//             } else {
-//                 stepX = 1;
-//                 sideDistX = (mapX + 1.0 - posX) * deltaDistX;
-//             }
-//             if (rayDirY < 0) {
-//                 stepY = -1;
-//                 sideDistY = (posY - mapY) * deltaDistY;
-//             } else {
-//                 stepY = 1;
-//                 sideDistY = (mapY + 1.0 - posY) * deltaDistY;
-//             }
-//             // perform DDA
-//             while (hit == 0) {
-//                 if (sideDistX < sideDistY) {
-//                     sideDistX += deltaDistX;
-//                     mapX += stepX;
-//                     side = 0;
-//                 } else {
-//                     sideDistY += deltaDistY;
-//                     mapY += stepY;
-//                     side = 1;
-//                 }
-//                 if (data->map[mapX][mapY] > 0) hit = 1;
-//             }
-
-//             if (side == 0) perpWallDist = (sideDistX - deltaDistX);
-//             else perpWallDist = (sideDistY - deltaDistY);
-
-//             int lineHeight = (int)(WINHEIGHT / perpWallDist);
-
-//             int drawStart = -lineHeight / 2 + WINHEIGHT / 2;
-//             if (drawStart < 0) drawStart = 0;
-//             int drawEnd = lineHeight / 2 + WINHEIGHT / 2;
-//             if (drawEnd >= WINHEIGHT) drawEnd = WINHEIGHT - 1;
-
-//             ColorRGB color;
-//             switch (data->map[mapX][mapY]) {
-//                 case 1:  color = RGB_Red;    break; // red
-//                 case 2:  color = RGB_Green;  break; // green
-//                 case 3:  color = RGB_Blue;   break; // blue
-//                 case 4:  color = RGB_White;  break; // white
-//                 default: color = RGB_Yellow; break; // yellow
-//             }
-//             if (side == 1) { color = color / 2; }
-//             verLine(x, drawStart, drawEnd, color);
-//         }
-//         oldTime = time;
-//         time = getTicks();
-//         double frameTime = (time - oldTime) / 1000.0; // frameTime is the time this frame has taken, in seconds
-
-//         double moveSpeed = frameTime * 5.0; // the constant value is in squares/second
-//         double rotSpeed = frameTime * 3.0; // the constant value is in radians/second
-//         readKeys();
-//         if (keyDown(SDLK_UP)) {
-//             if (data->map[(int)(posX + dirX * moveSpeed)][(int)posY] == 0) posX += dirX * moveSpeed;
-//             if (data->map[(int)posX][(int)(posY + dirY * moveSpeed)] == 0) posY += dirY * moveSpeed;
-//         }
-//         if (keyDown(SDLK_DOWN)) {
-//             if (data->map[(int)(posX - dirX * moveSpeed)][(int)posY] == 0) posX -= dirX * moveSpeed;
-//             if (data->map[(int)posX][(int)(posY - dirY * moveSpeed)] == 0) posY -= dirY * moveSpeed;
-//         }
-//         if (keyDown(SDLK_RIGHT)) {
-//             double oldDirX = dirX;
-//             dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
-//             dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
-//             double oldPlaneX = planeX;
-//             planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
-//             planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
-//         }
-//         if (keyDown(SDLK_LEFT)) {
-//             double oldDirX = dirX;
-//             dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
-//             dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
-//             double oldPlaneX = planeX;
-//             planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
-//             planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
-//         }
-//     }
-//     return 0;
-// }

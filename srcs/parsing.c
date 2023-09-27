@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:41:56 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/27 14:43:56 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:20:33 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	set_dir2(t_data *data, char c)
 		data->ray.dir.y = 0;
 		data->ray.plane.x = 0;
 		data->ray.plane.y = -0.66;
+		data->angle = 90;
 	}
 	if (c == 'N')
 	{
@@ -67,6 +68,7 @@ void	set_dir2(t_data *data, char c)
 		data->ray.dir.y = 0;
 		data->ray.plane.x = 0;
 		data->ray.plane.y = 0.66;
+		data->angle = 270;
 	}
 }
 void	set_dir(t_data *data, char c)
@@ -77,6 +79,7 @@ void	set_dir(t_data *data, char c)
 		data->ray.dir.y = -1;
 		data->ray.plane.x = -0.66;
 		data->ray.plane.y = 0;
+		data->angle = 180;
 	}
 	if (c == 'E')
 	{
@@ -84,6 +87,8 @@ void	set_dir(t_data *data, char c)
 		data->ray.dir.y = 1;
 		data->ray.plane.x = 0.66;
 		data->ray.plane.y = 0;
+		data->angle = 0;
+
 	}
 	else
 		(set_dir2(data, c));
