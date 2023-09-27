@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:41:56 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/25 11:28:37 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/27 10:54:48 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,13 +130,19 @@ void	parsing(t_data *data)
 			}
 			else if (ft_strncmp(&data->map[y][x], "F ", 2) == 0)
 			{
-				color_decoder(&data->map[y][x + 2], &data->param.floor);
+				if (color_decoder(&data->map[y][x + 2], &data->param.floor) == -1)
+					exit(-1);
 				data->param.flgfloor = 1;
+				x = -1;
+				y++;
 			}
 			else if (ft_strncmp(&data->map[y][x], "C ", 2) == 0)
 			{
-				color_decoder(&data->map[y][x + 2], &data->param.ceil);
+				if (color_decoder(&data->map[y][x + 2], &data->param.ceil) == -1)
+					exit(-1);
 				data->param.flgceil = 1;
+				x = -1;
+				y++;
 			}
 			else if (data->map[y][x] == '1' && ((!data->param.north) || (!data->param.south) || (!data->param.west) || (!data->param.east) || (data->param.flgceil == 0) || (data->param.flgfloor == 0)))
 			{

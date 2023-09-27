@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/27 10:13:55 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/27 13:42:32 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	init_game(t_data *data)
 {
-	data->ray.pos.x = 4;
-	data->ray.pos.y = 17;
+	data->ray.pos.x = (double)data->player.pos_y / MINITILES;
+	data->ray.pos.y = (double)data->player.pos_x / MINITILES;
 
 	//TODO: attributes the correct orientation per the data->map (N, W, S, E)
 	// iniiral direction vector (where the player looks)
@@ -138,11 +138,11 @@ void	draw_vertline(t_data *data, int x)
 	y = 0;
 	// printf("%d", data->ray.draw_end);
 	while((int)y < data->ray.draw_start)
-		mlx_put_pixel(data->image.window, x, y++, ft_color(48,127,207,255)); //ceiling color (Black)
+		mlx_put_pixel(data->image.window, x, y++, data->param.ceil); //ceiling color (Black)ft_color(48,127,207,255
 	while((int)y < data->ray.draw_end)
 		mlx_put_pixel(data->image.window, x, y++, ft_color(71,24,10,255)); // red
 	while((int)y < WINHEIGHT)
-		mlx_put_pixel(data->image.window, x, y++, ft_color(30,30,30,255)); //floor color (white)
+		mlx_put_pixel(data->image.window, x, y++, data->param.floor); //floor color (white)ft_color(30,30,30,255)
 }
 
 void	rotate_vector(double *x, double *y, double angle) 
@@ -156,21 +156,27 @@ void	rotate_vector(double *x, double *y, double angle)
 
 void	move_player(t_data *data, double move_speed) 
 {
+	double checkRadius = 0.2;
     // Move along X direction
-    if(data->map[(int)(data->ray.pos.x + data->ray.dir.x * move_speed)][(int)data->ray.pos.y] == '0')
+	if (move_speed < 0)
+		checkRadius = -0.2;
+    if(data->map[(int)(data->ray.pos.x + data->ray.dir.x * (move_speed + checkRadius))][(int)data->ray.pos.y] == '0')
         data->ray.pos.x += data->ray.dir.x * move_speed;
     
     // Move along Y direction
-    if(data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y + data->ray.dir.y * move_speed)] == '0')
+    if(data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y + data->ray.dir.y * (move_speed + checkRadius))] == '0')
         data->ray.pos.y += data->ray.dir.y * move_speed;
 }
 
 void strafe_player(t_data *data, double strafe_speed) 
 {
-    if(data->map[(int)(data->ray.pos.x + data->ray.dir.y * strafe_speed)][(int)data->ray.pos.y] == '0')
+	double checkRadius = 0.2;
+	if (strafe_speed < 0)
+		checkRadius = -0.2;
+    if(data->map[(int)(data->ray.pos.x + data->ray.dir.y * (strafe_speed + checkRadius))][(int)data->ray.pos.y] == '0')
         data->ray.pos.x += data->ray.dir.y * strafe_speed;
     
-    if(data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y - data->ray.dir.x * strafe_speed)] == '0')
+    if(data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y - data->ray.dir.x * (strafe_speed + checkRadius))] == '0')
         data->ray.pos.y -= data->ray.dir.x * strafe_speed;
 }
 
