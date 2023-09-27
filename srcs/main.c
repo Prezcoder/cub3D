@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/26 14:58:02 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/27 09:57:36 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,14 +130,14 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 
 	if(mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 	{
-		data->angle += 2.5;
+		data->angle += 6.5;
 		if(data->angle >= 360)
 			data->angle -= 360;
 		// ft_printf("(RIGHT)");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 	{
-		data->angle -= 2.5;
+		data->angle -= 6.5;
 		if(data->angle <= 0)
 			data->angle += 360;
 		// ft_printf("(LEFT)");
@@ -163,7 +163,7 @@ void draw_line_from_angle_stop_on_collision2(t_data *data, mlx_image_t *image, i
 	(void)color;
 
 	angleRad = playerAngle * DEGRE;
-	lineLength = 1000;
+	lineLength = 12;
 	lineEndX = playerX + (int)(lineLength * cos(angleRad));
 	lineEndY = playerY + (int)(lineLength * sin(angleRad));
 	lineEndRadius = 15;
@@ -265,7 +265,7 @@ void draw_filled_circle(mlx_image_t *image, int centerX, int centerY, int radius
 void	draw_minimap(mlx_image_t *image, char **map)
 {
 	int pix_x;
-	int pix_y = 0;
+	int pix_y;
 	
 	pix_y = 0;
 	while(map[pix_y / MINITILES] && pix_y < WINHEIGHT)
@@ -290,7 +290,7 @@ void	render(void *param)
 	t_data *data;
 	data = param;
 	(void) data;
-	int playerRadius = 10;
+	int playerRadius = 5;
 
 	draw_minimap(data->image.minimap, data->map);
 	draw_filled_circle(data->image.minimap, data->player.pos_x, data->player.pos_y, playerRadius, 0x0000FFFF);
@@ -300,7 +300,8 @@ void	render(void *param)
 }
 
 int main(int argc, char **argv)
-{	t_data data;
+{
+	t_data data;
 
 	char **map_temp;
 	if (argc != 2)
@@ -317,15 +318,15 @@ int main(int argc, char **argv)
 	map_temp = ft_tabdup(&data.map[data.player.start_map]);
 	ft_freeall(data.map);
 	data.map = map_temp;
-	// data.angle = 180;
+	data.angle = 270;
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
-	// data.image.minimap = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
-	// mlx_image_to_window(data.mlx, data.image.minimap, 0, 0);
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	mlx_image_to_window(data.mlx, data.image.window, 0, 0);
-	// mlx_image_to_window(data.mlx, data.image.miniplayer, 0, 0);
+	// data.image.minimap = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
+	// mlx_image_to_window(data.mlx, data.image.minimap, 0, 0);
 	// mlx_key_hook(data.mlx, &key_hook, &data);
 	// mlx_loop_hook(data.mlx, &render, &data);
+	init_game(&data);
 	mlx_loop_hook(data.mlx, &loop, &data);
 	mlx_loop(data.mlx);
 	// mlx_delete_image(data.mlx, data.image.east);

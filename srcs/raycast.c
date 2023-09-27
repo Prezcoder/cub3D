@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/26 15:13:38 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/27 09:21:41 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	init_game(t_data *data)
 {
 	data->ray.pos.x = 4;
-	data->ray.pos.y = 18;
+	data->ray.pos.y = 17;
 
 	//TODO: attributes the correct orientation per the data->map (N, W, S, E)
 	// iniiral direction vector (where the player looks)
@@ -106,13 +106,14 @@ void	dda(t_data *data)
 
 			data->ray.side = 1;
 		}
-		if(data->map[(int)data->ray.coord.x][(int)data->ray.coord.y])
+		if(data->map[(int)data->ray.coord.x][(int)data->ray.coord.y] == '1')
 			break;
+
 	}
 	if(data->ray.side == 0)
-		data->ray.perp_wall_dist = (data->ray.side_dist.x - data->ray.delta_dist.x);
+			data->ray.perp_wall_dist = (data->ray.side_dist.x - data->ray.delta_dist.x);
 	else
-		data->ray.perp_wall_dist = (data->ray.side_dist.y - data->ray.delta_dist.y);
+			data->ray.perp_wall_dist = (data->ray.side_dist.y - data->ray.delta_dist.y);
 }
 
 void	set_draw_range(t_data *data)
@@ -131,13 +132,13 @@ void	draw_vertline(t_data *data, u_int32_t x)
 	u_int32_t	y;
 	
 	y = 0;
-	printf("%d", data->ray.draw_end);
+	// printf("%d", data->ray.draw_end);
 	while((int)y < data->ray.draw_start)
-		mlx_put_pixel(data->image.window, x, y++, ft_color(0,0,0,255)); //ceiling color (Black)
+		mlx_put_pixel(data->image.window, x, y++, ft_color(48,127,207,255)); //ceiling color (Black)
 	while((int)y < data->ray.draw_end)
-		mlx_put_pixel(data->image.window, x, y++, ft_color(255,0,0,255)); // red
+		mlx_put_pixel(data->image.window, x, y++, ft_color(71,24,10,255)); // red
 	while((int)y < WINHEIGHT)
-		mlx_put_pixel(data->image.window, x, y++, ft_color(255,255,0,255)); //floor color (white)
+		mlx_put_pixel(data->image.window, x, y++, ft_color(30,30,30,255)); //floor color (white)
 }
 
 void	rotate_vector(double *x, double *y, double angle) 
@@ -152,20 +153,20 @@ void	rotate_vector(double *x, double *y, double angle)
 void	move_player(t_data *data, double move_speed) 
 {
     // Move along X direction
-    if(data->map[(int)(data->ray.pos.x + data->ray.dir.x * move_speed)][(int)data->ray.pos.y] == 0)
+    if(data->map[(int)(data->ray.pos.x + data->ray.dir.x * move_speed)][(int)data->ray.pos.y] == '0')
         data->ray.pos.x += data->ray.dir.x * move_speed;
     
     // Move along Y direction
-    if(data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y + data->ray.dir.y * move_speed)] == 0)
+    if(data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y + data->ray.dir.y * move_speed)] == '0')
         data->ray.pos.y += data->ray.dir.y * move_speed;
 }
 
 void strafe_player(t_data *data, double strafe_speed) 
 {
-    if(data->map[(int)(data->ray.pos.x + data->ray.dir.y * strafe_speed)][(int)data->ray.pos.y] == 0)
+    if(data->map[(int)(data->ray.pos.x + data->ray.dir.y * strafe_speed)][(int)data->ray.pos.y] == '0')
         data->ray.pos.x += data->ray.dir.y * strafe_speed;
     
-    if(data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y - data->ray.dir.x * strafe_speed)] == 0)
+    if(data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y - data->ray.dir.x * strafe_speed)] == '0')
         data->ray.pos.y -= data->ray.dir.x * strafe_speed;
 }
 

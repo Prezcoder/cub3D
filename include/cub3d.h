@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/26 15:05:14 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/27 09:39:59 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 //----------define
 # define WINWIDTH 1024
 # define WINHEIGHT 768
-# define MINITILES 32
+# define MINITILES 8
 # define DEGRE M_PI / 180.0
-# define MOVESPEED 0.5
+# define MOVESPEED 5
 # define MOVE_SPEED 0.00003
 # define ROTATE_SPEED 0.000015
 
@@ -139,5 +139,6 @@ uint32_t	ft_color(int32_t r, int32_t g, int32_t b, int32_t a);
 
 void		ft_hook(void *param);
 void		loop(void *param);
+void		init_game(t_data *data);
 
 #endif
