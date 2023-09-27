@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:41:56 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/27 10:54:48 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:35:54 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,11 @@ void	parse_map(t_data *data, int y)
 		while(data->map[y][x])
 		{
 			if(data->map[y][x] == '1' || data->map[y][x] == '0' || data->map[y][x] == ' ')
+			{
+				if (data->map[y][x] == ' ')
+					data->map[y][x] = '0';
 				x++;
+			}
 			else if (data->map[y][x] == 'N' || data->map[y][x] == 'S' || data->map[y][x] == 'W' || data->map[y][x] == 'E')
 			{
 				if(data->player.map_y == -1)
@@ -71,6 +75,7 @@ void	parse_map(t_data *data, int y)
 					data->player.map_y = y;
 					data->player.pos_x = data->player.map_x * MINITILES;
 					data->player.pos_y = data->player.map_y * MINITILES - (data->player.start_map * MINITILES);
+					data->map[y][x] = '0';
 					x++;
 				}
 				else
