@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/27 10:07:54 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/09/27 10:13:55 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_game(t_data *data)
 	data->ray.dir.x = -1;
 	data->ray.dir.y = 0;
 	// cam plane
-	data->ray.plane.y = -0.66;
+	data->ray.plane.y = 0.66;
 	data->ray.plane.x = 0;
 
 	data->ray.cam_x = 0;
