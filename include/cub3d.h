@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/28 13:05:12 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/28 16:21:11 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ typedef struct s_data
 	t_ray			ray;
 	double			angle;
 	char			**map;
-	
+	int				testflag;
 }			t_data;
 
 int			errhandler(char *msg);
