@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/28 12:20:35 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:18:18 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,35 +219,33 @@ void	key_binding(t_data *data)
 }
 void	mouse_tracking(t_data *data)
 {
-	int32_t y = WINHEIGHT / 2;
-	int32_t x = WINWIDTH / 2;
-	u_int32_t speed = 700;
+	int32_t y = 0;
+	int32_t x = 0;
 	
 	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
 	mlx_get_mouse_pos(data->mlx, &x, &y);
-	if(y < WINHEIGHT / 2)
-	{
-		if(data->ray.cam_angle < 1)
-			data->ray.cam_angle += 0.009;
-	}
-	if(y > WINHEIGHT / 2)
-	{
-		if(data->ray.cam_angle > 0)
-			data->ray.cam_angle -= 0.009;
-	}
+	
+	// if(y < WINHEIGHT / 2)
+	// {
+	// 	if(data->ray.cam_angle < 1)
+	// 		data->ray.cam_angle += 0.009;
+	// }
+	// if(y > WINHEIGHT / 2)
+	// {
+	// 	if(data->ray.cam_angle > 0)
+	// 		data->ray.cam_angle -= 0.009;
+	// }
 	if(x < WINWIDTH / 2)
 	{
-		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, ROTATE_SPEED * speed);
-		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, ROTATE_SPEED * speed);
+		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, ROTATE_SPEED * MOUSE_SPEED);
+		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, ROTATE_SPEED * MOUSE_SPEED);
 	}
 	if(x > WINWIDTH / 2)
 	{
-		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, -ROTATE_SPEED * speed);
-		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, -ROTATE_SPEED * speed);
+		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, -ROTATE_SPEED * MOUSE_SPEED);
+		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, -ROTATE_SPEED * MOUSE_SPEED);
 	}
-	
-	// printf("A : %f", data->ray.cam_angle);
-	if(y < WINHEIGHT / 2 || y > WINHEIGHT / 2 || x < WINWIDTH / 2 || x > WINWIDTH / 2)
+	if(y < WINHEIGHT / 2|| y > WINHEIGHT / 2 || x < WINWIDTH / 2|| x > WINWIDTH / 2)
 		mlx_set_mouse_pos(data->mlx, WINWIDTH / 2, WINHEIGHT / 2);
 }
 

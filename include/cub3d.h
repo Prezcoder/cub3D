@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/28 12:12:31 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:05:12 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define MOVESPEED 5
 # define MOVE_SPEED 0.00007
 # define ROTATE_SPEED 0.000040
+# define MOUSE_SPEED 700
 
 ////////////----------error message
 # define ERRARGC "Usage : ./cub3D <map.cub>\n"
