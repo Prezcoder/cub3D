@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/27 17:19:26 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/28 12:15:36 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,23 +343,22 @@ int main(int argc, char **argv)
 	ft_freeall(data.map);
 	data.map = map_temp;
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
+	// mlx_set_cursor_mode(data.mlx, MLX_MOUSE_HIDDEN);
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	mlx_image_to_window(data.mlx, data.image.window, 0, 0);
 	// data.image.minimap = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	// mlx_image_to_window(data.mlx, data.image.minimap, 0, 0);
 	// mlx_key_hook(data.mlx, &key_hook, &data);
 	//-------------------------------------
-	data.image.test = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
-	data.texture.nord = mlx_load_png(data.param.north);
-	mlx_image_to_window(data.mlx, data.image.test, 0, 0);
+	// data.image.test = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
+	// data.texture.nord = mlx_load_png(data.param.north);
+	// mlx_image_to_window(data.mlx, data.image.test, 0, 0);
 	
-	mlx_loop_hook(data.mlx, &render, &data);
+	// mlx_loop_hook(data.mlx, &render, &data);
 	//*----------------------------
-	// init_game(&data);
-	// mlx_loop_hook(data.mlx, &loop, &data);
+	init_game(&data);
+	mlx_loop_hook(data.mlx, &loop, &data);
 	mlx_loop(data.mlx);
-	// // mlx_delete_image(data.mlx, data.image.east);
-	// // mlx_delete_texture(data.texture.east);
-	// mlx_terminate(data.mlx);
-	// ft_freeall(data.map);
+	mlx_terminate(data.mlx);
+	ft_freeall(data.map);
 }

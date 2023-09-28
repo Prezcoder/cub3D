@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/27 16:41:21 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/28 12:12:31 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ typedef struct s_ray {
 	int				line_height;
 	int				draw_start;
 	int				draw_end;
+	double			cam_angle;
+	int32_t			mouse_x;
+	int32_t			mouse_y;
 }	t_ray;
 
 typedef struct s_param
