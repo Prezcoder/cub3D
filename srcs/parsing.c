@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emman <emman@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:41:56 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/27 15:20:33 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/09/28 21:15:18 by emman            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,11 +145,9 @@ void	parsing(t_data *data)
 {
 	int	x;
 	int	y;
-	int start;
 
 	x = 0;
 	y = 0;
-	start = 0;
 	while (data->map[y])
 	{
 		x = 0;
