@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/28 16:27:10 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/02 11:38:38 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,16 +291,16 @@ void	texture_test(t_data *data)
 
 	
 	
-	while(y < data->texture.nord->height / 2)
+	while(y < data->texture.north_tex->height / 2)
 	{
 		x = 0;
-		while(x < data->texture.nord->width / 2)
+		while(x < data->texture.north_tex->width / 2)
 		{
-			mlx_put_pixel(data->image.test, x, y, ft_color(data->texture.nord->pixels[i], data->texture.nord->pixels[i + 1], data->texture.nord->pixels[i + 2], data->texture.nord->pixels[i + 3]));
+			mlx_put_pixel(data->image.test, x, y, ft_color(data->texture.north_tex->pixels[i], data->texture.north_tex->pixels[i + 1], data->texture.north_tex->pixels[i + 2], data->texture.north_tex->pixels[i + 3]));
 			i += 8;
 			x++;
 		}
-		i += data->texture.nord->width * 4;
+		i += data->texture.north_tex->width * 4;
 		y++;
 	}
 	
@@ -335,6 +335,37 @@ void	mouse_init(t_data *data)
 
 }
 
+uint32_t    **texture_to_wall(mlx_texture_t *texture)
+{
+    uint32_t x = 0;
+    uint32_t y = 0;
+    uint32_t i = 0;
+    uint32_t **ar;
+    ar = ft_calloc(texture->height + 1, sizeof(uint32_t *));
+    while(y < texture->height)
+    {
+        ar[y] = ft_calloc(texture->width, sizeof(uint32_t));
+        y++;
+    }
+    y = 0;
+    while(y < texture->height - 1)
+    {
+        x = 0;
+        while(x < texture->width)
+        {
+            ar[y][x] = ft_color((uint32_t)texture->pixels[i],
+            (uint32_t)texture->pixels[i + 1],
+            (uint32_t)texture->pixels[i + 2],
+            (uint32_t)texture->pixels[i + 3]);
+            i += 4;
+            x++;
+        }
+        y++;
+    }
+    return (ar);
+}
+
+
 int main(int argc, char **argv)
 {
 	t_data data;
@@ -359,12 +390,20 @@ int main(int argc, char **argv)
 
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	mlx_image_to_window(data.mlx, data.image.window, 0, 0);
+	data.texture.north_tex = mlx_load_png(data.param.north);
+	data.texture.south_tex = mlx_load_png(data.param.south);
+	data.texture.east_tex = mlx_load_png(data.param.east);
+	data.texture.west_tex = mlx_load_png(data.param.west);
+	data.texture.north = texture_to_wall(data.texture.north_tex);
+	data.texture.south = texture_to_wall(data.texture.south_tex);
+	data.texture.east = texture_to_wall(data.texture.east_tex);
+	data.texture.west = texture_to_wall(data.texture.west_tex);
 	// data.image.minimap = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	// mlx_image_to_window(data.mlx, data.image.minimap, 0, 0);
 	// mlx_key_hook(data.mlx, &key_hook, &data);
 	//-------------------------------------
 	// data.image.test = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
-	// data.texture.nord = mlx_load_png(data.param.north);
+	// data.texture.north = mlx_load_png(data.param.north);
 	// mlx_image_to_window(data.mlx, data.image.test, 0, 0);
 	
 	// mlx_loop_hook(data.mlx, &render, &data);

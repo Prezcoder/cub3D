@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/09/28 16:21:11 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/02 12:18:58 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ typedef	struct s_vect
 	double 			y;
 }	t_vect;
 
-typedef struct s_ray {
+typedef struct s_ray 
+{
+	int				tex_x;
+	int				line;
 	t_vect			pos;
 	t_vect			dir;
 	t_vect			plane;
@@ -111,12 +114,18 @@ typedef struct s_image
 
 typedef struct s_texture
 {
-	mlx_texture_t	*nord;
-	mlx_texture_t	*south;
-	mlx_texture_t	*east;
-	mlx_texture_t	*west;
-	mlx_texture_t	*ceil;
-	mlx_texture_t	*floor;
+	uint32_t		**north;
+	uint32_t		**south;
+	uint32_t		**east;
+	uint32_t		**west;
+	uint32_t		**ceil;
+	uint32_t		**floor;
+	mlx_texture_t	*north_tex;
+	mlx_texture_t	*south_tex;
+	mlx_texture_t	*east_tex;
+	mlx_texture_t	*west_tex;
+	mlx_texture_t	*ceil_tex;
+	mlx_texture_t	*floor_tex;
 }			t_texture;
 
 
