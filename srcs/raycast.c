@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/28 16:25:29 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:57:04 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	init_game(t_data *data)
 {
-	data->ray.pos.x = (double)data->player.pos_y / MINITILES;
-	data->ray.pos.y = (double)data->player.pos_x / MINITILES;
+	data->ray.pos.x = (double)data->player.pos_y / MINITILES + (0.5);
+	data->ray.pos.y = (double)data->player.pos_x / MINITILES + (0.5);
 	//TODO: attributes the correct orientation per the data->map (N, W, S, E)
 	// iniiral direction vector (where the player looks)
 	// cam plane
@@ -117,7 +117,7 @@ void	dda(t_data *data)
 
 void	set_draw_range(t_data *data)
 {
-	data->ray.line_height = (int)((WINHEIGHT * 125) / data->ray.perp_wall_dist); //add to add multiply HEIGHT by 125 to smooth mvt
+	data->ray.line_height = (int)((WINHEIGHT * 110) / data->ray.perp_wall_dist); //add to add multiply HEIGHT by 125 to smooth mvt (110 more squared)
 	data->ray.draw_start = -data->ray.line_height * 0.5 + WINHEIGHT * data->ray.cam_angle;
 	if (data->ray.draw_start < 0)
 		data->ray.draw_start = 0;
@@ -138,116 +138,6 @@ void	draw_vertline(t_data *data, int x)
 		mlx_put_pixel(data->image.window, x, y++, data->param.wall); // red
 	while((int)y < WINHEIGHT)
 		mlx_put_pixel(data->image.window, x, y++, data->param.floor); //floor color (white)ft_color(30,30,30,255)
-}
-
-void	rotate_vector(double *x, double *y, double angle) 
-{
-	double old_x ;
-
-	old_x = *x;
-	*x = old_x * cos(angle) - *y * sin(angle);
-	*y = old_x * sin(angle) + *y * cos(angle);
-}
-
-void	move_player(t_data *data, double move_speed) 
-{
-	double checkRadius = 0.5;
-    // Move along X direction
-	if (move_speed < 0)
-		checkRadius = -0.5;
-    if(data->map[(int)(data->ray.pos.x + data->ray.dir.x * (move_speed + checkRadius))][(int)data->ray.pos.y] == '0')
-        data->ray.pos.x += data->ray.dir.x * move_speed;
-    
-    // Move along Y direction
-    if(data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y + data->ray.dir.y * (move_speed + checkRadius))] == '0')
-        data->ray.pos.y += data->ray.dir.y * move_speed;
-}
-
-void strafe_player(t_data *data, double strafe_speed) 
-{
-	double checkRadius = 0.5;
-	if (strafe_speed < 0)
-		checkRadius = -0.5;
-    if(data->map[(int)(data->ray.pos.x + data->ray.dir.y * (strafe_speed + checkRadius))][(int)data->ray.pos.y] == '0')
-        data->ray.pos.x += data->ray.dir.y * strafe_speed;
-    
-    if(data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y - data->ray.dir.x * (strafe_speed + checkRadius))] == '0')
-        data->ray.pos.y -= data->ray.dir.x * strafe_speed;
-}
-
-void	key_binding(t_data *data)
-{
-	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-			mlx_close_window(data->mlx);
-
-	if (mlx_is_key_down(data->mlx, MLX_KEY_W)) 
-		move_player(data, MOVE_SPEED); // Move forward
-	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
-		move_player(data, -MOVE_SPEED); // Move backward
-
-	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
-		strafe_player(data, -MOVE_SPEED); // Strafe left
-	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
-		strafe_player(data, MOVE_SPEED); // Strafe right
-
-	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT)) 
-	{
-		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, -ROTATE_SPEED);
-		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, -ROTATE_SPEED);
-	}
-	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT)) 
-	{
-		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, ROTATE_SPEED);
-		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, ROTATE_SPEED);
-	}
-	if(mlx_is_key_down(data->mlx, MLX_KEY_UP))
-	{
-		if(data->ray.cam_angle < 1)
-			data->ray.cam_angle += 0.00002;
-		// printf("%f\n", data->ray.cam_angle);
-	}
-	if(mlx_is_key_down(data->mlx, MLX_KEY_DOWN))
-	{
-		if(data->ray.cam_angle > 0)
-			data->ray.cam_angle -= 0.00002;
-		// printf("%f\n", data->ray.cam_angle);
-
-	}
-	
-	// printf("X %f\n", data->ray.dir.x);
-	// printf("Y %f\n", data->ray.dir.y);
-}
-void	mouse_tracking(t_data *data)
-{
-	int32_t y = 0;
-	int32_t x = 0;
-	
-	mlx_get_mouse_pos(data->mlx, &x, &y);
-	
-	if(data->testflag > 4 && y < WINHEIGHT / 2)
-	{
-		if(data->ray.cam_angle < 1)
-			data->ray.cam_angle += 0.009;
-	}
-	if(data->testflag > 4 && y > WINHEIGHT / 2)
-	{
-		if(data->ray.cam_angle > 0)
-			data->ray.cam_angle -= 0.009;
-	}
-	if(data->testflag > 4 && x < WINWIDTH / 2)
-	{
-		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, ROTATE_SPEED * MOUSE_SPEED);
-		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, ROTATE_SPEED * MOUSE_SPEED);
-	}
-	if(data->testflag > 4 && x > WINWIDTH / 2)
-	{
-		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, -ROTATE_SPEED * MOUSE_SPEED);
-		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, -ROTATE_SPEED * MOUSE_SPEED);
-	}
-	if(y != WINHEIGHT / 2 || x != WINWIDTH / 2)
-		mlx_set_mouse_pos(data->mlx, WINWIDTH / 2, WINHEIGHT / 2);
-	if(data->testflag <= 4)
-		data->testflag++;
 }
 
 void	wall_color(t_data *data)

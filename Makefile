@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+         #
+#    By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 10:27:08 by emlamoth          #+#    #+#              #
-#    Updated: 2023/09/26 13:40:56 by fbouchar         ###   ########.fr        #
+#    Updated: 2023/10/02 16:10:49 by emlamoth         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ SRCS =	main.c			\
 		init.c			\
 		flood_fill.c	\
 		raycast.c		\
+		controls.c		\
+		movements.c		\
 
 SRCS_DIR = ./srcs/
 OBJS_DIR = ./srcs/objs_cub3D/
