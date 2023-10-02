@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/02 12:48:47 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/02 15:20:04 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	set_draw_range(t_data *data)
 		data->ray.draw_start = 0;
 	data->ray.draw_end = data->ray.line_height * 0.5 + WINHEIGHT * data->ray.cam_angle;
 	if (data->ray.draw_end >= WINHEIGHT)
-		data->ray.draw_end = WINHEIGHT - 1;
+		data->ray.draw_end = WINHEIGHT;
 }
 
 
@@ -254,16 +254,16 @@ void	wall_color(t_data *data)
 		data->param.wall = ft_color(127, 127, 255, 255);
 }
 
-void	calc_line(t_data *data)
-{
-	data->ray.line = WINHEIGHT / data->ray.perp_wall_dist;
-	data->ray.draw_start = -data->ray.line / 2 + WINHEIGHT / 2;
-	if (data->ray.draw_start < 0)
-		data->ray.draw_start = 0;
-	data->ray.draw_end = data->ray.line / 2 + WINHEIGHT / 2;
-	if (data->ray.draw_end >= WINHEIGHT)
-		data->ray.draw_end = WINHEIGHT;
-}
+// void	calc_line(t_data *data)
+// {
+// 	data->ray.line = WINHEIGHT / data->ray.perp_wall_dist;
+// 	data->ray.draw_start = -data->ray.line / 2 + WINHEIGHT / 2 + data->texture.north_tex->width;
+// 	if (data->ray.draw_start < 0)
+// 		data->ray.draw_start = 0;
+// 	data->ray.draw_end = data->ray.line / 2 + WINHEIGHT / 2 + data->texture.north_tex->width;
+// 	if (data->ray.draw_end >= WINHEIGHT)
+// 		data->ray.draw_end = WINHEIGHT;
+// }
 
 void	find_hit(t_data *data, mlx_texture_t *texture)
 {
@@ -275,7 +275,9 @@ void	find_hit(t_data *data, mlx_texture_t *texture)
 	else
 		hit = data->ray.pos.x + data->ray.perp_wall_dist * data->ray.ray_dir.x;
 	hit -= (int) hit;
+
 	data->ray.tex_x = (int)(hit * (double) texture->width);
+
 	if ((data->ray.side == 0 || data->ray.side == 1) && data->ray.ray_dir.x > 0)
 		data->ray.tex_x = texture->width - data->ray.tex_x - 1;
 	if ((data->ray.side == 2 || data->ray.side == 3) && data->ray.ray_dir.y < 0)
@@ -289,9 +291,9 @@ void	drawline(t_data *data, mlx_texture_t *texture, uint32_t **arr, int x)
 	int		tex_y;
 	int		j;
 
-	dist = 1.0 * texture->height / data->ray.line;
+	dist = 1.0 * texture->height / data->ray.line_height;
 	pos = ((double) data->ray.draw_start - (double) WINHEIGHT / 2
-			+ (double) data->ray.line / 2) * dist;
+			+ (double) data->ray.line_height / 2) * dist;
 	if (pos < 0)
 		pos = 0;
 	j = data->ray.draw_start - 1;
@@ -301,31 +303,32 @@ void	drawline(t_data *data, mlx_texture_t *texture, uint32_t **arr, int x)
 		if (pos > texture->height - 1)
 			pos = texture->height - 1;
 		pos += dist;
-		mlx_put_pixel(data->image.window, x, j, arr[tex_y][(int)data->ray.tex_x]);
+		printf("%d\n", data->ray.tex_x);
+		mlx_put_pixel(data->image.window, x, j, arr[tex_y][data->ray.tex_x]);
 	}
 }
 
-void	choose_texture(t_data *data, int i)
+void	choose_texture(t_data *data, int x)
 {
 	if (data->ray.side == 0)
 	{
 		find_hit(data, data->texture.east_tex);
-		drawline(data, data->texture.east_tex, data->texture.east, i);
+		drawline(data, data->texture.east_tex, data->texture.east, x);
 	}
 	else if (data->ray.side == 1)
 	{
 		find_hit(data, data->texture.west_tex);
-		drawline(data, data->texture.west_tex, data->texture.west, i);
+		drawline(data, data->texture.west_tex, data->texture.west, x);
 	}
 	else if (data->ray.side == 2)
 	{
 		find_hit(data, data->texture.south_tex);
-		drawline(data, data->texture.south_tex, data->texture.south, i);
+		drawline(data, data->texture.south_tex, data->texture.south, x);
 	}
 	else
 	{
 		find_hit(data, data->texture.north_tex);
-		drawline(data, data->texture.north_tex, data->texture.north, i);
+		drawline(data, data->texture.north_tex, data->texture.north, x);
 	}
 }
 
@@ -362,12 +365,12 @@ void	loop(void *param)
 		set_side_dist(data);
 		dda(data);
 		set_draw_range(data);
-		calc_line(data);
+		// calc_line(data);
 		// choose_texture(data, x);
 		// wall_color(data);
 		draw_vertline(data, x);
 		key_binding(data);
-		mouse_tracking(data);
+		// mouse_tracking(data);
 	}
 	usleep(3000);
 }

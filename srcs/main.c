@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/02 11:38:38 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/02 15:29:46 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,9 +287,6 @@ void	texture_test(t_data *data)
 	uint32_t x = 0;
 	uint32_t y = 0;
 	uint32_t i = 0;
-
-
-	
 	
 	while(y < data->texture.north_tex->height / 2)
 	{
