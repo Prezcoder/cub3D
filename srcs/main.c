@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/02 15:29:46 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/02 17:12:27 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,11 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 		if(data->angle <= 0)
 			data->angle += 360;
 		// ft_printf("(LEFT)");
+	}
+	if(mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+	{
+		// ft_printf("(ESCAPE)");
+		mlx_close_window(data->mlx);
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 	{
@@ -282,26 +287,54 @@ void	draw_minimap(mlx_image_t *image, char **map)
 		pix_y++;
 	}
 }
-void	texture_test(t_data *data)
+void	texture_test(t_data *data, uint32_t **ar)
 {
 	uint32_t x = 0;
 	uint32_t y = 0;
-	uint32_t i = 0;
-	
-	while(y < data->texture.north_tex->height / 2)
+
+	while(y < data->texture.north_tex->height - 1)
 	{
 		x = 0;
-		while(x < data->texture.north_tex->width / 2)
+		while(x < data->texture.north_tex->width - 1)
 		{
-			mlx_put_pixel(data->image.test, x, y, ft_color(data->texture.north_tex->pixels[i], data->texture.north_tex->pixels[i + 1], data->texture.north_tex->pixels[i + 2], data->texture.north_tex->pixels[i + 3]));
-			i += 8;
+			mlx_put_pixel(data->image.test, x, y, ar[y][x]);
 			x++;
 		}
-		i += data->texture.north_tex->width * 4;
 		y++;
 	}
 	
 }
+uint32_t	**texture_to_wall(mlx_texture_t *texture)
+{
+	uint32_t x = 0;
+	uint32_t y = 0;
+	uint32_t i = 0;
+	uint32_t **ar;
+	ar = ft_calloc(texture->height + 1, sizeof(uint32_t *));
+	while(y < texture->height)
+	{
+		ar[y] = ft_calloc(texture->width, sizeof(uint32_t));
+		y++;
+	}
+	y = 0;
+	while(y < texture->height - 1)
+	{
+		x = 0;
+		while(x < texture->width)
+		{
+			ar[y][x] = ft_color((uint32_t)texture->pixels[i],
+			(uint32_t)texture->pixels[i + 1],
+			(uint32_t)texture->pixels[i + 2],
+			(uint32_t)texture->pixels[i + 3]);
+			i += 4;
+			x++;
+		}
+		y++;
+	}
+	return (ar);
+}
+
+//TODO free les array de texture
 
 void	render(void *param)
 {
@@ -309,14 +342,14 @@ void	render(void *param)
 	// double pos_y;
 	t_data *data;
 	data = param;
-	(void) data;
+	// (void) data;
 	// int playerRadius = 5;
 	// draw_minimap(data->image.minimap, data->map);
 	// draw_filled_circle(data->image.minimap, data->player.pos_x, data->player.pos_y, playerRadius, 0x0000FFFF);
 	// draw_raycast_on_minimap(data, data->image.minimap, data->player.pos_x, data->player.pos_y);
 	// dda_algorithm(data, data->player.pos_x, data->player.pos_y, data->image.minimap);
 	// printf("%f\n", data->angle);
-	texture_test(data);
+	texture_test(data, data->texture.north);
 }
 void	mouse_init(t_data *data)
 {
@@ -332,35 +365,6 @@ void	mouse_init(t_data *data)
 
 }
 
-uint32_t    **texture_to_wall(mlx_texture_t *texture)
-{
-    uint32_t x = 0;
-    uint32_t y = 0;
-    uint32_t i = 0;
-    uint32_t **ar;
-    ar = ft_calloc(texture->height + 1, sizeof(uint32_t *));
-    while(y < texture->height)
-    {
-        ar[y] = ft_calloc(texture->width, sizeof(uint32_t));
-        y++;
-    }
-    y = 0;
-    while(y < texture->height - 1)
-    {
-        x = 0;
-        while(x < texture->width)
-        {
-            ar[y][x] = ft_color((uint32_t)texture->pixels[i],
-            (uint32_t)texture->pixels[i + 1],
-            (uint32_t)texture->pixels[i + 2],
-            (uint32_t)texture->pixels[i + 3]);
-            i += 4;
-            x++;
-        }
-        y++;
-    }
-    return (ar);
-}
 
 
 int main(int argc, char **argv)
@@ -399,13 +403,18 @@ int main(int argc, char **argv)
 	// mlx_image_to_window(data.mlx, data.image.minimap, 0, 0);
 	// mlx_key_hook(data.mlx, &key_hook, &data);
 	//-------------------------------------
-	// data.image.test = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
-	// data.texture.north = mlx_load_png(data.param.north);
-	// mlx_image_to_window(data.mlx, data.image.test, 0, 0);
-	
+	// data.texture.north_tex = mlx_load_png(data.param.north);
+	data.image.test = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
+	mlx_image_to_window(data.mlx, data.image.test, 0, 0);
+	// data.texture.north_tex = mlx_load_png(data.param.north);
+	// data.texture.north = texture_to_wall(data.texture.north_tex);
+	// data.texture.south = texture_to_wall(data.texture.south_tex);
+	// data.texture.east = texture_to_wall(data.texture.east_tex);
+	// data.texture.west = texture_to_wall(data.texture.west_tex);
 	// mlx_loop_hook(data.mlx, &render, &data);
 	//*----------------------------
 	init_game(&data);
+	mlx_key_hook(data.mlx, &ft_key_detect, &data);
 	mlx_loop_hook(data.mlx, &loop, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/02 12:18:58 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/02 17:09:42 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ typedef struct s_texture
 	uint32_t		**west;
 	uint32_t		**ceil;
 	uint32_t		**floor;
+	
 	mlx_texture_t	*north_tex;
 	mlx_texture_t	*south_tex;
 	mlx_texture_t	*east_tex;
@@ -139,7 +140,7 @@ typedef struct s_data
 	t_ray			ray;
 	double			angle;
 	char			**map;
-	int				testflag;
+	int				view;
 }			t_data;
 
 int			errhandler(char *msg);
@@ -155,5 +156,13 @@ uint32_t	ft_color(int32_t r, int32_t g, int32_t b, int32_t a);
 void		ft_hook(void *param);
 void		loop(void *param);
 void		init_game(t_data *data);
+
+//----------controls.c
+void		key_binding(t_data *data);
+void		mouse_tracking(t_data *data);
+void		ft_key_detect(mlx_key_data_t keydata, void *param);
+void		rotate_vector(double *x, double *y, double angle);
+void		move_player(t_data *data, double move_speed);
+void 		strafe_player(t_data *data, double strafe_speed);
 
 #endif
