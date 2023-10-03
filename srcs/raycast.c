@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/03 08:36:17 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/03 14:53:26 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,11 +230,11 @@ void	draw_vertline(t_data *data, int x)
 	// printf("%d", data->ray.draw_end);
 	while((int)y < data->ray.draw_start)
 		mlx_put_pixel(data->image.window, x, y++, data->param.ceil); //ceiling color (Black)ft_color(48,127,207,255
-	while((int)y < data->ray.draw_end)
-	{
-		choose_texture(data, x);
-		y++;
-	}
+	// while((int)y < data->ray.draw_end)
+	// {
+	// 	choose_texture(data, x);
+	// 	y++;
+	// }
 	while((int)y < WINHEIGHT)
 		mlx_put_pixel(data->image.window, x, y++, data->param.floor); //floor color (white)ft_color(30,30,30,255)
 }
@@ -256,9 +256,9 @@ void	loop(void *param)
 		dda(data);
 		set_draw_range(data);
 		// calc_line(data);
-		// choose_texture(data, x);
-		// wall_color(data);
 		draw_vertline(data, x);
+		choose_texture(data, x);
+		// wall_color(data);
 		key_binding(data);
 		// mouse_tracking(data);
 	}
