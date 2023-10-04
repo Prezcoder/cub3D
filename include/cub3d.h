@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 09:33:57 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 10:02:34 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define MOVESPEED 5
 # define MOVE_SPEED 0.00007
 # define ROTATE_SPEED 0.000040
-# define MOUSE_SPEED 700
+# define MOUSE_SPEED 625
 
 ////////////----------error message
 # define ERRARGC "Usage : ./cub3D <map.cub>\n"
@@ -131,6 +131,7 @@ typedef struct s_texture
 
 typedef struct s_data
 {
+	mlx_texture_t	*textures[4];
 	mlx_t			*mlx;
 	t_param			param;
 	t_texture		texture;
@@ -169,6 +170,7 @@ void		mouse_tracking(t_data *data);
 void		ft_key_detect(mlx_key_data_t keydata, void *param);
 void		rotate_vector(double *x, double *y, double angle);
 void		move_player(t_data *data, double move_speed);
+<<<<<<< HEAD
 void		strafe_player(t_data *data, double strafe_speed);
 
 //----------raycast.c
@@ -180,6 +182,11 @@ void		set_draw_range(t_data *data);
 void		find_hit(t_data *data, mlx_texture_t *texture);
 void		drawline(t_data *data, mlx_texture_t *texture, uint32_t **arr, int x);
 void		choose_texture(t_data *data, int x);
+=======
+void 		strafe_player(t_data *data, double strafe_speed);
+void 		raycast2(t_data *data);
+void		set_data(t_data *data);
+>>>>>>> finaly working
 void		draw_vertline(t_data *data, int x);
 
 #endif
