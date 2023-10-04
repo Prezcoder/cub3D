@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/03 14:53:26 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/04 11:12:02 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,11 @@ void	init_game(t_data *data)
 {
 	data->ray.pos.x = (double)data->player.pos_y / MINITILES + (0.5);
 	data->ray.pos.y = (double)data->player.pos_x / MINITILES + (0.5);
-	//TODO: attributes the correct orientation per the data->map (N, W, S, E)
-	// iniiral direction vector (where the player looks)
-	// cam plane
-
 	data->ray.cam_x = 0;
 	data->ray.side_dist.x = 0;
 	data->ray.side_dist.y = 0;
 	data->ray.delta_dist.x = 0;
 	data->ray.delta_dist.y = 0;
-
 	data->ray.step.x = 1;
 	data->ray.step.y = 1;
 	data->ray.cam_angle = 0.5;
@@ -33,17 +28,10 @@ void	init_game(t_data *data)
 
 void	set_data(t_data *data)
 {
-	//set ray dir
-	data->ray.ray_dir.x = data->ray.dir.x + \
-		data->ray.plane.x * data->ray.cam_x;
-	data->ray.ray_dir.y = data->ray.dir.y + \
-		data->ray.plane.y * data->ray.cam_x;
-	
-	//set map pos
+	data->ray.ray_dir.x = data->ray.dir.x + data->ray.plane.x * data->ray.cam_x;
+	data->ray.ray_dir.y = data->ray.dir.y + data->ray.plane.y * data->ray.cam_x;
 	data->ray.coord.x = data->ray.pos.x;
 	data->ray.coord.y = data->ray.pos.y;
-
-	//set delta dist
 	data->ray.delta_dist.x = fabs(1 / data->ray.ray_dir.x);
 	data->ray.delta_dist.y = fabs(1 / data->ray.ray_dir.y);
 }
@@ -53,26 +41,22 @@ void	set_side_dist(t_data *data)
 	if(data->ray.ray_dir.x < 0)
 	{
 		data->ray.step.x = -0.01;
-		data->ray.side_dist.x = (data->ray.pos.x - \
-			data->ray.coord.x) * data->ray.delta_dist.x;
+		data->ray.side_dist.x = (data->ray.pos.x - data->ray.coord.x) * data->ray.delta_dist.x;
 	}
 	else
 	{
 		data->ray.step.x = 0.01;
-		data->ray.side_dist.x = (data->ray.coord.x + 1.0 - \
-			data->ray.pos.x) * data->ray.delta_dist.x;
+		data->ray.side_dist.x = (data->ray.coord.x + 1.0 - data->ray.pos.x) * data->ray.delta_dist.x;
 	}
 	if(data->ray.ray_dir.y < 0)
 	{
 		data->ray.step.y = -0.01;
-		data->ray.side_dist.y = (data->ray.pos.y - \
-			data->ray.coord.y) * data->ray.delta_dist.y;
+		data->ray.side_dist.y = (data->ray.pos.y - data->ray.coord.y) * data->ray.delta_dist.y;
 	}
 	else
 	{
 		data->ray.step.y = 0.01;
-		data->ray.side_dist.y = (data->ray.coord.y + 1.0 - \
-			data->ray.pos.y) * data->ray.delta_dist.y;
+		data->ray.side_dist.y = (data->ray.coord.y + 1.0 - data->ray.pos.y) * data->ray.delta_dist.y;
 	}
 }
 
@@ -80,16 +64,10 @@ void	dda(t_data *data)
 {
 	while(1)
 	{
-		
 		if(data->ray.side_dist.x < data->ray.side_dist.y)
 		{
 			data->ray.side_dist.x += data->ray.delta_dist.x;
 			data->ray.coord.x += data->ray.step.x;
-			//keep in case of norm too tough on set_side_dist
-			// if(data->ray.ray_dir.x < 0)
-			// 	data->ray.coord.x -= 0.01;
-			// else
-			// 	data->ray.coord.x += 0.01;
 			if (data->ray.ray_dir.x > 0)
 				data->ray.side = 0;
 			else
@@ -99,11 +77,6 @@ void	dda(t_data *data)
 		{
 			data->ray.side_dist.y += data->ray.delta_dist.y;
 			data->ray.coord.y += data->ray.step.y;
-			//keep in case of norm too tough on set_side_dist
-			// if(data->ray.ray_dir.y < 0)
-			// 	data->ray.coord.y -= 0.01; 
-			// else
-			// 	data->ray.coord.y += 0.01;
 		if (data->ray.ray_dir.y > 0)
 				data->ray.side = 2;
 			else
@@ -111,7 +84,6 @@ void	dda(t_data *data)
 		}
 		if(data->map[(int)data->ray.coord.x][(int)data->ray.coord.y] == '1')
 			break;
-
 	}
 	if(data->ray.side < 2)
 			data->ray.perp_wall_dist = (data->ray.side_dist.x - data->ray.delta_dist.x);
@@ -122,7 +94,7 @@ void	dda(t_data *data)
 
 void	set_draw_range(t_data *data)
 {
-	data->ray.line_height = (int)((WINHEIGHT * 110) / data->ray.perp_wall_dist); //add to add multiply HEIGHT by 125 to smooth mvt (110 more squared)
+	data->ray.line_height = (int)((WINHEIGHT * 110) / data->ray.perp_wall_dist);
 	data->ray.draw_start = -data->ray.line_height * 0.5 + WINHEIGHT * data->ray.cam_angle;
 	if (data->ray.draw_start < 0)
 		data->ray.draw_start = 0;
@@ -143,17 +115,6 @@ void	wall_color(t_data *data)
 	if(data->ray.side == 3)
 		data->param.wall = ft_color(127, 127, 255, 255);
 }
-
-// void	calc_line(t_data *data)
-// {
-// 	data->ray.line = WINHEIGHT / data->ray.perp_wall_dist;
-// 	data->ray.draw_start = -data->ray.line / 2 + WINHEIGHT / 2 + data->texture.north_tex->width;
-// 	if (data->ray.draw_start < 0)
-// 		data->ray.draw_start = 0;
-// 	data->ray.draw_end = data->ray.line / 2 + WINHEIGHT / 2 + data->texture.north_tex->width;
-// 	if (data->ray.draw_end >= WINHEIGHT)
-// 		data->ray.draw_end = WINHEIGHT;
-// }
 
 void	find_hit(t_data *data, mlx_texture_t *texture)
 {
@@ -193,7 +154,6 @@ void	drawline(t_data *data, mlx_texture_t *texture, uint32_t **arr, int x)
 		if (pos > texture->height - 1)
 			pos = texture->height - 1;
 		pos += dist;
-		// printf("%d\n", data->ray.tex_x);
 		mlx_put_pixel(data->image.window, x, j, arr[tex_y][data->ray.tex_x]);
 	}
 }
@@ -227,16 +187,10 @@ void	draw_vertline(t_data *data, int x)
 	int	y;
 	
 	y = 0;
-	// printf("%d", data->ray.draw_end);
 	while((int)y < data->ray.draw_start)
-		mlx_put_pixel(data->image.window, x, y++, data->param.ceil); //ceiling color (Black)ft_color(48,127,207,255
-	// while((int)y < data->ray.draw_end)
-	// {
-	// 	choose_texture(data, x);
-	// 	y++;
-	// }
+		mlx_put_pixel(data->image.window, x, y++, data->param.ceil); //ceiling color
 	while((int)y < WINHEIGHT)
-		mlx_put_pixel(data->image.window, x, y++, data->param.floor); //floor color (white)ft_color(30,30,30,255)
+		mlx_put_pixel(data->image.window, x, y++, data->param.floor); //floor color
 }
 
 void	loop(void *param)
@@ -255,10 +209,8 @@ void	loop(void *param)
 		set_side_dist(data);
 		dda(data);
 		set_draw_range(data);
-		// calc_line(data);
 		draw_vertline(data, x);
 		choose_texture(data, x);
-		// wall_color(data);
 		key_binding(data);
 		// mouse_tracking(data);
 	}
