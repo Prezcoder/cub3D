@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   controls.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:52:39 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/02 16:17:27 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/04 11:14:14 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ void	key_binding(t_data *data)
 	if(mlx_is_key_down(data->mlx, MLX_KEY_DOWN))
 		if(data->ray.cam_angle > 0)
 			data->ray.cam_angle -= 0.00002;
-	
-	// printf("X %f\n", data->ray.dir.x);
-	// printf("Y %f\n", data->ray.dir.y);
 }
 
 void	mouse_tracking(t_data *data)
@@ -95,4 +92,4 @@ void	ft_key_detect(mlx_key_data_t keydata, void *param)
 	mouse_tracking(data);
 }
 
-//TODO conner spawn
+//TODO corner spawn
