@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/02 17:12:27 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/04 11:21:35 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,6 @@ int	errhandler(char *msg)
 	ft_putstr_fd(msg, 2);
 	return(-1);
 }
-
-// int is_collision(t_data *data, int playerX, int playerY, int playerRadius)
-// {
-// 	int	gridX;
-// 	int	gridY;
-// 	int	dx;
-// 	int	dy;
-// 	int	squaredDist;
-// 	int	maxSquaredDist;
-
-// 	gridX = playerX / MINITILES;
-// 	gridY = playerY / MINITILES;
-// 	if (data->map[gridY] && data->map[gridY][gridX] == '1')
-// 	{
-// 		dx = playerX - (gridX * MINITILES + MINITILES / 2);
-// 		dy = playerY - (gridY * MINITILES + MINITILES / 2);
-// 		squaredDist = dx * dx + dy * dy;
-// 		maxSquaredDist = (playerRadius + MINITILES / 2) * (playerRadius + MINITILES / 2);
-// 		return (squaredDist <= maxSquaredDist);
-// 	}
-// 	return (0);
-// }
 
 int is_collision(t_data *data, int playerX, int playerY, int playerRadius)
 {
@@ -63,36 +41,34 @@ int is_collision(t_data *data, int playerX, int playerY, int playerRadius)
 
 void	key_hook(mlx_key_data_t keydata, void *param)
 {
-	// int movespeed = 4;
 	t_data *data;
 	(void) keydata;
 
 	data = param;
-	int playerRadius = 5;
-    float moveSpeed = 5; // Adjust the movement speed as needed
-
-    if (mlx_is_key_down(data->mlx, MLX_KEY_W))
-    {
-        // Calculate the new position based on the player's angle
-        float angleRad = data->angle * DEGRE;
-        int newX = data->player.pos_x + (int)(moveSpeed * cos(angleRad));
-        int newY = data->player.pos_y + (int)(moveSpeed * sin(angleRad));
-
-        // Check for collision before updating the position
-        if (!is_collision(data, newX, newY, playerRadius))
-        {
-            data->player.pos_x = newX;
-            data->player.pos_y = newY;
-        }
-    }
-    if (mlx_is_key_down(data->mlx, MLX_KEY_S))
-    {
-        // Calculate the new position based on the player's angle
-        float angleRad = data->angle * DEGRE;
-        int newX = data->player.pos_x - (int)(moveSpeed * cos(angleRad));
-        int newY = data->player.pos_y - (int)(moveSpeed * sin(angleRad));
-
-        // Check for collision before updating the position
+	float angleRad;
+	int playerRadius;
+	float moveSpeed;
+	int newX;
+	int newY;
+	
+	playerRadius = 5;
+	moveSpeed = 5;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
+	{
+		angleRad = data->angle * DEGRE;
+		newX = data->player.pos_x + (int)(moveSpeed * cos(angleRad));
+		newY = data->player.pos_y + (int)(moveSpeed * sin(angleRad));
+		if (!is_collision(data, newX, newY, playerRadius))
+		{
+			data->player.pos_x = newX;
+			data->player.pos_y = newY;
+		}
+	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
+	{
+		angleRad = data->angle * DEGRE;
+        newX = data->player.pos_x - (int)(moveSpeed * cos(angleRad));
+        newY = data->player.pos_y - (int)(moveSpeed * sin(angleRad));
         if (!is_collision(data, newX, newY, playerRadius))
         {
             data->player.pos_x = newX;
@@ -101,12 +77,9 @@ void	key_hook(mlx_key_data_t keydata, void *param)
     }
     if (mlx_is_key_down(data->mlx, MLX_KEY_A))
     {
-        // Calculate the new position based on the player's angle - 90 degrees
-        float angleRad = (data->angle - 90.0) * DEGRE;
-        int newX = data->player.pos_x + (int)(moveSpeed * cos(angleRad));
-        int newY = data->player.pos_y + (int)(moveSpeed * sin(angleRad));
-
-        // Check for collision before updating the position
+        angleRad = (data->angle - 90.0) * DEGRE;
+        newX = data->player.pos_x + (int)(moveSpeed * cos(angleRad));
+        newY = data->player.pos_y + (int)(moveSpeed * sin(angleRad));
         if (!is_collision(data, newX, newY, playerRadius))
         {
             data->player.pos_x = newX;
@@ -115,43 +88,31 @@ void	key_hook(mlx_key_data_t keydata, void *param)
     }
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
     {
-        // Calculate the new position based on the player's angle + 90 degrees
-        float angleRad = (data->angle + 90.0) * DEGRE;
-        int newX = data->player.pos_x + (int)(moveSpeed * cos(angleRad));
-        int newY = data->player.pos_y + (int)(moveSpeed * sin(angleRad));
-
-        // Check for collision before updating the position
-        if (!is_collision(data, newX, newY, playerRadius))
-        {
-            data->player.pos_x = newX;
-            data->player.pos_y = newY;
-        }
-    }
-
+		angleRad = (data->angle + 90.0) * DEGRE;
+		newX = data->player.pos_x + (int)(moveSpeed * cos(angleRad));
+		newY = data->player.pos_y + (int)(moveSpeed * sin(angleRad));
+		if (!is_collision(data, newX, newY, playerRadius))
+		{
+			data->player.pos_x = newX;
+			data->player.pos_y = newY;
+		}
+	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 	{
 		data->angle += 10;
 		if(data->angle >= 360)
 			data->angle -= 360;
-		// ft_printf("(RIGHT)");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 	{
 		data->angle -= 10;
 		if(data->angle <= 0)
 			data->angle += 360;
-		// ft_printf("(LEFT)");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-	{
-		// ft_printf("(ESCAPE)");
 		mlx_close_window(data->mlx);
-	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-	{
-		// ft_printf("(ESCAPE)");
 		mlx_close_window(data->mlx);
-	}
 }
 
 void draw_line_from_angle_stop_on_collision2(t_data *data, mlx_image_t *image, int playerX, int playerY, float playerAngle, uint32_t color)
@@ -217,8 +178,8 @@ void draw_line_from_angle_stop_on_collision2(t_data *data, mlx_image_t *image, i
 
 void draw_raycast_on_minimap(t_data *data, mlx_image_t *image, int playerX, int playerY)
 {
-	int		numRays; // Adjust the number of rays as needed
-	int		fovAngle; // Adjust the field of view angle as needed
+	int		numRays;
+	int		fovAngle;
 	float	angleIncrement;
 	float	startAngle;
 	float	currentAngle;
@@ -229,13 +190,9 @@ void draw_raycast_on_minimap(t_data *data, mlx_image_t *image, int playerX, int 
 	fovAngle = 60;
 	angleIncrement = (float)fovAngle / (float)(numRays - 1);
 	startAngle = data->angle - (float)(fovAngle / 2);
-
-	// Iterate over the number of rays
 	while (i < numRays)
 	{
-		// Calculate the angle for the current ray
 		currentAngle = startAngle + i * angleIncrement;
-		// Call draw_line_from_angle_stop_on_collision for the current ray
 		draw_line_from_angle_stop_on_collision2(data, image, playerX, playerY, currentAngle,ft_color(255,0,0,255));
 		i += 2;
 	}
@@ -361,8 +318,6 @@ void	mouse_init(t_data *data)
 	mlx_set_mouse_pos(data->mlx, 1024 / 2, 768 / 2);
 	mlx_get_mouse_pos(data->mlx, &x, &y);
 	printf("X :%d Y : %d", x, y);
-	
-
 }
 
 
@@ -406,11 +361,6 @@ int main(int argc, char **argv)
 	// data.texture.north_tex = mlx_load_png(data.param.north);
 	data.image.test = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	mlx_image_to_window(data.mlx, data.image.test, 0, 0);
-	// data.texture.north_tex = mlx_load_png(data.param.north);
-	// data.texture.north = texture_to_wall(data.texture.north_tex);
-	// data.texture.south = texture_to_wall(data.texture.south_tex);
-	// data.texture.east = texture_to_wall(data.texture.east_tex);
-	// data.texture.west = texture_to_wall(data.texture.west_tex);
 	// mlx_loop_hook(data.mlx, &render, &data);
 	//*----------------------------
 	init_game(&data);

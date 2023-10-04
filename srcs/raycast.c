@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/04 11:12:02 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/04 11:22:03 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,13 +195,11 @@ void	draw_vertline(t_data *data, int x)
 
 void	loop(void *param)
 {
-	t_data		*data;
-	int	x;
+	t_data	*data;
+	int		x;
 
 	data = param;
 	x = -1;
-	
-	
 	while(++x < WINWIDTH)
 	{
 		data->ray.cam_x = 2 * x / (double)WINWIDTH - 1;
