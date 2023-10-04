@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:52:39 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/02 16:17:27 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/04 16:50:33 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,6 @@ void	key_binding(t_data *data)
 		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, ROTATE_SPEED);
 		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, ROTATE_SPEED);
 	}
-	if(mlx_is_key_down(data->mlx, MLX_KEY_UP))
-		if(data->ray.cam_angle < 1)
-			data->ray.cam_angle += 0.00002;
-	if(mlx_is_key_down(data->mlx, MLX_KEY_DOWN))
-		if(data->ray.cam_angle > 0)
-			data->ray.cam_angle -= 0.00002;
-	
-	// printf("X %f\n", data->ray.dir.x);
-	// printf("Y %f\n", data->ray.dir.y);
 }
 
 void	mouse_tracking(t_data *data)
@@ -51,29 +42,19 @@ void	mouse_tracking(t_data *data)
 	int32_t x = 0;
 	
 	mlx_get_mouse_pos(data->mlx, &x, &y);
-	
-	if(data->view == 2 && y < WINHEIGHT / 2)
-	{
-		if(data->ray.cam_angle < 1)
-			data->ray.cam_angle += 0.015;
-	}
-	if(data->view == 2 && y > WINHEIGHT / 2)
-	{
-		if(data->ray.cam_angle > 0)
-			data->ray.cam_angle -= 0.015;
-	}
-	if(data->view > 0 && x < WINWIDTH / 2)
+	if(x < WINWIDTH / 2)
 	{
 		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, ROTATE_SPEED * MOUSE_SPEED);
 		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, ROTATE_SPEED * MOUSE_SPEED);
 	}
-	if(data->view > 0 && x > WINWIDTH / 2)
+	if(x > WINWIDTH / 2)
 	{
 		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, -ROTATE_SPEED * MOUSE_SPEED);
 		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, -ROTATE_SPEED * MOUSE_SPEED);
 	}
 	if(y != WINHEIGHT / 2 || x != WINWIDTH / 2)
 		mlx_set_mouse_pos(data->mlx, WINWIDTH / 2, WINHEIGHT / 2);
+	
 }
 
 void	ft_key_detect(mlx_key_data_t keydata, void *param)

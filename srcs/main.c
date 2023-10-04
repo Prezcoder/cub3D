@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/02 17:12:27 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:38:54 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,70 +287,10 @@ void	draw_minimap(mlx_image_t *image, char **map)
 		pix_y++;
 	}
 }
-void	texture_test(t_data *data, uint32_t **ar)
-{
-	uint32_t x = 0;
-	uint32_t y = 0;
 
-	while(y < data->texture.north_tex->height - 1)
-	{
-		x = 0;
-		while(x < data->texture.north_tex->width - 1)
-		{
-			mlx_put_pixel(data->image.test, x, y, ar[y][x]);
-			x++;
-		}
-		y++;
-	}
-	
-}
-uint32_t	**texture_to_wall(mlx_texture_t *texture)
-{
-	uint32_t x = 0;
-	uint32_t y = 0;
-	uint32_t i = 0;
-	uint32_t **ar;
-	ar = ft_calloc(texture->height + 1, sizeof(uint32_t *));
-	while(y < texture->height)
-	{
-		ar[y] = ft_calloc(texture->width, sizeof(uint32_t));
-		y++;
-	}
-	y = 0;
-	while(y < texture->height - 1)
-	{
-		x = 0;
-		while(x < texture->width)
-		{
-			ar[y][x] = ft_color((uint32_t)texture->pixels[i],
-			(uint32_t)texture->pixels[i + 1],
-			(uint32_t)texture->pixels[i + 2],
-			(uint32_t)texture->pixels[i + 3]);
-			i += 4;
-			x++;
-		}
-		y++;
-	}
-	return (ar);
-}
 
 //TODO free les array de texture
 
-void	render(void *param)
-{
-	// double pos_x;
-	// double pos_y;
-	t_data *data;
-	data = param;
-	// (void) data;
-	// int playerRadius = 5;
-	// draw_minimap(data->image.minimap, data->map);
-	// draw_filled_circle(data->image.minimap, data->player.pos_x, data->player.pos_y, playerRadius, 0x0000FFFF);
-	// draw_raycast_on_minimap(data, data->image.minimap, data->player.pos_x, data->player.pos_y);
-	// dda_algorithm(data, data->player.pos_x, data->player.pos_y, data->image.minimap);
-	// printf("%f\n", data->angle);
-	texture_test(data, data->texture.north);
-}
 void	mouse_init(t_data *data)
 {
 	int32_t x = 0;
@@ -364,8 +304,6 @@ void	mouse_init(t_data *data)
 	
 
 }
-
-
 
 int main(int argc, char **argv)
 {
@@ -387,36 +325,21 @@ int main(int argc, char **argv)
 	ft_freeall(data.map);
 	data.map = map_temp;
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
-	mouse_init(&data);
-
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	mlx_image_to_window(data.mlx, data.image.window, 0, 0);
-	data.texture.north_tex = mlx_load_png(data.param.north);
-	data.texture.south_tex = mlx_load_png(data.param.south);
-	data.texture.east_tex = mlx_load_png(data.param.east);
-	data.texture.west_tex = mlx_load_png(data.param.west);
-	data.texture.north = texture_to_wall(data.texture.north_tex);
-	data.texture.south = texture_to_wall(data.texture.south_tex);
-	data.texture.east = texture_to_wall(data.texture.east_tex);
-	data.texture.west = texture_to_wall(data.texture.west_tex);
+	data.textures[0] = mlx_load_png(data.param.north);
+	data.textures[1] = mlx_load_png(data.param.south);
+	data.textures[2] = mlx_load_png(data.param.west);
+	data.textures[3] = mlx_load_png(data.param.east);
 	// data.image.minimap = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	// mlx_image_to_window(data.mlx, data.image.minimap, 0, 0);
 	// mlx_key_hook(data.mlx, &key_hook, &data);
-	//-------------------------------------
-	// data.texture.north_tex = mlx_load_png(data.param.north);
-	data.image.test = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
-	mlx_image_to_window(data.mlx, data.image.test, 0, 0);
-	// data.texture.north_tex = mlx_load_png(data.param.north);
-	// data.texture.north = texture_to_wall(data.texture.north_tex);
-	// data.texture.south = texture_to_wall(data.texture.south_tex);
-	// data.texture.east = texture_to_wall(data.texture.east_tex);
-	// data.texture.west = texture_to_wall(data.texture.west_tex);
-	// mlx_loop_hook(data.mlx, &render, &data);
-	//*----------------------------
-	init_game(&data);
-	mlx_key_hook(data.mlx, &ft_key_detect, &data);
+	data.ray.pos.x = (double)data.player.pos_y / MINITILES + (0.5);
+	data.ray.pos.y = (double)data.player.pos_x / MINITILES + (0.5);
 	mlx_loop_hook(data.mlx, &loop, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
 	ft_freeall(data.map);
 }
+
+//TODO pourquoi faut diviser player.pos par MINITILES

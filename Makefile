@@ -6,7 +6,7 @@
 #    By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 10:27:08 by emlamoth          #+#    #+#              #
-#    Updated: 2023/10/02 16:10:49 by emlamoth         ###   ########.fr        #
+#    Updated: 2023/10/04 14:48:25 by emlamoth         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SRCS =	main.c			\
 		init.c			\
 		flood_fill.c	\
 		raycast.c		\
+		raycast2.c		\
 		controls.c		\
 		movements.c		\
 

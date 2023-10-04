@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Raycast.c                                          :+:      :+:    :+:   */
+/*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/04 11:12:02 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/04 14:52:38 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,22 @@ void	set_side_dist(t_data *data)
 {
 	if(data->ray.ray_dir.x < 0)
 	{
-		data->ray.step.x = -0.01;
+		data->ray.step.x = -1;
 		data->ray.side_dist.x = (data->ray.pos.x - data->ray.coord.x) * data->ray.delta_dist.x;
 	}
 	else
 	{
-		data->ray.step.x = 0.01;
+		data->ray.step.x = 1;
 		data->ray.side_dist.x = (data->ray.coord.x + 1.0 - data->ray.pos.x) * data->ray.delta_dist.x;
 	}
 	if(data->ray.ray_dir.y < 0)
 	{
-		data->ray.step.y = -0.01;
+		data->ray.step.y = -1;
 		data->ray.side_dist.y = (data->ray.pos.y - data->ray.coord.y) * data->ray.delta_dist.y;
 	}
 	else
 	{
-		data->ray.step.y = 0.01;
+		data->ray.step.y = 1;
 		data->ray.side_dist.y = (data->ray.coord.y + 1.0 - data->ray.pos.y) * data->ray.delta_dist.y;
 	}
 }
@@ -94,7 +94,7 @@ void	dda(t_data *data)
 
 void	set_draw_range(t_data *data)
 {
-	data->ray.line_height = (int)((WINHEIGHT * 110) / data->ray.perp_wall_dist);
+	data->ray.line_height = (int)((WINHEIGHT) / data->ray.perp_wall_dist);
 	data->ray.draw_start = -data->ray.line_height * 0.5 + WINHEIGHT * data->ray.cam_angle;
 	if (data->ray.draw_start < 0)
 		data->ray.draw_start = 0;
@@ -126,7 +126,6 @@ void	find_hit(t_data *data, mlx_texture_t *texture)
 	else
 		hit = data->ray.pos.x + data->ray.perp_wall_dist * data->ray.ray_dir.x;
 	hit -= (int) hit;
-
 	data->ray.tex_x = (int)(hit * (double) texture->width);
 
 	if ((data->ray.side == 0 || data->ray.side == 1) && data->ray.ray_dir.x > 0)
@@ -187,7 +186,7 @@ void	draw_vertline(t_data *data, int x)
 	int	y;
 	
 	y = 0;
-	while((int)y < data->ray.draw_start)
+	while((int)y < WINHEIGHT / 2)
 		mlx_put_pixel(data->image.window, x, y++, data->param.ceil); //ceiling color
 	while((int)y < WINHEIGHT)
 		mlx_put_pixel(data->image.window, x, y++, data->param.floor); //floor color
@@ -196,23 +195,23 @@ void	draw_vertline(t_data *data, int x)
 void	loop(void *param)
 {
 	t_data		*data;
-	int	x;
+	// int	x;
 
 	data = param;
-	x = -1;
+	// x = -1;
+	raycast2(data);
 	
-	
-	while(++x < WINWIDTH)
-	{
-		data->ray.cam_x = 2 * x / (double)WINWIDTH - 1;
-		set_data(data);
-		set_side_dist(data);
-		dda(data);
-		set_draw_range(data);
-		draw_vertline(data, x);
-		choose_texture(data, x);
-		key_binding(data);
-		// mouse_tracking(data);
-	}
-	usleep(3000);
+	// while(++x < WINWIDTH)
+	// {
+	// 	data->ray.cam_x = 2 * x / (double)WINWIDTH - 1;
+	// 	set_data(data);
+	// 	draw_vertline(data, x);
+	// 	// set_side_dist(data);
+	// 	// dda(data);
+	// 	// set_draw_range(data);
+	// 	// choose_texture(data, x);
+	// 	// key_binding(data);
+	// 	// mouse_tracking(data);
+	// }
+	// usleep(3000);
 }

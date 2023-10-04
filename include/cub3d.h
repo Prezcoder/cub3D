@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/02 17:09:42 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/04 16:45:58 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define MOVESPEED 5
 # define MOVE_SPEED 0.00007
 # define ROTATE_SPEED 0.000040
-# define MOUSE_SPEED 700
+# define MOUSE_SPEED 625
 
 ////////////----------error message
 # define ERRARGC "Usage : ./cub3D <map.cub>\n"
@@ -88,6 +88,7 @@ typedef struct s_ray
 	double			cam_angle;
 	int32_t			mouse_x;
 	int32_t			mouse_y;
+	double 			dist;
 }	t_ray;
 
 typedef struct s_param
@@ -132,6 +133,7 @@ typedef struct s_texture
 
 typedef struct s_data
 {
+	mlx_texture_t	*textures[4];
 	mlx_t			*mlx;
 	t_param			param;
 	t_texture		texture;
@@ -164,5 +166,8 @@ void		ft_key_detect(mlx_key_data_t keydata, void *param);
 void		rotate_vector(double *x, double *y, double angle);
 void		move_player(t_data *data, double move_speed);
 void 		strafe_player(t_data *data, double strafe_speed);
+void 		raycast2(t_data *data);
+void		set_data(t_data *data);
+void		draw_vertline(t_data *data, int x);
 
 #endif
