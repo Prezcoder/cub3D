@@ -6,13 +6,13 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/04 17:38:54 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:51:43 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-uint32_t ft_color(int32_t r, int32_t g, int32_t b, int32_t a)
+uint32_t	ft_color(int32_t r, int32_t g, int32_t b, int32_t a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
@@ -24,33 +24,11 @@ int	errhandler(char *msg)
 	return(-1);
 }
 
-// int is_collision(t_data *data, int playerX, int playerY, int playerRadius)
-// {
-// 	int	gridX;
-// 	int	gridY;
-// 	int	dx;
-// 	int	dy;
-// 	int	squaredDist;
-// 	int	maxSquaredDist;
-
-// 	gridX = playerX / MINITILES;
-// 	gridY = playerY / MINITILES;
-// 	if (data->map[gridY] && data->map[gridY][gridX] == '1')
-// 	{
-// 		dx = playerX - (gridX * MINITILES + MINITILES / 2);
-// 		dy = playerY - (gridY * MINITILES + MINITILES / 2);
-// 		squaredDist = dx * dx + dy * dy;
-// 		maxSquaredDist = (playerRadius + MINITILES / 2) * (playerRadius + MINITILES / 2);
-// 		return (squaredDist <= maxSquaredDist);
-// 	}
-// 	return (0);
-// }
-
-int is_collision(t_data *data, int playerX, int playerY, int playerRadius)
+int	is_collision(t_data *data, int playerX, int playerY, int playerRadius)
 {
 	(void)playerRadius;
-	int gridX;
-	int gridY;
+	int	gridX;
+	int	gridY;
 	
 	gridX = playerX / MINITILES;
 	gridY = playerY / MINITILES;
@@ -63,36 +41,34 @@ int is_collision(t_data *data, int playerX, int playerY, int playerRadius)
 
 void	key_hook(mlx_key_data_t keydata, void *param)
 {
-	// int movespeed = 4;
 	t_data *data;
 	(void) keydata;
 
 	data = param;
-	int playerRadius = 5;
-    float moveSpeed = 5; // Adjust the movement speed as needed
-
-    if (mlx_is_key_down(data->mlx, MLX_KEY_W))
-    {
-        // Calculate the new position based on the player's angle
-        float angleRad = data->angle * DEGRE;
-        int newX = data->player.pos_x + (int)(moveSpeed * cos(angleRad));
-        int newY = data->player.pos_y + (int)(moveSpeed * sin(angleRad));
-
-        // Check for collision before updating the position
-        if (!is_collision(data, newX, newY, playerRadius))
-        {
-            data->player.pos_x = newX;
-            data->player.pos_y = newY;
-        }
-    }
-    if (mlx_is_key_down(data->mlx, MLX_KEY_S))
-    {
-        // Calculate the new position based on the player's angle
-        float angleRad = data->angle * DEGRE;
-        int newX = data->player.pos_x - (int)(moveSpeed * cos(angleRad));
-        int newY = data->player.pos_y - (int)(moveSpeed * sin(angleRad));
-
-        // Check for collision before updating the position
+	float angleRad;
+	int playerRadius;
+	float moveSpeed;
+	int newX;
+	int newY;
+	
+	playerRadius = 5;
+	moveSpeed = 5;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
+	{
+		angleRad = data->angle * DEGRE;
+		newX = data->player.pos_x + (int)(moveSpeed * cos(angleRad));
+		newY = data->player.pos_y + (int)(moveSpeed * sin(angleRad));
+		if (!is_collision(data, newX, newY, playerRadius))
+		{
+			data->player.pos_x = newX;
+			data->player.pos_y = newY;
+		}
+	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
+	{
+		angleRad = data->angle * DEGRE;
+        newX = data->player.pos_x - (int)(moveSpeed * cos(angleRad));
+        newY = data->player.pos_y - (int)(moveSpeed * sin(angleRad));
         if (!is_collision(data, newX, newY, playerRadius))
         {
             data->player.pos_x = newX;
@@ -101,12 +77,9 @@ void	key_hook(mlx_key_data_t keydata, void *param)
     }
     if (mlx_is_key_down(data->mlx, MLX_KEY_A))
     {
-        // Calculate the new position based on the player's angle - 90 degrees
-        float angleRad = (data->angle - 90.0) * DEGRE;
-        int newX = data->player.pos_x + (int)(moveSpeed * cos(angleRad));
-        int newY = data->player.pos_y + (int)(moveSpeed * sin(angleRad));
-
-        // Check for collision before updating the position
+        angleRad = (data->angle - 90.0) * DEGRE;
+        newX = data->player.pos_x + (int)(moveSpeed * cos(angleRad));
+        newY = data->player.pos_y + (int)(moveSpeed * sin(angleRad));
         if (!is_collision(data, newX, newY, playerRadius))
         {
             data->player.pos_x = newX;
@@ -115,46 +88,34 @@ void	key_hook(mlx_key_data_t keydata, void *param)
     }
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
     {
-        // Calculate the new position based on the player's angle + 90 degrees
-        float angleRad = (data->angle + 90.0) * DEGRE;
-        int newX = data->player.pos_x + (int)(moveSpeed * cos(angleRad));
-        int newY = data->player.pos_y + (int)(moveSpeed * sin(angleRad));
-
-        // Check for collision before updating the position
-        if (!is_collision(data, newX, newY, playerRadius))
-        {
-            data->player.pos_x = newX;
-            data->player.pos_y = newY;
-        }
-    }
-
+		angleRad = (data->angle + 90.0) * DEGRE;
+		newX = data->player.pos_x + (int)(moveSpeed * cos(angleRad));
+		newY = data->player.pos_y + (int)(moveSpeed * sin(angleRad));
+		if (!is_collision(data, newX, newY, playerRadius))
+		{
+			data->player.pos_x = newX;
+			data->player.pos_y = newY;
+		}
+	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 	{
 		data->angle += 10;
 		if(data->angle >= 360)
 			data->angle -= 360;
-		// ft_printf("(RIGHT)");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 	{
 		data->angle -= 10;
 		if(data->angle <= 0)
 			data->angle += 360;
-		// ft_printf("(LEFT)");
 	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-	{
-		// ft_printf("(ESCAPE)");
 		mlx_close_window(data->mlx);
-	}
 	if(mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-	{
-		// ft_printf("(ESCAPE)");
 		mlx_close_window(data->mlx);
-	}
 }
 
-void draw_line_from_angle_stop_on_collision2(t_data *data, mlx_image_t *image, int playerX, int playerY, float playerAngle, uint32_t color)
+void	draw_line_from_angle_stop_on_collision2(t_data *data, mlx_image_t *image, int playerX, int playerY, float playerAngle, uint32_t color)
 {
 	int x;
 	int y;
@@ -215,10 +176,10 @@ void draw_line_from_angle_stop_on_collision2(t_data *data, mlx_image_t *image, i
 	}
 }
 
-void draw_raycast_on_minimap(t_data *data, mlx_image_t *image, int playerX, int playerY)
+void	draw_raycast_on_minimap(t_data *data, mlx_image_t *image, int playerX, int playerY)
 {
-	int		numRays; // Adjust the number of rays as needed
-	int		fovAngle; // Adjust the field of view angle as needed
+	int		numRays;
+	int		fovAngle;
 	float	angleIncrement;
 	float	startAngle;
 	float	currentAngle;
@@ -229,19 +190,15 @@ void draw_raycast_on_minimap(t_data *data, mlx_image_t *image, int playerX, int 
 	fovAngle = 60;
 	angleIncrement = (float)fovAngle / (float)(numRays - 1);
 	startAngle = data->angle - (float)(fovAngle / 2);
-
-	// Iterate over the number of rays
 	while (i < numRays)
 	{
-		// Calculate the angle for the current ray
 		currentAngle = startAngle + i * angleIncrement;
-		// Call draw_line_from_angle_stop_on_collision for the current ray
 		draw_line_from_angle_stop_on_collision2(data, image, playerX, playerY, currentAngle,ft_color(255,0,0,255));
 		i += 2;
 	}
 }
 
-void draw_filled_circle(mlx_image_t *image, int centerX, int centerY, int radius, uint32_t color)
+void	draw_filled_circle(mlx_image_t *image, int centerX, int centerY, int radius, uint32_t color)
 {
 	int x;
 	int y;
@@ -287,10 +244,69 @@ void	draw_minimap(mlx_image_t *image, char **map)
 		pix_y++;
 	}
 }
+// void	texture_test(t_data *data, uint32_t **ar)
+// {
+// 	uint32_t x = 0;
+// 	uint32_t y = 0;
 
+// 	while(y < data->texture.north_tex->height - 1)
+// 	{
+// 		x = 0;
+// 		while(x < data->texture.north_tex->width - 1)
+// 		{
+// 			mlx_put_pixel(data->image.test, x, y, ar[y][x]);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+	
+// }
+uint32_t	**texture_to_wall(mlx_texture_t *texture)
+{
+	uint32_t x = 0;
+	uint32_t y = 0;
+	uint32_t i = 0;
+	uint32_t **ar;
+	ar = ft_calloc(texture->height + 1, sizeof(uint32_t *));
+	while(y < texture->height)
+	{
+		ar[y] = ft_calloc(texture->width, sizeof(uint32_t));
+		y++;
+	}
+	y = 0;
+	while(y < texture->height - 1)
+	{
+		x = 0;
+		while(x < texture->width)
+		{
+			ar[y][x] = ft_color((uint32_t)texture->pixels[i],
+			(uint32_t)texture->pixels[i + 1],
+			(uint32_t)texture->pixels[i + 2],
+			(uint32_t)texture->pixels[i + 3]);
+			i += 4;
+			x++;
+		}
+		y++;
+	}
+	return (ar);
+}
 
 //TODO free les array de texture
 
+void	render(void *param)
+{
+	// double pos_x;
+	// double pos_y;
+	t_data *data;
+	data = param;
+	// (void) data;
+	// int playerRadius = 5;
+	// draw_minimap(data->image.minimap, data->map);
+	// draw_filled_circle(data->image.minimap, data->player.pos_x, data->player.pos_y, playerRadius, 0x0000FFFF);
+	// draw_raycast_on_minimap(data, data->image.minimap, data->player.pos_x, data->player.pos_y);
+	// dda_algorithm(data, data->player.pos_x, data->player.pos_y, data->image.minimap);
+	// printf("%f\n", data->angle);
+}
 void	mouse_init(t_data *data)
 {
 	int32_t x = 0;
@@ -301,15 +317,15 @@ void	mouse_init(t_data *data)
 	mlx_set_mouse_pos(data->mlx, 1024 / 2, 768 / 2);
 	mlx_get_mouse_pos(data->mlx, &x, &y);
 	printf("X :%d Y : %d", x, y);
-	
-
 }
 
-int main(int argc, char **argv)
-{
-	t_data data;
 
-	char **map_temp;
+
+int	main(int argc, char **argv)
+{
+	t_data	data;
+	char	**map_temp;
+	
 	if (argc != 2)
 		return(errhandler(ERRARGC));
 	if (ft_strlen(argv[1]) < 12)
@@ -325,6 +341,7 @@ int main(int argc, char **argv)
 	ft_freeall(data.map);
 	data.map = map_temp;
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
+	mouse_init(&data);
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	mlx_image_to_window(data.mlx, data.image.window, 0, 0);
 	data.textures[0] = mlx_load_png(data.param.north);
@@ -334,8 +351,13 @@ int main(int argc, char **argv)
 	// data.image.minimap = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	// mlx_image_to_window(data.mlx, data.image.minimap, 0, 0);
 	// mlx_key_hook(data.mlx, &key_hook, &data);
-	data.ray.pos.x = (double)data.player.pos_y / MINITILES + (0.5);
-	data.ray.pos.y = (double)data.player.pos_x / MINITILES + (0.5);
+	//-------------------------------------
+	data.image.test = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
+	mlx_image_to_window(data.mlx, data.image.test, 0, 0);
+	// mlx_loop_hook(data.mlx, &render, &data);
+	//*----------------------------
+	init_game(&data);
+	mlx_key_hook(data.mlx, &ft_key_detect, &data);
 	mlx_loop_hook(data.mlx, &loop, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);

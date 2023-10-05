@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:41:56 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/04 17:40:47 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:52:06 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 int	color_decoder(char *str, uint32_t *surface)
 {
-	int	i;
-	uint32_t temp;
-	char *temp_str;
+	int			i;
+	uint32_t	temp;
+	char		*temp_str;
 	
 	temp_str = NULL;
 	temp_str = ft_strtrim(str, " ");
 	i = 0;
 	*surface = 0;
-	while(temp_str[i] && i < 12)
+	while (temp_str[i] && i < 12)
 	{
 		temp = (uint32_t)ft_atoi(temp_str + i);
 		if (temp < 0 || temp > 255)
@@ -31,7 +31,7 @@ int	color_decoder(char *str, uint32_t *surface)
 		*surface |= temp;
 		while (temp_str[i] && temp_str[i] != ',')
 			i++;
-		if(temp_str[i])
+		if (temp_str[i])
 			i++;
 	}
 	*surface = *surface << 8;
