@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/02 17:09:42 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/05 08:50:50 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@
 
 typedef struct s_player
 {
-	int				pos_x;
-	int				pos_y;
+	double			pos_x;
+	double			pos_y;
 	int				map_x;
 	int				map_y;
 	float			angle;
@@ -63,11 +63,11 @@ typedef struct s_player
 
 typedef	struct s_vect
 {
-	double 			x;
-	double 			y;
-}	t_vect;
+	double			x;
+	double			y;
+}			t_vect;
 
-typedef struct s_ray 
+typedef struct s_ray
 {
 	int				tex_x;
 	int				line;
@@ -88,7 +88,7 @@ typedef struct s_ray
 	double			cam_angle;
 	int32_t			mouse_x;
 	int32_t			mouse_y;
-}	t_ray;
+}			t_ray;
 
 typedef struct s_param
 {
@@ -120,7 +120,6 @@ typedef struct s_texture
 	uint32_t		**west;
 	uint32_t		**ceil;
 	uint32_t		**floor;
-	
 	mlx_texture_t	*north_tex;
 	mlx_texture_t	*south_tex;
 	mlx_texture_t	*east_tex;
@@ -143,13 +142,20 @@ typedef struct s_data
 	int				view;
 }			t_data;
 
+//----------parsing.c
 int			errhandler(char *msg);
 void		parsing(t_data *data);
+void		parse_map(t_data *data, int y);
 void		wall_check(t_data *data);
+char		*check_path(char *str);
+int			color_decoder(char *str, uint32_t *surface);
+void		set_dir(t_data *data, char c);
+void		set_dir2(t_data *data, char c);
 
 //----------init.c
 t_data		*init_data(t_data *data, char **argv);
 int			init_map(t_data *data, char *path);
+void		init_game(t_data *data);
 
 uint32_t	ft_color(int32_t r, int32_t g, int32_t b, int32_t a);
 
@@ -163,6 +169,17 @@ void		mouse_tracking(t_data *data);
 void		ft_key_detect(mlx_key_data_t keydata, void *param);
 void		rotate_vector(double *x, double *y, double angle);
 void		move_player(t_data *data, double move_speed);
-void 		strafe_player(t_data *data, double strafe_speed);
+void		strafe_player(t_data *data, double strafe_speed);
+
+//----------raycast.c
+void		set_data(t_data *data, int x);
+void		set_side_dist(t_data *data);
+void		dda_calc(t_data *data);
+void		dda(t_data *data);
+void		set_draw_range(t_data *data);
+void		find_hit(t_data *data, mlx_texture_t *texture);
+void		drawline(t_data *data, mlx_texture_t *texture, uint32_t **arr, int x);
+void		choose_texture(t_data *data, int x);
+void		draw_vertline(t_data *data, int x);
 
 #endif

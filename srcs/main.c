@@ -6,13 +6,13 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/04 11:21:35 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 08:54:27 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-uint32_t ft_color(int32_t r, int32_t g, int32_t b, int32_t a)
+uint32_t	ft_color(int32_t r, int32_t g, int32_t b, int32_t a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
@@ -24,7 +24,7 @@ int	errhandler(char *msg)
 	return(-1);
 }
 
-int is_collision(t_data *data, int playerX, int playerY, int playerRadius)
+int	is_collision(t_data *data, int playerX, int playerY, int playerRadius)
 {
 	(void)playerRadius;
 	int gridX;
@@ -115,7 +115,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 		mlx_close_window(data->mlx);
 }
 
-void draw_line_from_angle_stop_on_collision2(t_data *data, mlx_image_t *image, int playerX, int playerY, float playerAngle, uint32_t color)
+void	draw_line_from_angle_stop_on_collision2(t_data *data, mlx_image_t *image, int playerX, int playerY, float playerAngle, uint32_t color)
 {
 	int x;
 	int y;
@@ -176,7 +176,7 @@ void draw_line_from_angle_stop_on_collision2(t_data *data, mlx_image_t *image, i
 	}
 }
 
-void draw_raycast_on_minimap(t_data *data, mlx_image_t *image, int playerX, int playerY)
+void	draw_raycast_on_minimap(t_data *data, mlx_image_t *image, int playerX, int playerY)
 {
 	int		numRays;
 	int		fovAngle;
@@ -198,7 +198,7 @@ void draw_raycast_on_minimap(t_data *data, mlx_image_t *image, int playerX, int 
 	}
 }
 
-void draw_filled_circle(mlx_image_t *image, int centerX, int centerY, int radius, uint32_t color)
+void	draw_filled_circle(mlx_image_t *image, int centerX, int centerY, int radius, uint32_t color)
 {
 	int x;
 	int y;
@@ -244,23 +244,23 @@ void	draw_minimap(mlx_image_t *image, char **map)
 		pix_y++;
 	}
 }
-void	texture_test(t_data *data, uint32_t **ar)
-{
-	uint32_t x = 0;
-	uint32_t y = 0;
+// void	texture_test(t_data *data, uint32_t **ar)
+// {
+// 	uint32_t x = 0;
+// 	uint32_t y = 0;
 
-	while(y < data->texture.north_tex->height - 1)
-	{
-		x = 0;
-		while(x < data->texture.north_tex->width - 1)
-		{
-			mlx_put_pixel(data->image.test, x, y, ar[y][x]);
-			x++;
-		}
-		y++;
-	}
+// 	while(y < data->texture.north_tex->height - 1)
+// 	{
+// 		x = 0;
+// 		while(x < data->texture.north_tex->width - 1)
+// 		{
+// 			mlx_put_pixel(data->image.test, x, y, ar[y][x]);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
 	
-}
+// }
 uint32_t	**texture_to_wall(mlx_texture_t *texture)
 {
 	uint32_t x = 0;
@@ -306,7 +306,6 @@ void	render(void *param)
 	// draw_raycast_on_minimap(data, data->image.minimap, data->player.pos_x, data->player.pos_y);
 	// dda_algorithm(data, data->player.pos_x, data->player.pos_y, data->image.minimap);
 	// printf("%f\n", data->angle);
-	texture_test(data, data->texture.north);
 }
 void	mouse_init(t_data *data)
 {
@@ -322,11 +321,11 @@ void	mouse_init(t_data *data)
 
 
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_data data;
-
-	char **map_temp;
+	t_data	data;
+	char	**map_temp;
+	
 	if (argc != 2)
 		return(errhandler(ERRARGC));
 	if (ft_strlen(argv[1]) < 12)
@@ -343,7 +342,6 @@ int main(int argc, char **argv)
 	data.map = map_temp;
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
 	mouse_init(&data);
-
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	mlx_image_to_window(data.mlx, data.image.window, 0, 0);
 	data.texture.north_tex = mlx_load_png(data.param.north);
@@ -358,13 +356,12 @@ int main(int argc, char **argv)
 	// mlx_image_to_window(data.mlx, data.image.minimap, 0, 0);
 	// mlx_key_hook(data.mlx, &key_hook, &data);
 	//-------------------------------------
-	// data.texture.north_tex = mlx_load_png(data.param.north);
 	data.image.test = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	mlx_image_to_window(data.mlx, data.image.test, 0, 0);
 	// mlx_loop_hook(data.mlx, &render, &data);
 	//*----------------------------
 	init_game(&data);
-	mlx_key_hook(data.mlx, &ft_key_detect, &data);
+	// mlx_key_hook(data.mlx, &ft_key_detect, &data);
 	mlx_loop_hook(data.mlx, &loop, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);

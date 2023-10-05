@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:41:30 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/09/25 11:03:41 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/05 08:57:10 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	flood_fill(int y, int x, t_data *data, char **map_cpy)
 
 void	wall_check(t_data *data)
 {
-	char **map_cpy;
+	char	**map_cpy;
 	
 	map_cpy = NULL;
 	map_cpy = ft_tabdup(data->map);
