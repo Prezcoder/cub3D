@@ -1,7 +1,7 @@
-NO ./graphics/bellebriquewow.png
-SO ./graphics/bellebriquewow.png
-WE ./graphics/bellebriquewow.png
-EA ./graphics/bellebriquewow.png
+NO ./graphics/south_wall.png
+SO ./graphics/south_wall.png
+WE ./graphics/south_wall.png
+EA ./graphics/south_wall.png
 
 C 1,230,210
 F 220,123,24
