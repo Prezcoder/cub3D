@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 09:16:52 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:33:57 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define CUB3D_H
 
 //----------define
-# define WINWIDTH 1024
-# define WINHEIGHT 768
+# define WINWIDTH 1280
+# define WINHEIGHT 1024
 # define MINITILES 8
 # define TEXTSIZE 
 # define DEGRE M_PI / 180.0

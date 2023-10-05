@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/05 09:25:02 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:39:38 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	loop(void *param)
 		draw_vertline(data, x);
 		choose_texture(data, x);
 		key_binding(data);
-		// mouse_tracking(data);
+		mouse_tracking(data);
 	}
 	usleep(3000);
 }

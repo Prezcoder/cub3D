@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 09:10:16 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:39:33 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,7 +361,7 @@ int	main(int argc, char **argv)
 	// mlx_loop_hook(data.mlx, &render, &data);
 	//*----------------------------
 	init_game(&data);
-	// mlx_key_hook(data.mlx, &ft_key_detect, &data);
+	mlx_key_hook(data.mlx, &ft_key_detect, &data);
 	mlx_loop_hook(data.mlx, &loop, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);

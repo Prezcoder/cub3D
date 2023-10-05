@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:20:23 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/05 09:26:34 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:38:04 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	dda(t_data *data)
 
 void	set_draw_range(t_data *data)
 {
-	data->ray.line_height = (int)((WINHEIGHT) / data->ray.perp_wall_dist);
+	data->ray.line_height = (int)WINHEIGHT / data->ray.perp_wall_dist;
 	data->ray.draw_start = -data->ray.line_height * 0.5 + WINHEIGHT
 		* data->ray.cam_angle;
 	if (data->ray.draw_start < 0)
