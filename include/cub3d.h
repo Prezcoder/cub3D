@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 12:40:58 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 13:54:23 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define ERRPLAYER "Too many players\n"
 # define ERRNOPLAYER "No player detected\n"
 # define ERRCHAR "Wrong chars detected\n"
+# define ERRWALL "The map isn't framed by wall\n"
 
 
 ////////////----------temp
@@ -132,7 +133,6 @@ typedef struct s_texture
 
 typedef struct s_data
 {
-	mlx_texture_t	*textures[4];
 	mlx_t			*mlx;
 	t_param			param;
 	t_texture		texture;
@@ -149,10 +149,11 @@ int			errhandler(char *msg);
 void		parsing(t_data *data);
 void		parse_map(t_data *data, int y);
 void		wall_check(t_data *data);
-char		*check_path(char *str);
-int			color_decoder(char *str, uint32_t *surface);
+char		*check_path(t_data *data, char *str);
+void		color_decoder(t_data *data, char *str, uint32_t *surface);
 void		set_dir(t_data *data, char c);
 void		set_dir2(t_data *data, char c);
+void		cub_exit(t_data *data, char *msg);
 
 //----------init.c
 t_data		*init_data(t_data *data, char **argv);

@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:41:30 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/05 09:29:02 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 12:50:50 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	flood_fill(int y, int x, t_data *data, char **map_cpy)
 	if (!map_cpy[y] || x < 0 || x > (int)ft_strlen(map_cpy[y])
 		|| y < data->player.start_map || y > data->param.nbline - 1)
 	{
-		ft_printf("error 1\n");
+		errhandler(ERRWALL);
 		exit(-1);
 	}
 	if (map_cpy[y][x] == '1' || map_cpy[y][x] == 'X')
