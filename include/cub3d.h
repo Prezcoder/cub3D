@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 12:45:11 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/05 15:38:58 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_param
 	char			*south;
 	char			*east;
 	char			*west;
+	char			*door;
 	uint32_t		wall;
 	uint32_t		ceil;
 	uint32_t		floor;
@@ -119,12 +120,15 @@ typedef struct s_texture
 	uint32_t		**south;
 	uint32_t		**east;
 	uint32_t		**west;
+	uint32_t		**door;
+	int				door_flag;
 	uint32_t		**ceil;
 	uint32_t		**floor;
 	mlx_texture_t	*north_tex;
 	mlx_texture_t	*south_tex;
 	mlx_texture_t	*east_tex;
 	mlx_texture_t	*west_tex;
+	mlx_texture_t	*door_tex;
 	mlx_texture_t	*ceil_tex;
 	mlx_texture_t	*floor_tex;
 }			t_texture;
@@ -132,7 +136,7 @@ typedef struct s_texture
 
 typedef struct s_data
 {
-	mlx_texture_t	*textures[4];
+	
 	mlx_t			*mlx;
 	t_param			param;
 	t_texture		texture;
@@ -184,4 +188,10 @@ void		drawline(t_data *data, mlx_texture_t *texture, uint32_t **arr, int x);
 void		choose_texture(t_data *data, int x);
 void		draw_vertline(t_data *data, int x);
 
+//----------init_text.c
+void		free_text_ar(mlx_texture_t *texture, uint32_t **ar);
+void		fill_array(mlx_texture_t * texture, uint32_t **ar);
+uint32_t	**texture_to_array(mlx_texture_t *texture);
+void		free_all_array(t_data *data);
+void		init_texture(t_data *data);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:20:23 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/05 10:36:48 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 15:39:15 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,11 @@ void	dda(t_data *data)
 		dda_calc(data);
 		if (data->map[(int)data->ray.coord.x][(int)data->ray.coord.y] == '1')
 			break ;
+		if (data->map[(int)data->ray.coord.x][(int)data->ray.coord.y] == '2')
+		{
+			data->texture.door_flag = 1;
+			break;
+		}
 	}
 	if (data->ray.side < 2)
 		data->ray.perp_wall_dist = (data->ray.side_dist.x
