@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+         #
+#    By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 10:27:08 by emlamoth          #+#    #+#              #
-#    Updated: 2023/10/02 16:10:49 by emlamoth         ###   ########.fr        #
+#    Updated: 2023/10/05 09:20:47 by fbouchar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SRCS =	main.c			\
 		init.c			\
 		flood_fill.c	\
 		raycast.c		\
+		raycast_utils.c		\
 		controls.c		\
 		movements.c		\
 

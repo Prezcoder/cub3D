@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 08:54:27 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 09:10:16 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	errhandler(char *msg)
 int	is_collision(t_data *data, int playerX, int playerY, int playerRadius)
 {
 	(void)playerRadius;
-	int gridX;
-	int gridY;
+	int	gridX;
+	int	gridY;
 	
 	gridX = playerX / MINITILES;
 	gridY = playerY / MINITILES;
