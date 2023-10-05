@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 08:54:57 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/05 09:29:49 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 10:35:52 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	init_map(t_data *data, char *path)
 }
 void	init_game(t_data *data)
 {
+	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
 	data->ray.pos.x = (double)data->player.pos_y / MINITILES + (0.5);
 	data->ray.pos.y = (double)data->player.pos_x / MINITILES + (0.5);
 	data->ray.cam_x = 0;

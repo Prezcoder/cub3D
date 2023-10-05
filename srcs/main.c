@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 10:06:35 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/05 12:45:25 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,13 +341,17 @@ int	main(int argc, char **argv)
 	ft_freeall(data.map);
 	data.map = map_temp;
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
-	mouse_init(&data);
+	// mouse_init(&data);
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	mlx_image_to_window(data.mlx, data.image.window, 0, 0);
-	data.textures[0] = mlx_load_png(data.param.north);
-	data.textures[1] = mlx_load_png(data.param.south);
-	data.textures[2] = mlx_load_png(data.param.west);
-	data.textures[3] = mlx_load_png(data.param.east);
+	data.texture.north_tex = mlx_load_png(data.param.north);
+    data.texture.south_tex = mlx_load_png(data.param.south);
+    data.texture.east_tex = mlx_load_png(data.param.east);
+    data.texture.west_tex = mlx_load_png(data.param.west);
+    data.texture.north = texture_to_wall(data.texture.north_tex);
+    data.texture.south = texture_to_wall(data.texture.south_tex);
+    data.texture.east = texture_to_wall(data.texture.east_tex);
+    data.texture.west = texture_to_wall(data.texture.west_tex);
 	// data.image.minimap = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	// mlx_image_to_window(data.mlx, data.image.minimap, 0, 0);
 	// mlx_key_hook(data.mlx, &key_hook, &data);

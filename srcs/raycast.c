@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/05 10:07:39 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/05 12:45:38 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,5 @@ void	loop(void *param)
 		key_binding(data);
 		mouse_tracking(data);
 	}
-	usleep(3000);
+	usleep(1500);
 }
