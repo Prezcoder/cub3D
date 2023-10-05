@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 10:49:28 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 12:40:58 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ typedef struct s_texture
 
 typedef struct s_data
 {
+	mlx_texture_t	*textures[4];
 	mlx_t			*mlx;
 	t_param			param;
 	t_texture		texture;
