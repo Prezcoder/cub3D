@@ -6,18 +6,19 @@
 #    By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 10:27:08 by emlamoth          #+#    #+#              #
-#    Updated: 2023/10/05 09:52:51 by emlamoth         ###   ########.fr        #
+#    Updated: 2023/10/05 13:59:17 by emlamoth         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS =	main.c			\
-		parsing.c		\
-		init.c			\
+SRCS =	controls.c		\
 		flood_fill.c	\
+		init_data.c			\
+		init_text.c		\
+		main.c			\
+		movements.c		\
+		parsing.c		\
 		raycast.c		\
 		raycast_utils.c		\
-		controls.c		\
-		movements.c		\
 
 SRCS_DIR = ./srcs/
 OBJS_DIR = ./srcs/objs_cub3D/

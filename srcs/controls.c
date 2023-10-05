@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   controls.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:52:39 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 12:41:10 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 15:34:22 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	mouse_tracking(t_data *data)
 		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, ROTATE_SPEED * MOUSE_SPEED);
 		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, ROTATE_SPEED * MOUSE_SPEED);
 	}
-	if(x > WINWIDTH / 2)
+	if(data->view > 0 && x > WINWIDTH / 2)
 	{
 		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, -ROTATE_SPEED * MOUSE_SPEED);
 		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, -ROTATE_SPEED * MOUSE_SPEED);
@@ -57,6 +57,17 @@ void	mouse_tracking(t_data *data)
 	if(y != WINHEIGHT / 2 || x != WINWIDTH / 2)
 		mlx_set_mouse_pos(data->mlx, WINWIDTH / 2, WINHEIGHT / 2);
 	
+}
+
+void	open_door(t_data *data)
+{
+	double	checkradius;
+
+	checkradius = 1.2;
+	if (data->map[(int)(data->ray.pos.x + data->ray.dir.x * checkradius)][(int)data->ray.pos.y] == '2')
+		data->map[(int)(data->ray.pos.x + data->ray.dir.x * checkradius)][(int)data->ray.pos.y] = '0';
+	if (data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y + data->ray.dir.y * checkradius)] == '2')
+		data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y + data->ray.dir.y * checkradius)] = '0';
 }
 
 void	ft_key_detect(mlx_key_data_t keydata, void *param)
@@ -71,8 +82,6 @@ void	ft_key_detect(mlx_key_data_t keydata, void *param)
 		else
 			data->view = 0;
 	}
-	key_binding(data);
-	mouse_tracking(data);
+	if (keydata.action == MLX_PRESS && keydata.key == MLX_KEY_SPACE)
+		open_door(data);
 }
-
-//TODO corner spawn

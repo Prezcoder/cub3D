@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:41:56 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/05 14:35:47 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 15:53:27 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	parse_map(t_data *data, int y)
 		while(data->map[y][x])
 		{
 			if(data->map[y][x] == '1' || data->map[y][x] == '0'
-				|| data->map[y][x] == ' ')
+				|| data->map[y][x] == ' ' || data->map[y][x] == '2')
 			{
 				if (data->map[y][x] == ' ')
 					data->map[y][x] = '0';
@@ -204,6 +204,8 @@ void	parsing(t_data *data)
 				data->param.west = check_path(data, &data->map[y][x + 3]);
 			else if (ft_strncmp(&data->map[y][x], "EA ", 3) == 0)
 				data->param.east = check_path(data, &data->map[y][x + 3]);
+			else if (ft_strncmp(&data->map[y][x], "DO ", 3) == 0)
+				data->param.door = check_path(data, &data->map[y][x + 3]);
 			else if (ft_strncmp(&data->map[y][x], "F ", 2) == 0)
 			{
 				color_decoder(data, &data->map[y][x + 2], &data->param.floor);

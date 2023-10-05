@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 12:43:11 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 14:10:55 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,38 +261,6 @@ void	draw_minimap(mlx_image_t *image, char **map)
 // 	}
 	
 // }
-uint32_t	**texture_to_wall(mlx_texture_t *texture)
-{
-	uint32_t x = 0;
-	uint32_t y = 0;
-	uint32_t i = 0;
-	uint32_t **ar;
-	ar = ft_calloc(texture->height + 1, sizeof(uint32_t *));
-	while(y < texture->height)
-	{
-		ar[y] = ft_calloc(texture->width, sizeof(uint32_t));
-		y++;
-	}
-	y = 0;
-	while(y < texture->height - 1)
-	{
-		x = 0;
-		while(x < texture->width)
-		{
-			ar[y][x] = ft_color((uint32_t)texture->pixels[i],
-			(uint32_t)texture->pixels[i + 1],
-			(uint32_t)texture->pixels[i + 2],
-			(uint32_t)texture->pixels[i + 3]);
-			i += 4;
-			x++;
-		}
-		y++;
-	}
-	return (ar);
-}
-
-//TODO free les array de texture
-
 void	render(void *param)
 {
 	// double pos_x;
@@ -320,7 +288,6 @@ void	mouse_init(t_data *data)
 }
 
 
-
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -341,27 +308,18 @@ int	main(int argc, char **argv)
 	ft_freeall(data.map);
 	data.map = map_temp;
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
+	init_texture(&data);
 	// mouse_init(&data);
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	mlx_image_to_window(data.mlx, data.image.window, 0, 0);
-	data.texture.north_tex = mlx_load_png(data.param.north);
-    data.texture.south_tex = mlx_load_png(data.param.south);
-    data.texture.east_tex = mlx_load_png(data.param.east);
-    data.texture.west_tex = mlx_load_png(data.param.west);
-    data.texture.north = texture_to_wall(data.texture.north_tex);
-    data.texture.south = texture_to_wall(data.texture.south_tex);
-    data.texture.east = texture_to_wall(data.texture.east_tex);
-    data.texture.west = texture_to_wall(data.texture.west_tex);
 	// data.image.minimap = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	// mlx_image_to_window(data.mlx, data.image.minimap, 0, 0);
 	// mlx_key_hook(data.mlx, &key_hook, &data);
 	//-------------------------------------
-	data.image.test = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
-	mlx_image_to_window(data.mlx, data.image.test, 0, 0);
 	// mlx_loop_hook(data.mlx, &render, &data);
-	//*----------------------------
+	//-----------------------------
+	
 	init_game(&data);
-	mlx_key_hook(data.mlx, &ft_key_detect, &data);
 	mlx_loop_hook(data.mlx, &loop, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
