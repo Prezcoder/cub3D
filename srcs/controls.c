@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:52:39 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 10:06:54 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/05 10:10:03 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	mouse_tracking(t_data *data)
 	y = 0;
 	x = 0;
 	mlx_get_mouse_pos(data->mlx, &x, &y);
-<<<<<<< HEAD
 	if(data->view == 2 && y < WINHEIGHT / 2)
 	{
 		if(data->ray.cam_angle < 1)
@@ -62,9 +61,6 @@ void	mouse_tracking(t_data *data)
 			data->ray.cam_angle -= 0.015;
 	}
 	if(data->view > 0 && x < WINWIDTH / 2)
-=======
-	if(x < WINWIDTH / 2)
->>>>>>> finaly working
 	{
 		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, ROTATE_SPEED * MOUSE_SPEED);
 		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, ROTATE_SPEED * MOUSE_SPEED);
