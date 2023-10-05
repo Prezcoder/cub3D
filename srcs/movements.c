@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:09:54 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 09:28:37 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/05 10:41:25 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	move_player(t_data *data, double move_speed)
 {
 	double	checkradius;
 
-	checkradius = 0.5;
+	checkradius = CHECKRADIUS;
 	if (move_speed < 0)
-		checkradius = -0.5;
+		checkradius = -CHECKRADIUS;
 	if (data->map[(int)(data->ray.pos.x + data->ray.dir.x * (move_speed
 				+ checkradius))][(int)data->ray.pos.y] == '0')
 		data->ray.pos.x += data->ray.dir.x * move_speed;
@@ -40,9 +40,9 @@ void	strafe_player(t_data *data, double strafe_speed)
 {
 	double	checkradius;
 
-	checkradius = 0.5;
+	checkradius = CHECKRADIUS;
 	if (strafe_speed < 0)
-		checkradius = -0.5;
+		checkradius = -CHECKRADIUS;
 	if (data->map[(int)(data->ray.pos.x + data->ray.dir.y * (strafe_speed
 				+ checkradius))][(int)data->ray.pos.y] == '0')
 		data->ray.pos.x += data->ray.dir.y * strafe_speed;
