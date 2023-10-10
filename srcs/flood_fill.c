@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:41:30 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/10 10:54:19 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/10 12:08:54 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	flood_fill(int y, int x, t_data *data, char **map_cpy)
 	if (map_cpy[y][x] == '1' || map_cpy[y][x] == 'X')
 		return ;
 	if (map_cpy[y][x] == 'N' || map_cpy[y][x] == 'S' || map_cpy[y][x] == 'W'
-		|| map_cpy[y][x] == 'E' || map_cpy[y][x] == ' ' || map_cpy[y][x] == '2')//TODO enlever le '2' pour downgrade
+		|| map_cpy[y][x] == 'E' || map_cpy[y][x] == ' ' || map_cpy[y][x] == '2') //TODO enlever le '2' pour downgrade
 		;
 	map_cpy[y][x] = 'X';
 	flood_fill(y + 1, x, data, map_cpy);

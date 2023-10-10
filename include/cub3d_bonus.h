@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/10 12:42:26 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/10 12:26:30 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 //----------define
 # define WINWIDTH 1792
@@ -159,7 +159,6 @@ void		set_dir2(t_data *data, char c);
 void		cub_exit(t_data *data, char *msg);
 int			check_start_map(t_data *data);
 int			player_position(t_data *data, int y, int x);
-void		free_param(t_data *data);
 
 //----------init.c
 t_data		*init_data(t_data *data, char **argv);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/10 11:17:18 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/10 12:45:26 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,18 @@ int	errhandler(char *msg)
 {
 	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd(msg, 2);
-	return(-1);
+	return (-1);
 }
 
 void	center_dot(mlx_image_t *image)
 {
-	int x;
-	int y;
-	int dx;
-	int dy;
-	int radius = 3;
-	
+	int	x;
+	int	y;
+	int	dx;
+	int	dy;
+	int	radius;
+
+	radius = 3;
 	x = (WINWIDTH / 2) - radius;
 	while (x <= (WINWIDTH / 2) + radius)
 	{
@@ -49,20 +50,21 @@ void	center_dot(mlx_image_t *image)
 		x++;
 	}
 }
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
 	char	**map_temp;
-	
+
 	if (argc != 2)
-		return(errhandler(ERRARGC));
+		return (errhandler(ERRARGC));
 	if (ft_strlen(argv[1]) < 12)
 		return (ft_printf("Error\nThe file format isn't good.\n"));
 	if (ft_strncmp(&argv[1][ft_strlen(argv[1]) - 4], ".cub", 4))
 		return (ft_printf("Error\nThe file format isn't good.\n"));
 	init_data(&data, argv);
 	if (init_map(&data, argv[1]) == -1)
-		return(-1);
+		return (-1);
 	parsing(&data);
 	wall_check(&data);
 	map_temp = ft_tabdup(&(data.map[data.player.start_map]));
@@ -70,7 +72,6 @@ int	main(int argc, char **argv)
 	data.map = map_temp;
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
 	init_texture(&data);
-	// mouse_init(&data);
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	mlx_image_to_window(data.mlx, data.image.window, 0, 0);
 	// data.image.minimap = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
@@ -79,12 +80,12 @@ int	main(int argc, char **argv)
 	//-------------------------------------
 	// mlx_loop_hook(data.mlx, &render, &data);
 	//-----------------------------
-	
 	init_game(&data);
 	mlx_loop_hook(data.mlx, &loop, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
 	ft_freeall(data.map);
+	free_param(&data);
 }
 
 //TODO pourquoi faut diviser player.pos par MINITILES

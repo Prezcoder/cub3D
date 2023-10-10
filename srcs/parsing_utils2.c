@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 11:06:21 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/10 11:07:49 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/10 12:38:07 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,31 @@ int	player_position(t_data *data, int y, int x)
 	else
 		cub_exit(data, ERRPLAYER);
 	return (x);
+}
+
+void	color_decoder(t_data *data, char *str, uint32_t *surface)
+{
+	int			i;
+	uint32_t	temp;
+	char		*temp_str;
+
+	temp_str = NULL;
+	temp_str = ft_strtrim(str, " ");
+	i = 0;
+	*surface = 0;
+	while (temp_str[i] && i < 12)
+	{
+		temp = (uint32_t)ft_atoi(temp_str + i);
+		if (temp < 0 || temp > 255)
+			cub_exit(data, ERRCOLOR);
+		*surface = *surface << 8;
+		*surface |= temp;
+		while (temp_str[i] && temp_str[i] != ',')
+			i++;
+		if (temp_str[i])
+			i++;
+	}
+	*surface = *surface << 8;
+	*surface |= 255;
+	free(temp_str);
 }
