@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 13:46:44 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/10 11:22:57 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/10 12:47:37 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,11 @@ void	init_texture(t_data *data)
 {
 	if (data->param.door)
 	{
-		data->texture.door_tex = mlx_load_png(data->param.door);
+		data->texture.door_tex = mlx_load_png(data->param.door); //TODO
 		data->texture.north_tex = mlx_load_png(data->param.north);
 		data->texture.south_tex = mlx_load_png(data->param.south);
 		data->texture.east_tex = mlx_load_png(data->param.east);
 		data->texture.west_tex = mlx_load_png(data->param.west);
-		data->texture.door_tex = mlx_load_png(data->param.door);
 	}
 	if (!data->texture.north_tex || !data->texture.south_tex 
 		|| !data->texture.west_tex || !data->texture.east_tex)
@@ -108,8 +107,7 @@ void	init_texture(t_data *data)
 	data->texture.south = texture_to_array(data->texture.south_tex);
 	data->texture.east = texture_to_array(data->texture.east_tex);
 	data->texture.west = texture_to_array(data->texture.west_tex);
-	if (data->param.door)
-		data->texture.door = texture_to_array(data->texture.door_tex);
+	data->texture.door = texture_to_array(data->texture.door_tex); //TODO
 	if (!data->texture.north || !data->texture.south 
 		|| !data->texture.west || !data->texture.east)
 	{

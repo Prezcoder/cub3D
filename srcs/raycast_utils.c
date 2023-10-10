@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 09:20:23 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/10 11:23:51 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/10 12:13:51 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	dda(t_data *data)
 		if (data->map[(int)data->ray.coord.x][(int)data->ray.coord.y] == '2')//TODO a enlever pour downgrade
 		{
 			data->texture.door_flag = 1;
-			break;
+			break ;
 		}//jusqu ici
 	}
 	if (data->ray.side < 2)
