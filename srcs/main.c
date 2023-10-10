@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/10 12:45:26 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/10 13:19:52 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	main(int argc, char **argv)
 	map_temp = ft_tabdup(&(data.map[data.player.start_map]));
 	ft_freeall(data.map);
 	data.map = map_temp;
+	system("afplay ./music/musique.mp3&");
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
 	init_texture(&data);
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
@@ -86,6 +87,8 @@ int	main(int argc, char **argv)
 	mlx_terminate(data.mlx);
 	ft_freeall(data.map);
 	free_param(&data);
+	system("killall afplay");
+	return(EXIT_SUCCESS);
 }
 
 //TODO pourquoi faut diviser player.pos par MINITILES
