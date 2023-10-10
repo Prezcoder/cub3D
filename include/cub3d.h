@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/10 11:19:43 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/10 11:22:30 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include "../srcs/libft/libft.h"
-# include "../srcs/MLX42/include/MLX42/MLX42.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 
 //----------struct
 
@@ -143,6 +143,8 @@ typedef struct s_data
 	double			angle;
 	char			**map;
 	int				view;
+	int				y;
+	int				x;
 }			t_data;
 
 //----------parsing.c
@@ -155,6 +157,8 @@ void		color_decoder(t_data *data, char *str, uint32_t *surface);
 void		set_dir(t_data *data, char c);
 void		set_dir2(t_data *data, char c);
 void		cub_exit(t_data *data, char *msg);
+int			check_start_map(t_data *data);
+int			player_position(t_data *data, int y, int x);
 
 //----------init.c
 t_data		*init_data(t_data *data, char **argv);

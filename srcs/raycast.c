@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast.c                                          :+:      :+:    :+:   */
+/*   Raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/10 11:12:18 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/10 11:23:24 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	find_hit(t_data *data, mlx_texture_t *texture)
 {
 	double	hit;
 
-	if(data->texture.door_flag == 1)//TODO a enlever pour downgrade
+	if (data->texture.door_flag == 1)//TODO a enlever pour downgrade
 		texture = data->texture.door_tex;
 	hit = 0;
 	if (data->ray.side == 0 || data->ray.side == 1)
@@ -37,7 +37,7 @@ void	drawline(t_data *data, mlx_texture_t *texture, uint32_t **arr, int x)
 	double	pos;
 	int		tex_y;
 	int		j;
-	if(data->texture.door_flag == 1)//TODO a enlever pour downgrade
+	if (data->texture.door_flag == 1)//TODO a enlever pour downgrade
 	{
 		texture = data->texture.door_tex;
 		arr = data->texture.door;
