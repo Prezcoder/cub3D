@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/10 12:42:26 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/10 17:19:07 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,4 +199,12 @@ void		free_all_array(t_data *data);
 void		init_texture(t_data *data);
 
 void		center_dot(mlx_image_t *image);
+void		clean_texture(t_data *data);
 #endif
+
+//Process 38767: 9028 leaks for 137015456 total leaked bytes.
+//Process 38920: 9036 leaks for 137080992 total leaked bytes.
+//Process 43663: 7084 leaks for 54272512 total leaked bytes. mlx delete texture
+//Process 51922: 1241 leaks for 6383616 total leaked bytes. mlx delete texture array
+
+

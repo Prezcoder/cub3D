@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/10 13:19:52 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/10 17:24:12 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	center_dot(mlx_image_t *image)
 	int	dy;
 	int	radius;
 
-	radius = 3;
+	radius = 4;
 	x = (WINWIDTH / 2) - radius;
 	while (x <= (WINWIDTH / 2) + radius)
 	{
@@ -70,7 +70,7 @@ int	main(int argc, char **argv)
 	map_temp = ft_tabdup(&(data.map[data.player.start_map]));
 	ft_freeall(data.map);
 	data.map = map_temp;
-	system("afplay ./music/musique.mp3&");
+	// system("afplay ./music/musique.mp3&");
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
 	init_texture(&data);
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
@@ -84,10 +84,12 @@ int	main(int argc, char **argv)
 	init_game(&data);
 	mlx_loop_hook(data.mlx, &loop, &data);
 	mlx_loop(data.mlx);
+	clean_texture(&data);
+	mlx_delete_image(data.mlx, data.image.window);
 	mlx_terminate(data.mlx);
 	ft_freeall(data.map);
 	free_param(&data);
-	system("killall afplay");
+	// system("killall afplay");
 	return(EXIT_SUCCESS);
 }
 
