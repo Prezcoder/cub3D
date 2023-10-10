@@ -3,22 +3,24 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+         #
+#    By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 10:27:08 by emlamoth          #+#    #+#              #
-#    Updated: 2023/10/05 13:59:17 by emlamoth         ###   ########.fr        #
+#    Updated: 2023/10/10 11:10:06 by fbouchar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =	controls.c		\
 		flood_fill.c	\
-		init_data.c			\
+		init_data.c		\
 		init_text.c		\
 		main.c			\
 		movements.c		\
 		parsing.c		\
+		parsing_utils.c	\
+		parsing_utils2.c\
 		raycast.c		\
-		raycast_utils.c		\
+		raycast_utils.c	\
 
 SRCS_DIR = ./srcs/
 OBJS_DIR = ./srcs/objs_cub3D/
@@ -28,7 +30,7 @@ HEADERS	:= -I ./include -I $(LIBMLX_DIR)include/
 LIBFT_DIR = ./srcs/libft/
 LIBFT = ./srcs/libft/libft.a
 
-LIBMLX_DIR	:= ./srcs/MLX42/
+LIBMLX_DIR	:= ./MLX42/
 LIBMLX	:= $(LIBMLX_DIR)/build/libmlx42.a -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/"
 
 NAME = cub3D

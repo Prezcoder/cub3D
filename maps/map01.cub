@@ -1,10 +1,16 @@
-NO ./graphics/north_wall.png
-SO ./graphics/south_wall2.png
+   
+   
+   
+   NO ./graphics/north_wall.png
+C 40,40,40
+	SO     ./graphics/south_wall2.png
+DO     ./graphics/door1.png
+
+
+
 WE ./graphics/west_wall2.png
 EA ./graphics/east_wall.png
-DO ./graphics/door2.png
 F 51,35,6
-C 40,40,40
 
 11111111111 11111111111111111111111111111
 1020000000110000101000001               1
