@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/10 10:29:27 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/10 11:12:18 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	loop(void *param)
 		set_draw_range(data);
 		draw_vertline(data, x);
 		choose_texture(data, x);
+		center_dot(data->image.window);
 		mlx_key_hook(data->mlx, &ft_key_detect, data);
 		key_binding(data);//TODO a enlever pour downgrade
 		mouse_tracking(data);//TODO a enlever pour downgrade

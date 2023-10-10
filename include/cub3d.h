@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/10 10:44:24 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/10 11:19:43 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define MOVESPEED 5
 # define MOVE_SPEED 0.00007
 # define ROTATE_SPEED 0.000040
-# define MOUSE_SPEED 700
+# define MOUSE_SPEED 450
 # define CHECKRADIUS 0.5
 
 ////////////----------error message
@@ -192,4 +192,6 @@ void		fill_array(mlx_texture_t * texture, uint32_t **ar);
 uint32_t	**texture_to_array(mlx_texture_t *texture);
 void		free_all_array(t_data *data);
 void		init_texture(t_data *data);
+
+void		center_dot(mlx_image_t *image);
 #endif
