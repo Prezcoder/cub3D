@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:52:39 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 15:34:22 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/10 10:28:53 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	key_binding(t_data *data)
 	}
 }
 
-void	mouse_tracking(t_data *data)
+void	mouse_tracking(t_data *data) // enlever pour downgrade
 {
 	int32_t	y;
 	int32_t	x;
@@ -59,7 +59,7 @@ void	mouse_tracking(t_data *data)
 	
 }
 
-void	open_door(t_data *data)
+void	open_door(t_data *data) //TODO enlever pour downgrade
 {
 	double	checkradius;
 
@@ -70,7 +70,7 @@ void	open_door(t_data *data)
 		data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y + data->ray.dir.y * checkradius)] = '0';
 }
 
-void	ft_key_detect(mlx_key_data_t keydata, void *param)
+void	ft_key_detect(mlx_key_data_t keydata, void *param) //TODO enlever pour downgrade
 {
 	t_data	*data;
 
@@ -82,6 +82,6 @@ void	ft_key_detect(mlx_key_data_t keydata, void *param)
 		else
 			data->view = 0;
 	}
-	if (keydata.action == MLX_PRESS && keydata.key == MLX_KEY_SPACE)
+	if (keydata.action == MLX_PRESS && keydata.key == MLX_KEY_F)
 		open_door(data);
 }

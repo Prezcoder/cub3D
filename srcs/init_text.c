@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 13:46:44 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 14:51:27 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/10 10:26:31 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	init_texture(t_data *data)
 	if(!data->texture.north_tex || !data->texture.south_tex 
 		|| !data->texture.west_tex || !data->texture.east_tex)
 	{
-		errhandler("PNG loading fail");
+		errhandler(ERRTEXT);
 		exit(-1); //TODO fonction pour free
 	}
     data->texture.north = texture_to_array(data->texture.north_tex);
@@ -113,7 +113,7 @@ void	init_texture(t_data *data)
 		|| !data->texture.west || !data->texture.east)
 	{
 		
-		errhandler("PNG loading fail");
+		errhandler(ERRTEXT);
 		exit(-1); //TODO fonction pour free
 	}
 }	

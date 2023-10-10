@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 15:52:37 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/10 10:44:24 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,8 @@
 # define ERRNOPLAYER "No player detected\n"
 # define ERRCHAR "Wrong chars detected\n"
 # define ERRWALL "The map isn't framed by wall\n"
-
-
-////////////----------temp
-# define TEMPMAP "./graphics/bellebriquewow.png"
-# define TEMPCOLOR "220,100,0"
+# define ERRTEXT "Texture initialization fail\n"
+# define ERRMAPINIT "Map initialization fail\n"
 
 //----------include
 # include <unistd.h>

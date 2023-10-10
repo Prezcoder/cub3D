@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 08:54:57 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/05 10:35:52 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/10 10:52:47 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,16 @@ t_data	*init_data(t_data *data, char **argv)
 	return (data);
 }
 
-int	init_map(t_data *data, char *path)
+int	init_aray(t_data *data, char *path)
 {
 	int		fd;
 	int		i;
-	int		len;
 	char	*temp;
 
 	i = 0;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		return (errhandler(ERRMAP));
+		return (-1);
 	temp = get_next_line(fd);
 	while (temp)
 	{
@@ -43,11 +42,22 @@ int	init_map(t_data *data, char *path)
 	data->param.nbline = i;
 	close(fd);
 	data->map = ft_calloc(i + 1, sizeof(char *));
+	return (0);
+}
+
+int	init_map(t_data *data, char *path)
+{
+	int		fd;
+	int		i;
+	int		len;
+	
+	if(init_aray(data, path) == -1)
+		return (errhandler(ERRMAP));
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (errhandler(ERRMAP));
 	i = 0;
-	data->map[i] = get_next_line(fd);
+	data->map[i] = get_next_line(fd);	
 	len = ft_strlen(data->map[i]);
 	if (data->map[i][len - 1] == '\n')
 		data->map[i][len - 1] = 0;
@@ -58,18 +68,14 @@ int	init_map(t_data *data, char *path)
 		{		
 			len = ft_strlen(data->map[i]);
 			if (data->map[i][len - 1] == '\n')
-			data->map[i][len - 1] = 0;
+				data->map[i][len - 1] = 0;
 		}
-	}	
-	//--------print la map-------//
-	// i = 0;
-	// while(data->map[i])
-	// 	ft_printf("%s", data->map[i++]);
+	}
 	return (0);
 }
 void	init_game(t_data *data)
 {
-	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
+	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);//TODO a enlever pour downgrade
 	data->ray.pos.x = (double)data->player.pos_y / MINITILES + (0.5);
 	data->ray.pos.y = (double)data->player.pos_x / MINITILES + (0.5);
 	data->ray.cam_x = 0;

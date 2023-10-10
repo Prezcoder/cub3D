@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/05 15:40:38 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/10 10:29:27 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	find_hit(t_data *data, mlx_texture_t *texture)
 {
 	double	hit;
 
-	if(data->texture.door_flag == 1)
+	if(data->texture.door_flag == 1)//TODO a enlever pour downgrade
 		texture = data->texture.door_tex;
 	hit = 0;
 	if (data->ray.side == 0 || data->ray.side == 1)
@@ -37,12 +37,12 @@ void	drawline(t_data *data, mlx_texture_t *texture, uint32_t **arr, int x)
 	double	pos;
 	int		tex_y;
 	int		j;
-	if(data->texture.door_flag == 1)
+	if(data->texture.door_flag == 1)//TODO a enlever pour downgrade
 	{
 		texture = data->texture.door_tex;
 		arr = data->texture.door;
 		data->texture.door_flag = 0;
-	}
+	}//jusqu ici
 	dist = 1.0 * texture->height / data->ray.line_height;
 	pos = ((double) data->ray.draw_start - (double) WINHEIGHT / 2
 			+ (double) data->ray.line_height / 2) * dist;
@@ -110,8 +110,8 @@ void	loop(void *param)
 		draw_vertline(data, x);
 		choose_texture(data, x);
 		mlx_key_hook(data->mlx, &ft_key_detect, data);
-		key_binding(data);
-		mouse_tracking(data);
+		key_binding(data);//TODO a enlever pour downgrade
+		mouse_tracking(data);//TODO a enlever pour downgrade
 	}
 	usleep(1500);
 }

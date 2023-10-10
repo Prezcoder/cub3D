@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/05 14:10:55 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/10 10:18:47 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,18 +275,6 @@ void	render(void *param)
 	// dda_algorithm(data, data->player.pos_x, data->player.pos_y, data->image.minimap);
 	// printf("%f\n", data->angle);
 }
-void	mouse_init(t_data *data)
-{
-	int32_t x = 0;
-	int32_t y = 0;
-	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
-	mlx_get_mouse_pos(data->mlx, &x, &y);
-	printf("X :%d Y : %d", x, y);
-	mlx_set_mouse_pos(data->mlx, 1024 / 2, 768 / 2);
-	mlx_get_mouse_pos(data->mlx, &x, &y);
-	printf("X :%d Y : %d", x, y);
-}
-
 
 int	main(int argc, char **argv)
 {
