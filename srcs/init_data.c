@@ -6,11 +6,20 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 08:54:57 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/10 12:09:32 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/11 10:38:07 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+void	dup_map(t_data *data)
+{
+	char	**map_temp;
+
+	map_temp = ft_tabdup(&(data->map[data->player.start_map]));
+	ft_freeall(data->map);
+	data->map = map_temp;
+}
 
 t_data	*init_data(t_data *data, char **argv)
 {

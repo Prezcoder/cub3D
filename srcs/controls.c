@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:52:39 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/10 12:17:31 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/11 10:39:17 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	mouse_tracking(t_data *data) // enlever pour downgrade
 	}
 	if (y != WINHEIGHT / 2 || x != WINWIDTH / 2)
 		mlx_set_mouse_pos(data->mlx, WINWIDTH / 2, WINHEIGHT / 2);
-	
 }
 
 void	open_door(t_data *data) //TODO enlever pour downgrade
@@ -85,7 +84,7 @@ void	ft_key_detect(mlx_key_data_t keydata, void *param) //TODO enlever pour down
 	data = param;
 	if (keydata.action == MLX_PRESS && keydata.key == MLX_KEY_V)
 	{
-		if(data->view == 0)
+		if (data->view == 0)
 			data->view = 1;
 		else
 			data->view = 0;

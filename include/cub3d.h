@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/10 17:19:07 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/11 10:39:51 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # define WINHEIGHT 1344
 # define MINITILES 8
 # define TEXTSIZE 
-# define DEGRE M_PI / 180.0
 # define MOVESPEED 5
 # define MOVE_SPEED 0.00007
 # define ROTATE_SPEED 0.000040
@@ -60,7 +59,7 @@ typedef struct s_player
 	int				start_map;
 }			t_player;
 
-typedef	struct s_vect
+typedef struct s_vect
 {
 	double			x;
 	double			y;
@@ -106,7 +105,6 @@ typedef struct s_param
 
 typedef struct s_image
 {
-	
 	mlx_image_t		*window;
 	mlx_image_t		*minimap;
 	mlx_image_t		*test;
@@ -131,7 +129,6 @@ typedef struct s_texture
 	mlx_texture_t	*floor_tex;
 }			t_texture;
 
-
 typedef struct s_data
 {
 	mlx_t			*mlx;
@@ -147,7 +144,7 @@ typedef struct s_data
 	int				x;
 }			t_data;
 
-//----------parsing.c
+//----------parsing
 int			errhandler(char *msg);
 void		parsing(t_data *data);
 void		parse_map(t_data *data, int y);
@@ -161,18 +158,17 @@ int			check_start_map(t_data *data);
 int			player_position(t_data *data, int y, int x);
 void		free_param(t_data *data);
 
-//----------init.c
+//----------init
+void		dup_map(t_data *data);
 t_data		*init_data(t_data *data, char **argv);
 int			init_map(t_data *data, char *path);
 void		init_game(t_data *data);
-
 uint32_t	ft_color(int32_t r, int32_t g, int32_t b, int32_t a);
-
 void		ft_hook(void *param);
 void		loop(void *param);
 void		init_game(t_data *data);
 
-//----------controls.c
+//----------controls
 void		key_binding(t_data *data);
 void		mouse_tracking(t_data *data);
 void		ft_key_detect(mlx_key_data_t keydata, void *param);
@@ -180,31 +176,24 @@ void		rotate_vector(double *x, double *y, double angle);
 void		move_player(t_data *data, double move_speed);
 void		strafe_player(t_data *data, double strafe_speed);
 
-//----------raycast.c
+//----------raycast
 void		set_data(t_data *data, int x);
 void		set_side_dist(t_data *data);
 void		dda_calc(t_data *data);
 void		dda(t_data *data);
 void		set_draw_range(t_data *data);
 void		find_hit(t_data *data, mlx_texture_t *texture);
-void		drawline(t_data *data, mlx_texture_t *texture, uint32_t **arr, int x);
+void		drawline(t_data *data, mlx_texture_t *texture,
+				uint32_t **arr, int x);
 void		choose_texture(t_data *data, int x);
 void		draw_vertline(t_data *data, int x);
 
-//----------init_text.c
+//----------init_text
 void		free_text_ar(mlx_texture_t *texture, uint32_t **ar);
-void		fill_array(mlx_texture_t * texture, uint32_t **ar);
+void		fill_array(mlx_texture_t *texture, uint32_t **ar);
 uint32_t	**texture_to_array(mlx_texture_t *texture);
 void		free_all_array(t_data *data);
 void		init_texture(t_data *data);
-
 void		center_dot(mlx_image_t *image);
 void		clean_texture(t_data *data);
 #endif
-
-//Process 38767: 9028 leaks for 137015456 total leaked bytes.
-//Process 38920: 9036 leaks for 137080992 total leaked bytes.
-//Process 43663: 7084 leaks for 54272512 total leaked bytes. mlx delete texture
-//Process 51922: 1241 leaks for 6383616 total leaked bytes. mlx delete texture array
-
-

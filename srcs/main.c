@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/10 17:24:12 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/11 10:37:04 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+int	free_toute(t_data *data)
+{
+	system("killall afplay");
+	mlx_delete_image(data->mlx, data->image.window);
+	mlx_terminate(data->mlx);
+	free_param(data);
+	clean_texture(data);
+	ft_freeall(data->map);
+	return (EXIT_SUCCESS);
+}
 
 uint32_t	ft_color(int32_t r, int32_t g, int32_t b, int32_t a)
 {
@@ -54,7 +65,6 @@ void	center_dot(mlx_image_t *image)
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	char	**map_temp;
 
 	if (argc != 2)
 		return (errhandler(ERRARGC));
@@ -67,30 +77,14 @@ int	main(int argc, char **argv)
 		return (-1);
 	parsing(&data);
 	wall_check(&data);
-	map_temp = ft_tabdup(&(data.map[data.player.start_map]));
-	ft_freeall(data.map);
-	data.map = map_temp;
-	// system("afplay ./music/musique.mp3&");
+	dup_map(&data);
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
 	init_texture(&data);
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	mlx_image_to_window(data.mlx, data.image.window, 0, 0);
-	// data.image.minimap = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
-	// mlx_image_to_window(data.mlx, data.image.minimap, 0, 0);
-	// mlx_key_hook(data.mlx, &key_hook, &data);
-	//-------------------------------------
-	// mlx_loop_hook(data.mlx, &render, &data);
-	//-----------------------------
 	init_game(&data);
+	system("afplay ./music/musique.mp3&");
 	mlx_loop_hook(data.mlx, &loop, &data);
 	mlx_loop(data.mlx);
-	clean_texture(&data);
-	mlx_delete_image(data.mlx, data.image.window);
-	mlx_terminate(data.mlx);
-	ft_freeall(data.map);
-	free_param(&data);
-	// system("killall afplay");
-	return(EXIT_SUCCESS);
+	free_toute(&data);
 }
-
-//TODO pourquoi faut diviser player.pos par MINITILES

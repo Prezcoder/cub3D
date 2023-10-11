@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/10 12:26:30 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/11 09:47:32 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # define WINHEIGHT 1344
 # define MINITILES 8
 # define TEXTSIZE 
-# define DEGRE M_PI / 180.0
 # define MOVESPEED 5
 # define MOVE_SPEED 0.00007
 # define ROTATE_SPEED 0.000040
@@ -60,7 +59,7 @@ typedef struct s_player
 	int				start_map;
 }			t_player;
 
-typedef	struct s_vect
+typedef struct s_vect
 {
 	double			x;
 	double			y;
@@ -106,7 +105,6 @@ typedef struct s_param
 
 typedef struct s_image
 {
-	
 	mlx_image_t		*window;
 	mlx_image_t		*minimap;
 	mlx_image_t		*test;
@@ -130,7 +128,6 @@ typedef struct s_texture
 	mlx_texture_t	*ceil_tex;
 	mlx_texture_t	*floor_tex;
 }			t_texture;
-
 
 typedef struct s_data
 {
@@ -186,16 +183,16 @@ void		dda_calc(t_data *data);
 void		dda(t_data *data);
 void		set_draw_range(t_data *data);
 void		find_hit(t_data *data, mlx_texture_t *texture);
-void		drawline(t_data *data, mlx_texture_t *texture, uint32_t **arr, int x);
+void		drawline(t_data *data, mlx_texture_t *texture,
+				uint32_t **arr, int x);
 void		choose_texture(t_data *data, int x);
 void		draw_vertline(t_data *data, int x);
 
 //----------init_text.c
 void		free_text_ar(mlx_texture_t *texture, uint32_t **ar);
-void		fill_array(mlx_texture_t * texture, uint32_t **ar);
+void		fill_array(mlx_texture_t *texture, uint32_t **ar);
 uint32_t	**texture_to_array(mlx_texture_t *texture);
 void		free_all_array(t_data *data);
 void		init_texture(t_data *data);
-
 void		center_dot(mlx_image_t *image);
 #endif

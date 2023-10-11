@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_text.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 13:46:44 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/10 17:33:01 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/11 10:37:52 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
 
 void	fill_array(mlx_texture_t *texture, uint32_t **ar)
 {
@@ -65,7 +64,7 @@ void	free_text_ar(mlx_texture_t *texture, uint32_t **ar)
 	uint32_t	y;
 
 	y = 0;
-	while (y < texture->height - 2)
+	while (y < texture->height)
 	{
 		free(ar[y]);
 		ar[y] = NULL;
@@ -85,6 +84,8 @@ void	free_all_texture_array(t_data *data)
 		free_text_ar(data->texture.east_tex, data->texture.east);
 	if (data->texture.west)
 		free_text_ar(data->texture.west_tex, data->texture.west);
+	if (data->texture.door)
+		free_text_ar(data->texture.door_tex, data->texture.door);
 }
 
 void	init_texture(t_data *data)
@@ -119,14 +120,14 @@ void	init_texture(t_data *data)
 void	clean_texture(t_data *data)
 {
 	free_all_texture_array(data);
-	if(data->texture.door_tex)
+	if (data->texture.door_tex)
 		mlx_delete_texture(data->texture.door_tex);//TODO enlever sans bonus
-	if(data->texture.north_tex)
+	if (data->texture.north_tex)
 		mlx_delete_texture(data->texture.north_tex);
-	if(data->texture.south_tex)
+	if (data->texture.south_tex)
 		mlx_delete_texture(data->texture.south_tex);
-	if(data->texture.east_tex)
+	if (data->texture.east_tex)
 		mlx_delete_texture(data->texture.east_tex);
-	if(data->texture.west_tex)
+	if (data->texture.west_tex)
 		mlx_delete_texture(data->texture.west_tex);
 }
