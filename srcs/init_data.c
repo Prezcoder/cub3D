@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 08:54:57 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/11 10:38:07 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:05:45 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,15 @@
 void	dup_map(t_data *data)
 {
 	char	**map_temp;
+	int		y;
 
+	y = 0;
 	map_temp = ft_tabdup(&(data->map[data->player.start_map]));
 	ft_freeall(data->map);
 	data->map = map_temp;
+	while (data->map[y])
+		y++;
+	data->param.nbline = y;
 }
 
 t_data	*init_data(t_data *data, char **argv)
@@ -28,6 +33,14 @@ t_data	*init_data(t_data *data, char **argv)
 	ft_bzero(data, sizeof(t_data));
 	data->player.map_x = -1;
 	data->player.map_y = -1;
+	data->minimap.background_color = ft_color(0, 0, 0, 125);
+	data->minimap.floor_color = ft_color(255, 0, 0, 125);
+	data->minimap.wall_color = ft_color(0, 0, 255, 125);
+	data->minimap.door_color = ft_color(0, 255, 255, 125);
+	data->minimap.player_color = ft_color(255, 255, 0, 125);
+	data->minimap.pos_x = 10;
+	data->minimap.pos_y = 10;
+	
 	return (data);
 }
 

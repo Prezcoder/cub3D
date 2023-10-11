@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+         #
+#    By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 10:27:08 by emlamoth          #+#    #+#              #
-#    Updated: 2023/10/10 11:10:06 by fbouchar         ###   ########.fr        #
+#    Updated: 2023/10/11 18:04:49 by emlamoth         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS =	controls.c		\
 		parsing_utils2.c\
 		raycast.c		\
 		raycast_utils.c	\
+		minimap.c		\
 
 SRCS_DIR = ./srcs/
 OBJS_DIR = ./srcs/objs_cub3D/

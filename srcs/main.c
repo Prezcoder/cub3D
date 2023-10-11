@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/11 10:37:04 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/11 17:15:47 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int	main(int argc, char **argv)
 	init_texture(&data);
 	data.image.window = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
 	mlx_image_to_window(data.mlx, data.image.window, 0, 0);
+	data.image.minimap = mlx_new_image(data.mlx, WINWIDTH, WINHEIGHT);
+	mlx_image_to_window(data.mlx, data.image.minimap, 0, 0);
 	init_game(&data);
 	system("afplay ./music/musique.mp3&");
 	mlx_loop_hook(data.mlx, &loop, &data);

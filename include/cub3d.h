@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/11 10:39:51 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:03:56 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # define ROTATE_SPEED 0.000040
 # define MOUSE_SPEED 450
 # define CHECKRADIUS 0.5
+# define MINIHEIGHT 17
+# define MINIWIDTH 25
+# define MINISIZE 16
 
 ////////////----------error message
 # define ERRARGC "Usage : ./cub3D <map.cub>\n"
@@ -65,6 +68,26 @@ typedef struct s_vect
 	double			y;
 }			t_vect;
 
+typedef struct s_coor
+{
+	int	x;
+	int	y;
+}				t_coor;
+
+typedef struct s_minimap
+{
+	int				pos_x;
+	int				pos_y;
+	int				width;
+	int				height;
+	int				slot_size;
+	uint32_t		wall_color;
+	uint32_t		door_color;
+	uint32_t		floor_color;
+	uint32_t		player_color;
+	uint32_t		background_color;
+}					t_minimap;
+
 typedef struct s_ray
 {
 	int				tex_x;
@@ -101,6 +124,7 @@ typedef struct s_param
 	int				flgfloor;
 	int				flgceil;
 	int				nbline;
+	int				maxlen;
 }			t_param;
 
 typedef struct s_image
@@ -131,6 +155,7 @@ typedef struct s_texture
 
 typedef struct s_data
 {
+	t_minimap		minimap;
 	mlx_t			*mlx;
 	t_param			param;
 	t_texture		texture;
@@ -196,4 +221,8 @@ void		free_all_array(t_data *data);
 void		init_texture(t_data *data);
 void		center_dot(mlx_image_t *image);
 void		clean_texture(t_data *data);
+
+void		draw_minimap(t_data *data);
+void		draw_filled_circle(mlx_image_t *image, t_coor center, int radius,
+				uint32_t color);
 #endif
