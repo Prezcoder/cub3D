@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 08:54:57 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/11 18:05:45 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:47:25 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ void	dup_map(t_data *data)
 	data->param.nbline = y;
 }
 
-t_data	*init_data(t_data *data, char **argv)
+void	init_data(t_data *data)
 {
-	if (!argv)
-		return (data);
 	ft_bzero(data, sizeof(t_data));
 	data->player.map_x = -1;
 	data->player.map_y = -1;
@@ -40,8 +38,6 @@ t_data	*init_data(t_data *data, char **argv)
 	data->minimap.player_color = ft_color(255, 255, 0, 125);
 	data->minimap.pos_x = 10;
 	data->minimap.pos_y = 10;
-	
-	return (data);
 }
 
 int	init_aray(t_data *data, char *path)
@@ -109,4 +105,5 @@ void	init_game(t_data *data)
 	data->ray.step.x = 1;
 	data->ray.step.y = 1;
 	data->ray.cam_angle = 0.5;
+	mlx_get_window_pos(data->mlx, &data->param.w_pos_x, &data->param.w_pos_y);
 }

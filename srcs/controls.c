@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   controls.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:52:39 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/11 10:39:17 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/11 19:03:27 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	ft_key_detect(mlx_key_data_t keydata, void *param) //TODO enlever pour down
 
 	data = param;
 	if (keydata.action == MLX_PRESS && keydata.key == MLX_KEY_V)
-	{
+	{		
 		if (data->view == 0)
 			data->view = 1;
 		else
@@ -91,4 +91,6 @@ void	ft_key_detect(mlx_key_data_t keydata, void *param) //TODO enlever pour down
 	}
 	if (keydata.action == MLX_PRESS && keydata.key == MLX_KEY_F)
 		open_door(data);
+	if (keydata.action == MLX_PRESS && keydata.key == MLX_KEY_LEFT_SUPER)
+		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
 }

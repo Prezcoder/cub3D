@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/11 18:06:11 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/11 19:02:19 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,21 @@ void	draw_vertline(t_data *data, int x)
 		mlx_put_pixel(data->image.window, x, y++, data->param.floor);
 }
 
+void	track_window(t_data *data)
+{
+	int32_t	x = 0;
+	int32_t	y = 0;
+	
+	mlx_get_window_pos(data->mlx, &x, &y);
+	printf("X :%d\n", x);
+	printf("Y :%d\n", y);
+	if(data->param.w_pos_x != x || data->param.w_pos_y != y)
+	{
+		mlx_set_window_pos(data->mlx, data->param.w_pos_x, data->param.w_pos_y);
+	}
+	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
+}
+
 void	loop(void *param)
 {
 	t_data	*data;
@@ -110,11 +125,12 @@ void	loop(void *param)
 		set_draw_range(data);
 		draw_vertline(data, x);
 		choose_texture(data, x);
-		center_dot(data->image.window);
-		mlx_key_hook(data->mlx, &ft_key_detect, data);
 		key_binding(data);//TODO a enlever pour downgrade
 		mouse_tracking(data);//TODO a enlever pour downgrade
 	}
+	center_dot(data->image.window);
+	mlx_key_hook(data->mlx, &ft_key_detect, data);
+	track_window(data);
 	draw_minimap(data);
 	usleep(1500);
 }

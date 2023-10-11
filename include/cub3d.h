@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/11 18:03:56 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:52:00 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ typedef struct s_param
 	int				flgceil;
 	int				nbline;
 	int				maxlen;
+	int32_t			w_pos_x;
+	int32_t			w_pos_y;
 }			t_param;
 
 typedef struct s_image
@@ -185,11 +187,11 @@ void		free_param(t_data *data);
 
 //----------init
 void		dup_map(t_data *data);
-t_data		*init_data(t_data *data, char **argv);
+void		init_data(t_data *data);
 int			init_map(t_data *data, char *path);
 void		init_game(t_data *data);
 uint32_t	ft_color(int32_t r, int32_t g, int32_t b, int32_t a);
-void		ft_hook(void *param);
+// void		ft_hook(void *param);
 void		loop(void *param);
 void		init_game(t_data *data);
 
@@ -217,11 +219,12 @@ void		draw_vertline(t_data *data, int x);
 void		free_text_ar(mlx_texture_t *texture, uint32_t **ar);
 void		fill_array(mlx_texture_t *texture, uint32_t **ar);
 uint32_t	**texture_to_array(mlx_texture_t *texture);
-void		free_all_array(t_data *data);
+void		free_all_texture_array(t_data *data);
 void		init_texture(t_data *data);
 void		center_dot(mlx_image_t *image);
 void		clean_texture(t_data *data);
 
+//----------minimap
 void		draw_minimap(t_data *data);
 void		draw_filled_circle(mlx_image_t *image, t_coor center, int radius,
 				uint32_t color);

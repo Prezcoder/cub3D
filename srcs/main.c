@@ -6,13 +6,13 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/11 17:15:47 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:32:38 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int	free_toute(t_data *data)
+void	free_toute(t_data *data)
 {
 	system("killall afplay");
 	mlx_delete_image(data->mlx, data->image.window);
@@ -20,7 +20,6 @@ int	free_toute(t_data *data)
 	free_param(data);
 	clean_texture(data);
 	ft_freeall(data->map);
-	return (EXIT_SUCCESS);
 }
 
 uint32_t	ft_color(int32_t r, int32_t g, int32_t b, int32_t a)
@@ -72,7 +71,7 @@ int	main(int argc, char **argv)
 		return (ft_printf("Error\nThe file format isn't good.\n"));
 	if (ft_strncmp(&argv[1][ft_strlen(argv[1]) - 4], ".cub", 4))
 		return (ft_printf("Error\nThe file format isn't good.\n"));
-	init_data(&data, argv);
+	init_data(&data);
 	if (init_map(&data, argv[1]) == -1)
 		return (-1);
 	parsing(&data);
@@ -89,4 +88,5 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(data.mlx, &loop, &data);
 	mlx_loop(data.mlx);
 	free_toute(&data);
+	return (EXIT_SUCCESS);//TODO si on veux garder ce return faut le laisser dans le main
 }
