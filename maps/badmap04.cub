@@ -5,7 +5,7 @@ C 40,40,40
 
 WE ./graphics/west_wall2.png
 EA ./graphics/east_wall.png
-F 51,35,6
+
 
 11111
 10001

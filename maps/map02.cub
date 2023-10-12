@@ -1,9 +1,12 @@
-NO ./graphics/bellebriquewow.png
-SO ./graphics/bellebriquewow.png
-WE ./graphics/bellebriquewow.png
-EA ./graphics/bellebriquewow.png
-F 30,30,30
-C 48,127,207
+   NO ./graphics/north_wall.png
+C 40,40,40
+	SO     ./graphics/south_wall2.png
+
+
+
+WE ./graphics/west_wall2.png
+EA ./graphics/east_wall.png
+F 51,35,6
 
 1111111111111111111111111
 1000000000000000000000001
