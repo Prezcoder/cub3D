@@ -1,0 +1,15 @@
+   NO ./graphics/north_wall.png
+C 40,40,40
+	SO     ./graphics/south_wall2.png
+
+
+WE ./graphics/west_wall2.png
+EA ./graphics/east_wall.png
+
+F 255,         255,           255
+
+11111
+10001
+10N01
+10001
+11111

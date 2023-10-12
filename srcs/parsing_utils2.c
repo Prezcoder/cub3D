@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 11:06:21 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 13:41:16 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 17:09:52 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	color_decoder(t_data *data, char *str, uint32_t *surface)
 		cub_exit(data, ERRMALLOC);
 	i = 0;
 	*surface = 0;
-	while (temp_str[i] && i < 12)
+	while (temp_str[i])
 	{
 		temp = (uint32_t)ft_atoi(temp_str + i);
 		if (temp < 0 || temp > 255)
