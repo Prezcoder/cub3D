@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 11:03:50 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/11 18:01:27 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:09:26 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	logical_minimap(t_data *data, t_minimap *map, int x, int y)
 			draw_pixel_square(data->image.minimap, (t_coor){(x * MINISIZE)
 				+ map->pos_x, (y * MINISIZE) + map->pos_y}, (t_coor){MINISIZE,
 				MINISIZE}, map->wall_color);
-		else if (data->map[y + cam_y][x + cam_x] == '2')
+		else if (data->map[y + cam_y][x + cam_x] == '2' || data->map[y + cam_y][x + cam_x] == '3')
 			draw_pixel_square(data->image.minimap, (t_coor){(x * MINISIZE)
 				+ map->pos_x, (y * MINISIZE) + map->pos_y}, (t_coor){MINISIZE,
 				MINISIZE}, map->door_color);

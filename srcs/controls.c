@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:52:39 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/11 19:03:27 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 11:21:47 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,56 @@ void	mouse_tracking(t_data *data) // enlever pour downgrade
 		mlx_set_mouse_pos(data->mlx, WINWIDTH / 2, WINHEIGHT / 2);
 }
 
-void	open_door(t_data *data) //TODO enlever pour downgrade
+int	open_door(t_data *data)
 {
 	double	checkradius;
 
 	checkradius = 1.2;
 	if (data->map[(int)(data->ray.pos.x + data->ray.dir.x * checkradius)]
 		[(int)data->ray.pos.y] == '2')
+	{
 		data->map[(int)(data->ray.pos.x + data->ray.dir.x * checkradius)]
-		[(int)data->ray.pos.y] = '0';
-	if (data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y
+		[(int)data->ray.pos.y] = '3';
+		system("afplay ./music/door_open.wav&");
+		return (1);
+	}
+	else if (data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y
 		+ data->ray.dir.y * checkradius)] == '2')
+	{
 		data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y
-				+ data->ray.dir.y * checkradius)] = '0';
+				+ data->ray.dir.y * checkradius)] = '3';
+		system("afplay ./music/door_open.wav&");
+		return (1);
+	}
+	return (0);
+}
+
+void	close_door(t_data *data)
+{
+	double	checkradius;
+
+	checkradius = 1.2;
+	if (data->map[(int)(data->ray.pos.x + data->ray.dir.x * checkradius)]
+		[(int)data->ray.pos.y] == '3')
+	{
+		data->map[(int)(data->ray.pos.x + data->ray.dir.x * checkradius)]
+		[(int)data->ray.pos.y] = '2';
+		system("afplay ./music/door_close.wav&");
+	}
+	else if (data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y
+		+ data->ray.dir.y * checkradius)] == '3')
+	{
+		data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y
+				+ data->ray.dir.y * checkradius)] = '2';
+		system("afplay ./music/door_close.wav&");
+	}
+}
+
+void	door(t_data *data) //TODO enlever pour downgrade
+{
+	if(open_door(data))
+		return;
+	close_door(data);
 }
 
 void	ft_key_detect(mlx_key_data_t keydata, void *param) //TODO enlever pour downgrade
@@ -90,7 +127,7 @@ void	ft_key_detect(mlx_key_data_t keydata, void *param) //TODO enlever pour down
 			data->view = 0;
 	}
 	if (keydata.action == MLX_PRESS && keydata.key == MLX_KEY_F)
-		open_door(data);
+		door(data);
 	if (keydata.action == MLX_PRESS && keydata.key == MLX_KEY_LEFT_SUPER)
-		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
+		data->view = 0;
 }
