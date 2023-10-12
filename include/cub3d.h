@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/11 18:52:00 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 09:56:17 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 # define ROTATE_SPEED 0.000040
 # define MOUSE_SPEED 450
 # define CHECKRADIUS 0.5
-# define MINIHEIGHT 17
-# define MINIWIDTH 25
-# define MINISIZE 16
+# define MINIHEIGHT 9
+# define MINIWIDTH 15
+# define MINISIZE 24
 
 ////////////----------error message
 # define ERRARGC "Usage : ./cub3D <map.cub>\n"

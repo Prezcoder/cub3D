@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/11 19:02:19 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 11:33:15 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ void	track_window(t_data *data)
 	int32_t	y = 0;
 	
 	mlx_get_window_pos(data->mlx, &x, &y);
-	printf("X :%d\n", x);
-	printf("Y :%d\n", y);
 	if(data->param.w_pos_x != x || data->param.w_pos_y != y)
 	{
 		mlx_set_window_pos(data->mlx, data->param.w_pos_x, data->param.w_pos_y);
