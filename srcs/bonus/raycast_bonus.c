@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 08:56:12 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 08:47:03 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,23 @@ void	draw_vertline(t_data *data, int x)
 		mlx_put_pixel(data->image.window, x, y++, data->param.ceil);
 	while ((int)y < WINHEIGHT)
 		mlx_put_pixel(data->image.window, x, y++, data->param.floor);
+}
+
+void	track_window(t_data *data)
+{
+	int32_t	x;
+	int32_t	y;
+
+	x = 0;
+	y = 0;
+	mlx_get_window_pos(data->mlx, &x, &y);
+	printf("X :%d\n", x);
+	printf("Y :%d\n", y);
+	if (data->param.w_pos_x != x || data->param.w_pos_y != y)
+	{
+		mlx_set_window_pos(data->mlx, data->param.w_pos_x, data->param.w_pos_y);
+	}
+	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
 }
 
 void	loop(void *param)

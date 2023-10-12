@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/11 09:47:32 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 08:56:07 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # define ROTATE_SPEED 0.000040
 # define MOUSE_SPEED 450
 # define CHECKRADIUS 0.5
+# define MINIHEIGHT 17
+# define MINIWIDTH 25
+# define MINISIZE 16
 
 ////////////----------error message
 # define ERRARGC "Usage : ./cub3D <map.cub>\n"
@@ -34,8 +37,8 @@
 # define ERRNOPLAYER "No player detected\n"
 # define ERRCHAR "Wrong chars detected\n"
 # define ERRWALL "The map isn't framed by wall\n"
-# define ERRTEXT "Texture initialization fail\n"
-# define ERRMAPINIT "Map initialization fail\n"
+# define ERRTEXT "Texture initialization failed\n"
+# define ERRMAPINIT "Map initialization failed\n"
 
 //----------include
 # include <unistd.h>
@@ -48,7 +51,6 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 
 //----------struct
-
 typedef struct s_player
 {
 	double			pos_x;
@@ -64,6 +66,26 @@ typedef struct s_vect
 	double			x;
 	double			y;
 }			t_vect;
+
+typedef struct s_coor
+{
+	int	x;
+	int	y;
+}			t_coor;
+
+typedef struct s_minimap
+{
+	int				pos_x;
+	int				pos_y;
+	int				width;
+	int				height;
+	int				slot_size;
+	uint32_t		wall_color;
+	uint32_t		door_color;
+	uint32_t		floor_color;
+	uint32_t		player_color;
+	uint32_t		background_color;
+}					t_minimap;
 
 typedef struct s_ray
 {
@@ -101,6 +123,9 @@ typedef struct s_param
 	int				flgfloor;
 	int				flgceil;
 	int				nbline;
+	int				maxlen;
+	int32_t			w_pos_x;
+	int32_t			w_pos_y;
 }			t_param;
 
 typedef struct s_image
@@ -131,6 +156,7 @@ typedef struct s_texture
 
 typedef struct s_data
 {
+	t_minimap		minimap;
 	mlx_t			*mlx;
 	t_param			param;
 	t_texture		texture;
@@ -144,7 +170,7 @@ typedef struct s_data
 	int				x;
 }			t_data;
 
-//----------parsing.c
+//----------parsing
 int			errhandler(char *msg);
 void		parsing(t_data *data);
 void		parse_map(t_data *data, int y);
@@ -156,27 +182,32 @@ void		set_dir2(t_data *data, char c);
 void		cub_exit(t_data *data, char *msg);
 int			check_start_map(t_data *data);
 int			player_position(t_data *data, int y, int x);
-
-//----------init.c
-t_data		*init_data(t_data *data, char **argv);
+void		free_param(t_data *data);
+//----------init
+void		dup_map(t_data *data);
+void		init_data(t_data *data);
 int			init_map(t_data *data, char *path);
 void		init_game(t_data *data);
-
 uint32_t	ft_color(int32_t r, int32_t g, int32_t b, int32_t a);
-
-void		ft_hook(void *param);
+// void		ft_hook(void *param);
 void		loop(void *param);
 void		init_game(t_data *data);
-
-//----------controls.c
+//----------init_text
+void		free_text_ar(mlx_texture_t *texture, uint32_t **ar);
+void		fill_array(mlx_texture_t *texture, uint32_t **ar);
+uint32_t	**texture_to_array(mlx_texture_t *texture);
+void		free_all_texture_array(t_data *data);
+void		init_texture(t_data *data);
+void		center_dot(mlx_image_t *image);
+void		clean_texture(t_data *data);
+//----------controls
 void		key_binding(t_data *data);
 void		mouse_tracking(t_data *data);
 void		ft_key_detect(mlx_key_data_t keydata, void *param);
 void		rotate_vector(double *x, double *y, double angle);
 void		move_player(t_data *data, double move_speed);
 void		strafe_player(t_data *data, double strafe_speed);
-
-//----------raycast.c
+//----------raycast
 void		set_data(t_data *data, int x);
 void		set_side_dist(t_data *data);
 void		dda_calc(t_data *data);
@@ -187,12 +218,9 @@ void		drawline(t_data *data, mlx_texture_t *texture,
 				uint32_t **arr, int x);
 void		choose_texture(t_data *data, int x);
 void		draw_vertline(t_data *data, int x);
-
-//----------init_text.c
-void		free_text_ar(mlx_texture_t *texture, uint32_t **ar);
-void		fill_array(mlx_texture_t *texture, uint32_t **ar);
-uint32_t	**texture_to_array(mlx_texture_t *texture);
-void		free_all_array(t_data *data);
-void		init_texture(t_data *data);
-void		center_dot(mlx_image_t *image);
+void		track_window(t_data *data);
+//----------minimap
+void		draw_minimap(t_data *data);
+void		draw_filled_circle(mlx_image_t *image, t_coor center, int radius,
+				uint32_t color);
 #endif

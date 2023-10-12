@@ -6,11 +6,35 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 13:46:44 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 08:54:58 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/11 10:37:52 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+void	fill_array(mlx_texture_t *texture, uint32_t **ar)
+{
+	uint32_t	x;
+	uint32_t	y;
+	uint32_t	i;
+
+	i = 0;
+	y = 0;
+	while (y < texture->height - 1)
+	{
+		x = 0;
+		while (x < texture->width)
+		{
+			ar[y][x] = ft_color((uint32_t)texture->pixels[i],
+					(uint32_t)texture->pixels[i + 1],
+					(uint32_t)texture->pixels[i + 2],
+					(uint32_t)texture->pixels[i + 3]);
+			i += 4;
+			x++;
+		}
+		y++;
+	}
+}
 
 uint32_t	**texture_to_array(mlx_texture_t *texture)
 {
