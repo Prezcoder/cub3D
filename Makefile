@@ -6,7 +6,7 @@
 #    By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 10:27:08 by emlamoth          #+#    #+#              #
-#    Updated: 2023/10/12 11:14:32 by fbouchar         ###   ########.fr        #
+#    Updated: 2023/10/12 12:11:25 by fbouchar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,19 +24,19 @@ SRCS =	controls.c		\
 		raycast_utils.c	\
 		minimap.c		\
 
-BONUS =	controls_bonus.c		\
-		flood_fill_bonus.c		\
-		init_data_bonus.c		\
-		init_text_bonus.c		\
-		utils_bonus.c			\
-		main_bonus.c			\
-		movements_bonus.c		\
-		parsing_bonus.c			\
-		parsing_utils_bonus.c	\
-		parsing_utils2_bonus.c	\
-		raycast_bonus.c			\
-		raycast_utils_bonus.c	\
-		minimap_bonus.c			\
+BONUS =	zcontrols_bonus.c		\
+		zflood_fill_bonus.c		\
+		zinit_data_bonus.c		\
+		zinit_text_bonus.c		\
+		zutils_bonus.c			\
+		zmain_bonus.c			\
+		zmovements_bonus.c		\
+		zparsing_bonus.c		\
+		zparsing_utils_bonus.c	\
+		zparsing_utils2_bonus.c	\
+		zraycast_bonus.c		\
+		zraycast_utils_bonus.c	\
+		zminimap_bonus.c		\
 
 SRCS_DIR = ./srcs/
 OBJS_DIR = ./srcs/objs_cub3D/
