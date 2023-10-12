@@ -6,11 +6,11 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 11:03:50 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 08:59:38 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:58:17 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d_bonus.h"
+#include "../include/cub3d_bonus.h"
 
 void	draw_pixel_square(mlx_image_t *image, t_coor pos,
 			t_coor size, uint32_t color)

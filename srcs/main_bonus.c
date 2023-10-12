@@ -6,11 +6,11 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 09:19:30 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:58:12 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d_bonus.h"
+#include "../include/cub3d_bonus.h"
 
 void	free_toute(t_data *data)
 {

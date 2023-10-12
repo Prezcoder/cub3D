@@ -6,11 +6,11 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 09:13:38 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:58:38 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d_bonus.h"
+#include "../include/cub3d_bonus.h"
 
 void	find_hit(t_data *data, mlx_texture_t *texture)
 {

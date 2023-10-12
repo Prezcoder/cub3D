@@ -6,11 +6,11 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 08:54:57 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 09:11:19 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:58:03 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d_bonus.h"
+#include "../include/cub3d_bonus.h"
 
 void	dup_map(t_data *data)
 {

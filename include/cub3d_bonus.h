@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 10:00:18 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:46:21 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ typedef struct s_data
 }			t_data;
 
 //----------parsing
+int			main(int argc, char **argv);
 int			errhandler(char *msg);
 void		parsing(t_data *data);
 void		parse_map(t_data *data, int y);

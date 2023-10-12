@@ -6,11 +6,11 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:41:56 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 08:59:53 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:58:26 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d_bonus.h"
+#include "../include/cub3d_bonus.h"
 
 void	parse_map(t_data *data, int y)
 {

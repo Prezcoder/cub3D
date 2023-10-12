@@ -6,11 +6,11 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 08:54:03 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 09:19:58 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:58:47 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d_bonus.h"
+#include "../include/cub3d_bonus.h"
 
 void	create_windows(t_data *data)
 {
