@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+         #
+#    By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 10:27:08 by emlamoth          #+#    #+#              #
-#    Updated: 2023/10/12 12:21:34 by emlamoth         ###   ########.fr        #
+#    Updated: 2023/10/12 12:51:12 by fbouchar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ SRCS =	controls.c		\
 		parsing_utils2.c\
 		raycast.c		\
 		raycast_utils.c	\
-		minimap.c		\
 
 BONUS =	zcontrols_bonus.c		\
 		zdoor_bonus.c		\
@@ -112,7 +111,7 @@ fclean: clean
 	@echo "${RED}MLX42 DELETED${NC}"
 
 
-bonus: fclean mlxb $(NAME_B)
+bonus: mlxb $(NAME_B)
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 11:04:27 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/11 10:03:18 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:47:05 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	free_param(t_data *data)
 		ft_freenull(&data->param.west);
 	if (data->param.east)
 		ft_freenull(&data->param.east);
-	if (data->param.door)
-		ft_freenull(&data->param.door); //TODO enlever sans bonus
 }
 
 void	cub_exit(t_data *data, char *msg)

@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 08:54:03 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 12:15:58 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:44:44 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+void	create_windows(t_data *data)
+{
+	data->image.window = mlx_new_image(data->mlx, WINWIDTH, WINHEIGHT);
+	mlx_image_to_window(data->mlx, data->image.window, 0, 0);
+	data->image.minimap = mlx_new_image(data->mlx, WINWIDTH, WINHEIGHT);
+	mlx_image_to_window(data->mlx, data->image.minimap, 0, 0);
+}
 
 void	track_window(t_data *data)
 {

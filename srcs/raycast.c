@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast.c                                          :+:      :+:    :+:   */
+/*   Raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 12:17:45 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:51:03 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	find_hit(t_data *data, mlx_texture_t *texture)
 {
 	double	hit;
 
-	if (data->texture.door_flag == 1) //TODO a enlever pour downgrade
-		texture = data->texture.door_tex;
 	hit = 0;
 	if (data->ray.side == 0 || data->ray.side == 1)
 		hit = data->ray.pos.y + data->ray.perp_wall_dist * data->ray.ray_dir.y;
@@ -37,13 +35,7 @@ void	drawline(t_data *data, mlx_texture_t *texture, uint32_t **arr, int x)
 	double	pos;
 	int		tex_y;
 	int		j;
-	
-	if (data->texture.door_flag == 1) //TODO a enlever pour downgrade
-	{
-		texture = data->texture.door_tex;
-		arr = data->texture.door;
-		data->texture.door_flag = 0;
-	}//jusqu ici
+
 	dist = 1.0 * texture->height / data->ray.line_height;
 	pos = ((double) data->ray.draw_start - (double) WINHEIGHT / 2
 			+ (double) data->ray.line_height / 2) * dist;
@@ -110,12 +102,8 @@ void	loop(void *param)
 		set_draw_range(data);
 		draw_vertline(data, x);
 		choose_texture(data, x);
-		key_binding(data);//TODO a enlever pour downgrade
-		mouse_tracking(data);//TODO a enlever pour downgrade
+		key_binding(data);
 	}
-	center_dot(data->image.window);
-	mlx_key_hook(data->mlx, &ft_key_detect, data);
 	track_window(data);
-	draw_minimap(data);
 	usleep(1500);
 }

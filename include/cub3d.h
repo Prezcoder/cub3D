@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 12:15:03 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:45:54 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ uint32_t	ft_color(int32_t r, int32_t g, int32_t b, int32_t a);
 // void		ft_hook(void *param);
 void		loop(void *param);
 void		init_game(t_data *data);
+void		create_windows(t_data *data);
 //----------init_text
 void		free_text_ar(mlx_texture_t *texture, uint32_t **ar);
 void		fill_array(mlx_texture_t *texture, uint32_t **ar);

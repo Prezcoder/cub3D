@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 13:46:44 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 08:54:58 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:44:10 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,14 @@ void	free_all_texture_array(t_data *data)
 		free_text_ar(data->texture.east_tex, data->texture.east);
 	if (data->texture.west)
 		free_text_ar(data->texture.west_tex, data->texture.west);
-	if (data->texture.door)
-		free_text_ar(data->texture.door_tex, data->texture.door);
 }
 
 void	init_texture(t_data *data)
 {
-	if (data->param.door)
-	{
-		data->texture.door_tex = mlx_load_png(data->param.door); //TODO enlever sans bonus
-		data->texture.north_tex = mlx_load_png(data->param.north);
-		data->texture.south_tex = mlx_load_png(data->param.south);
-		data->texture.east_tex = mlx_load_png(data->param.east);
-		data->texture.west_tex = mlx_load_png(data->param.west);
-	}
+	data->texture.north_tex = mlx_load_png(data->param.north);
+	data->texture.south_tex = mlx_load_png(data->param.south);
+	data->texture.east_tex = mlx_load_png(data->param.east);
+	data->texture.west_tex = mlx_load_png(data->param.west);
 	if (!data->texture.north_tex || !data->texture.south_tex 
 		|| !data->texture.west_tex || !data->texture.east_tex)
 	{
@@ -84,7 +78,6 @@ void	init_texture(t_data *data)
 	data->texture.south = texture_to_array(data->texture.south_tex);
 	data->texture.east = texture_to_array(data->texture.east_tex);
 	data->texture.west = texture_to_array(data->texture.west_tex);
-	data->texture.door = texture_to_array(data->texture.door_tex); //TODO enlever sans bonus
 	if (!data->texture.north || !data->texture.south 
 		|| !data->texture.west || !data->texture.east)
 	{
@@ -96,8 +89,6 @@ void	init_texture(t_data *data)
 void	clean_texture(t_data *data)
 {
 	free_all_texture_array(data);
-	if (data->texture.door_tex)
-		mlx_delete_texture(data->texture.door_tex);//TODO enlever sans bonus
 	if (data->texture.north_tex)
 		mlx_delete_texture(data->texture.north_tex);
 	if (data->texture.south_tex)

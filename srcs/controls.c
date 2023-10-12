@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   controls.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:52:39 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 12:19:55 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:42:38 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,50 +34,4 @@ void	key_binding(t_data *data)
 		rotate_vector(&data->ray.dir.x, &data->ray.dir.y, ROTATE_SPEED);
 		rotate_vector(&data->ray.plane.x, &data->ray.plane.y, ROTATE_SPEED);
 	}
-}
-
-void	mouse_tracking(t_data *data) // enlever pour downgrade
-{
-	int32_t	y;
-	int32_t	x;
-
-	y = 0;
-	x = 0;
-	mlx_get_mouse_pos(data->mlx, &x, &y);
-	if (data->view > 0 && x < WINWIDTH / 2)
-	{
-		rotate_vector(&data->ray.dir.x, &data->ray.dir.y,
-			ROTATE_SPEED * MOUSE_SPEED);
-		rotate_vector(&data->ray.plane.x, &data->ray.plane.y,
-			ROTATE_SPEED * MOUSE_SPEED);
-	}
-	if (data->view > 0 && x > WINWIDTH / 2)
-	{
-		rotate_vector(&data->ray.dir.x, &data->ray.dir.y,
-			-ROTATE_SPEED * MOUSE_SPEED);
-		rotate_vector(&data->ray.plane.x, &data->ray.plane.y,
-			-ROTATE_SPEED * MOUSE_SPEED);
-	}
-	if (y != WINHEIGHT / 2 || x != WINWIDTH / 2)
-		mlx_set_mouse_pos(data->mlx, WINWIDTH / 2, WINHEIGHT / 2);
-}
-
-
-
-void	ft_key_detect(mlx_key_data_t keydata, void *param) //TODO enlever pour downgrade
-{
-	t_data	*data;
-
-	data = param;
-	if (keydata.action == MLX_PRESS && keydata.key == MLX_KEY_V)
-	{		
-		if (data->view == 0)
-			data->view = 1;
-		else
-			data->view = 0;
-	}
-	if (keydata.action == MLX_PRESS && keydata.key == MLX_KEY_F)
-		door(data);
-	if (keydata.action == MLX_PRESS && keydata.key == MLX_KEY_LEFT_SUPER)
-		data->view = 0;
 }
