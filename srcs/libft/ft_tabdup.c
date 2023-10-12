@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tabdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 18:57:49 by emman             #+#    #+#             */
-/*   Updated: 2023/07/18 17:20:45 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:37:18 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	**ft_tabdup(char **src)
 	while (src[i])
 	{
 		new[i] = ft_strdup(src[i]);
+		if (!new[i])
+			return (ft_freeall(new));
 		i++;
 	}
 	return (new);

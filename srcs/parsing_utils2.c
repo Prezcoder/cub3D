@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 11:06:21 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/10 12:38:07 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:41:16 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	color_decoder(t_data *data, char *str, uint32_t *surface)
 
 	temp_str = NULL;
 	temp_str = ft_strtrim(str, " ");
+	if (!temp_str)
+		cub_exit(data, ERRMALLOC);
 	i = 0;
 	*surface = 0;
 	while (temp_str[i] && i < 12)

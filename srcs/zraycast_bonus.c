@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast_bonus.c                                    :+:      :+:    :+:   */
+/*   zraycast_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 10:58:38 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:55:06 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,23 @@ void	choose_texture(t_data *data, int x)
 {
 	if (data->ray.side == 0)
 	{
-		find_hit(data, data->texture.east_tex);
-		drawline(data, data->texture.east_tex, data->texture.east, x);
-	}
-	else if (data->ray.side == 1)
-	{
-		find_hit(data, data->texture.west_tex);
-		drawline(data, data->texture.west_tex, data->texture.west, x);
-	}
-	else if (data->ray.side == 2)
-	{
 		find_hit(data, data->texture.south_tex);
 		drawline(data, data->texture.south_tex, data->texture.south, x);
 	}
-	else if (data->ray.side == 3)
+	else if (data->ray.side == 1)
 	{
 		find_hit(data, data->texture.north_tex);
 		drawline(data, data->texture.north_tex, data->texture.north, x);
+	}
+	else if (data->ray.side == 2)
+	{
+		find_hit(data, data->texture.east_tex);
+		drawline(data, data->texture.east_tex, data->texture.east, x);
+	}
+	else if (data->ray.side == 3)
+	{
+		find_hit(data, data->texture.west_tex);
+		drawline(data, data->texture.west_tex, data->texture.west, x);
 	}
 }
 

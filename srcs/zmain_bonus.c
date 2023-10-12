@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*   zmain_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 10:58:12 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:27:12 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,16 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (errhandler(ERRARGC));
-	if (ft_strlen(argv[1]) < 12)
-		return (ft_printf("Error\nThe file format isn't good.\n"));
 	if (ft_strncmp(&argv[1][ft_strlen(argv[1]) - 4], ".cub", 4))
-		return (ft_printf("Error\nThe file format isn't good.\n"));
+		return (errhandler(ERRFORMAT));
 	init_data(&data);
-	if (init_map(&data, argv[1]) == -1)
-		return (-1);
+	init_map(&data, argv[1]);
 	parsing(&data);
 	wall_check(&data);
 	dup_map(&data);
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
+	if (!data.mlx)
+		cub_exit(&data, ERRMLX);
 	init_texture(&data);
 	create_windows(&data);
 	init_game(&data);

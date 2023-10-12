@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:57:57 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 12:45:12 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:36:07 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	free_toute(t_data *data)
 {
-	system("killall afplay");
 	mlx_delete_image(data->mlx, data->image.window);
 	mlx_delete_image(data->mlx, data->image.minimap);
 	mlx_terminate(data->mlx);
@@ -68,21 +67,19 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (errhandler(ERRARGC));
-	if (ft_strlen(argv[1]) < 12)
-		return (ft_printf("Error\nThe file format isn't good.\n"));
 	if (ft_strncmp(&argv[1][ft_strlen(argv[1]) - 4], ".cub", 4))
-		return (ft_printf("Error\nThe file format isn't good.\n"));
+		return (errhandler(ERRFORMAT));
 	init_data(&data);
-	if (init_map(&data, argv[1]) == -1)
-		return (-1);
+	init_map(&data, argv[1]);
 	parsing(&data);
 	wall_check(&data);
 	dup_map(&data);
 	data.mlx = mlx_init(WINWIDTH, WINHEIGHT, "cub3D", 0);
+	if (!data.mlx)
+		cub_exit(&data, ERRMLX);
 	init_texture(&data);
 	create_windows(&data);
 	init_game(&data);
-	system("afplay ./music/musique.mp3&");
 	mlx_loop_hook(data.mlx, &loop, &data);
 	mlx_loop(data.mlx);
 	free_toute(&data);

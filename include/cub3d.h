@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 13:31:16 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:06:20 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@
 # define ERRTEXT "Texture initialization failed\n"
 # define ERRMAPINIT "Map initialization failed\n"
 # define ERRMALLOC "Malloc Error\n"
+# define ERRFORMAT "The file format isn't good\n"
+# define ERRMLX "The inittialization failed\n"
 
 //----------include
 # include <unistd.h>
@@ -73,20 +75,6 @@ typedef struct s_coor
 	int	x;
 	int	y;
 }			t_coor;
-
-typedef struct s_minimap
-{
-	int				pos_x;
-	int				pos_y;
-	int				width;
-	int				height;
-	int				slot_size;
-	uint32_t		wall_color;
-	uint32_t		door_color;
-	uint32_t		floor_color;
-	uint32_t		player_color;
-	uint32_t		background_color;
-}					t_minimap;
 
 typedef struct s_ray
 {
@@ -157,7 +145,6 @@ typedef struct s_texture
 
 typedef struct s_data
 {
-	t_minimap		minimap;
 	mlx_t			*mlx;
 	t_param			param;
 	t_texture		texture;
@@ -187,10 +174,9 @@ void		free_param(t_data *data);
 //----------init
 void		dup_map(t_data *data);
 void		init_data(t_data *data);
-int			init_map(t_data *data, char *path);
+void		init_map(t_data *data, char *path);
 void		init_game(t_data *data);
 uint32_t	ft_color(int32_t r, int32_t g, int32_t b, int32_t a);
-// void		ft_hook(void *param);
 void		loop(void *param);
 void		init_game(t_data *data);
 void		create_windows(t_data *data);
@@ -200,12 +186,9 @@ void		fill_array(mlx_texture_t *texture, uint32_t **ar);
 uint32_t	**texture_to_array(mlx_texture_t *texture);
 void		free_all_texture_array(t_data *data);
 void		init_texture(t_data *data);
-void		center_dot(mlx_image_t *image);
 void		clean_texture(t_data *data);
 //----------controls
 void		key_binding(t_data *data);
-void		mouse_tracking(t_data *data);
-void		ft_key_detect(mlx_key_data_t keydata, void *param);
 void		rotate_vector(double *x, double *y, double angle);
 void		move_player(t_data *data, double move_speed);
 void		strafe_player(t_data *data, double strafe_speed);
@@ -221,8 +204,4 @@ void		drawline(t_data *data, mlx_texture_t *texture,
 void		choose_texture(t_data *data, int x);
 void		draw_vertline(t_data *data, int x);
 void		track_window(t_data *data);
-//----------minimap
-void		draw_minimap(t_data *data);
-void		draw_filled_circle(mlx_image_t *image, t_coor center, int radius,
-				uint32_t color);
 #endif

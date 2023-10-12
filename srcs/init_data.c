@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 08:54:57 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 13:31:24 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:40:46 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ void	dup_map(t_data *data)
 	y = 0;
 	map_temp = ft_tabdup(&(data->map[data->player.start_map]));
 	if (!map_temp)
-	{
-		ft_freeall(data->map);
 		cub_exit(data, ERRMALLOC);
-	}
 	ft_freeall(data->map);
 	data->map = map_temp;
 	while (data->map[y])
@@ -36,13 +33,6 @@ void	init_data(t_data *data)
 	ft_bzero(data, sizeof(t_data));
 	data->player.map_x = -1;
 	data->player.map_y = -1;
-	data->minimap.background_color = ft_color(0, 0, 0, 125);
-	data->minimap.floor_color = ft_color(255, 0, 0, 125);
-	data->minimap.wall_color = ft_color(0, 0, 255, 125);
-	data->minimap.door_color = ft_color(0, 255, 255, 125);
-	data->minimap.player_color = ft_color(255, 255, 0, 125);
-	data->minimap.pos_x = 10;
-	data->minimap.pos_y = 10;
 }
 
 int	init_aray(t_data *data, char *path)
@@ -52,7 +42,7 @@ int	init_aray(t_data *data, char *path)
 	char	*temp;
 
 	i = 0;
-	fd = open(path, O_RDONLY);
+	fd = open(path, O_RDWR);
 	if (fd == -1)
 		return (-1);
 	temp = get_next_line(fd);
@@ -65,20 +55,22 @@ int	init_aray(t_data *data, char *path)
 	data->param.nbline = i;
 	close(fd);
 	data->map = ft_calloc(i + 1, sizeof(char *));
+	if (!data->map)
+		exit(errhandler(ERRMALLOC));
 	return (0);
 }
 
-int	init_map(t_data *data, char *path)
+void	init_map(t_data *data, char *path)
 {
 	int		fd;
 	int		i;
 	int		len;
 
 	if (init_aray(data, path) == -1)
-		return (errhandler(ERRMAP));
-	fd = open(path, O_RDONLY);
+		exit(errhandler(ERRMAP));
+	fd = open(path, O_RDWR);
 	if (fd == -1)
-		return (errhandler(ERRMAP));
+		cub_exit(data, ERRMAP);
 	i = 0;
 	data->map[i] = get_next_line(fd);
 	len = ft_strlen(data->map[i]);
@@ -94,7 +86,6 @@ int	init_map(t_data *data, char *path)
 				data->map[i][len - 1] = 0;
 		}
 	}
-	return (0);
 }
 
 void	init_game(t_data *data)

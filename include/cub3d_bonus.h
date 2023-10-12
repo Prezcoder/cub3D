@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 13:31:49 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:05:47 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@
 # define ERRTEXT "Texture initialization failed\n"
 # define ERRMAPINIT "Map initialization failed\n"
 # define ERRMALLOC "Malloc Error\n"
+# define ERRFORMAT "The file format isn't good\n"
+# define ERRMLX "The inittialization failed\n"
 
 //----------include
 # include <unistd.h>
@@ -188,11 +190,10 @@ void		free_param(t_data *data);
 //----------init
 void		dup_map(t_data *data);
 void		init_data(t_data *data);
-int			init_map(t_data *data, char *path);
+void		init_map(t_data *data, char *path);
 void		init_game(t_data *data);
 void		create_windows(t_data *data);
 uint32_t	ft_color(int32_t r, int32_t g, int32_t b, int32_t a);
-// void		ft_hook(void *param);
 void		loop(void *param);
 void		init_game(t_data *data);
 //----------init_text

@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 08:54:03 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 12:44:44 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:46:12 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 void	create_windows(t_data *data)
 {
 	data->image.window = mlx_new_image(data->mlx, WINWIDTH, WINHEIGHT);
+	if (!data->image.window)
+	{
+		clean_texture(data);
+		cub_exit(data, ERRMALLOC);
+	}
 	mlx_image_to_window(data->mlx, data->image.window, 0, 0);
-	data->image.minimap = mlx_new_image(data->mlx, WINWIDTH, WINHEIGHT);
-	mlx_image_to_window(data->mlx, data->image.minimap, 0, 0);
 }
 
 void	track_window(t_data *data)
@@ -29,9 +32,7 @@ void	track_window(t_data *data)
 	y = 0;
 	mlx_get_window_pos(data->mlx, &x, &y);
 	if (data->param.w_pos_x != x || data->param.w_pos_y != y)
-	{
 		mlx_set_window_pos(data->mlx, data->param.w_pos_x, data->param.w_pos_y);
-	}
 	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
 }
 

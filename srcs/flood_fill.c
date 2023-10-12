@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:41:30 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 13:27:41 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:37:58 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	flood_fill(int y, int x, t_data *data, char **map_cpy)
 		|| y < data->player.start_map || y > data->param.nbline - 1)
 	{
 		ft_freeall(map_cpy);
-		ft_freeall(data->map);
 		cub_exit(data, ERRWALL);
 	}
 	if (map_cpy[y][x] == '1' || map_cpy[y][x] == 'X')
@@ -40,11 +39,7 @@ void	wall_check(t_data *data)
 	map_cpy = NULL;
 	map_cpy = ft_tabdup(data->map);
 	if (!map_cpy)
-	{
-		ft_freeall(map_cpy);
-		ft_freeall(data->map);
-		cub_exit(data, ERRWALL);
-	}
+		cub_exit(data, ERRMALLOC);
 	flood_fill(data->player.map_y, data->player.map_x, data, map_cpy);
 	ft_freeall(map_cpy);
 }
