@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:09:54 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 12:28:57 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:19:00 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,13 @@ void	strafe_player(t_data *data, double strafe_speed)
 	if (strafe_speed < 0)
 		checkradius = -CHECKRADIUS;
 	if (data->map[(int)(data->ray.pos.x + data->ray.dir.y * (strafe_speed
-				+ checkradius))][(int)data->ray.pos.y] == '0')
+				+ checkradius))][(int)data->ray.pos.y] == '0'
+				|| data->map[(int)(data->ray.pos.x + data->ray.dir.y
+				* (strafe_speed + checkradius))][(int)data->ray.pos.y] == '3')
 		data->ray.pos.x += data->ray.dir.y * strafe_speed;
 	if (data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y - data->ray.dir.x
-		* (strafe_speed + checkradius))] == '0')
+		* (strafe_speed + checkradius))] == '0'
+		|| data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y
+		- data->ray.dir.x * (strafe_speed + checkradius))] == '3')
 		data->ray.pos.y -= data->ray.dir.x * strafe_speed;
 }

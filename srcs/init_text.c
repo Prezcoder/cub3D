@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_text.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 13:46:44 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 12:44:10 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:19:26 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	init_texture(t_data *data)
 	data->texture.south_tex = mlx_load_png(data->param.south);
 	data->texture.east_tex = mlx_load_png(data->param.east);
 	data->texture.west_tex = mlx_load_png(data->param.west);
-	if (!data->texture.north_tex || !data->texture.south_tex 
+	if (!data->texture.north_tex || !data->texture.south_tex
 		|| !data->texture.west_tex || !data->texture.east_tex)
 	{
 		clean_texture(data);
@@ -78,7 +78,7 @@ void	init_texture(t_data *data)
 	data->texture.south = texture_to_array(data->texture.south_tex);
 	data->texture.east = texture_to_array(data->texture.east_tex);
 	data->texture.west = texture_to_array(data->texture.west_tex);
-	if (!data->texture.north || !data->texture.south 
+	if (!data->texture.north || !data->texture.south
 		|| !data->texture.west || !data->texture.east)
 	{
 		clean_texture(data);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_data_bonus.c                                  :+:      :+:    :+:   */
+/*   zinit_data_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 08:54:57 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 10:58:03 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:15:59 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	init_data(t_data *data)
 	data->player.map_x = -1;
 	data->player.map_y = -1;
 	data->minimap.background_color = ft_color(0, 0, 0, 125);
-	data->minimap.floor_color = ft_color(255, 0, 0, 125);
+	data->minimap.floor_color = ft_color(0, 0, 60, 125);
 	data->minimap.wall_color = ft_color(0, 0, 255, 125);
 	data->minimap.door_color = ft_color(0, 255, 255, 125);
 	data->minimap.player_color = ft_color(255, 255, 0, 125);
