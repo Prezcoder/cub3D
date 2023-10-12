@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   zutils_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 08:54:03 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 14:48:28 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 16:13:31 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d_bonus.h"
+#include "../../include/cub3d_bonus.h"
 
 void	create_windows(t_data *data)
 {

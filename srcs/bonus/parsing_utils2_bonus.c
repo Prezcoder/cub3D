@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   zparsing_utils2_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 11:06:21 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 13:42:06 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 16:13:23 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d_bonus.h"
+#include "../../include/cub3d_bonus.h"
 
 int	check_start_map(t_data *data)
 {

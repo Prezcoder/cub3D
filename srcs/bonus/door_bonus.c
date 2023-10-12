@@ -6,11 +6,11 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 12:20:18 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 12:31:50 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 16:12:50 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d_bonus.h"
+#include "../../include/cub3d_bonus.h"
 
 int	open_door(t_data *data)
 {

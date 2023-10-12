@@ -6,11 +6,11 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:52:39 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 12:24:19 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 16:12:36 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d_bonus.h"
+#include "../../include/cub3d_bonus.h"
 
 void	key_binding(t_data *data)
 {

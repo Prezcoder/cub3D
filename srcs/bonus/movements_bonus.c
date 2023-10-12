@@ -6,11 +6,11 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:09:54 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 13:19:00 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 16:13:11 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d_bonus.h"
+#include "../../include/cub3d_bonus.h"
 
 void	rotate_vector(double *x, double *y, double angle)
 {

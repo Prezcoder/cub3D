@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+         #
+#    By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 10:27:08 by emlamoth          #+#    #+#              #
-#    Updated: 2023/10/12 12:51:12 by fbouchar         ###   ########.fr        #
+#    Updated: 2023/10/12 16:55:45 by emlamoth         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,27 +23,30 @@ SRCS =	controls.c		\
 		raycast.c		\
 		raycast_utils.c	\
 
-BONUS =	zcontrols_bonus.c		\
-		zdoor_bonus.c		\
-		zflood_fill_bonus.c		\
-		zinit_data_bonus.c		\
-		zinit_text_bonus.c		\
-		zutils_bonus.c			\
-		zmain_bonus.c			\
-		zmovements_bonus.c		\
-		zparsing_bonus.c		\
-		zparsing_utils_bonus.c	\
-		zparsing_utils2_bonus.c	\
-		zraycast_bonus.c		\
-		zraycast_utils_bonus.c	\
-		zminimap_bonus.c		\
+BONUS =	controls_bonus.c		\
+		door_bonus.c		\
+		flood_fill_bonus.c		\
+		init_data_bonus.c		\
+		init_text_bonus.c		\
+		utils_bonus.c			\
+		main_bonus.c			\
+		movements_bonus.c		\
+		parsing_bonus.c		\
+		parsing_utils_bonus.c	\
+		parsing_utils2_bonus.c	\
+		raycast_bonus.c		\
+		raycast_utils_bonus.c	\
+		minimap_bonus.c		\
 
+HEADERS	:= -I ./include/cub3d.h -I $(LIBMLX_DIR)include/
 SRCS_DIR = ./srcs/
 OBJS_DIR = ./srcs/objs_cub3D/
 OBJS = $(SRCS:$(SCRS_DIR)%.c=$(OBJS_DIR)%.o)
-HEADERS	:= -I ./include -I $(LIBMLX_DIR)include/
 
-OBJS_BONUS = $(BONUS:$(SCRS_DIR)%.c=$(OBJS_DIR)%.o)
+BONUS_HEADERS	:= -I ./include/cub3d_bonus.h -I $(LIBMLX_DIR)include/
+BONUS_SRCS_DIR = ./srcs/bonus/
+BONUS_OBJS_DIR = ./srcs/bonus/objs_cub3D_bonus/
+BONUS_OBJS = $(BONUS:$(BONUS_SCRS_DIR)%.c=$(BONUS_OBJS_DIR)%.o)
 
 LIBFT_DIR = ./srcs/libft/
 LIBFT = ./srcs/libft/libft.a
@@ -53,7 +56,7 @@ LIBMLX	:= $(LIBMLX_DIR)/build/libmlx42.a -lglfw -L "/Users/$(USER)/.brew/opt/glf
 
 NAME = cub3D
 
-NAME_B = cub3D_bonus
+BONUS_NAME = cub3D_bonus
 
 CFLAGS = -Wall -Wextra -Werror
 
@@ -66,10 +69,6 @@ NC = \033[0;0m
 all: mlx $(NAME)
 
 mlx: #dep
-	(cd $(LIBMLX_DIR) && cmake -B build)
-	make -C $(LIBMLX_DIR)build/
-
-mlxb: #dep
 	(cd $(LIBMLX_DIR) && cmake -B build)
 	make -C $(LIBMLX_DIR)build/
 
@@ -86,9 +85,13 @@ $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBMLX) $(LIBFT) -o $(NAME)
 	@echo "${GREEN}CUB3D COMPILED${NC}"
 
-$(NAME_B): $(OBJS_BONUS)
+$(BONUS_OBJS_DIR)%.o:$(BONUS_SRCS_DIR)%.c
+	@mkdir -p $(BONUS_OBJS_DIR)
+	@$(CC) $(CFLAGS) -c -o $@ $<
+
+$(BONUS_NAME): $(BONUS_OBJS)
 	@$(MAKE) -C $(LIBFT_DIR)
-	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBMLX) $(LIBFT) -o $(NAME_B)
+	@$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBMLX) $(LIBFT) -o $(BONUS_NAME)
 	@echo "${GREEN}CUB3D COMPILED${NC}"
 
 leak: CFLAGS += -g
@@ -101,18 +104,31 @@ clean:
 	@rm -rf $(OBJS_DIR)
 	@echo "${RED}CUB3D OBJECTS DELETED${NC}"
 	@$(MAKE) clean -C $(LIBMLX_DIR)build/
-	@echo "${RED}MLX42 DELETED${NC}"
+	@echo "${RED}MLX42 CLEANED${NC}"
 
 fclean: clean
 	@$(MAKE) fclean -C ./srcs/libft
-	@rm -f $(NAME) $(NAME_B)
+	@rm -f $(NAME)
 	@echo "${RED}CUB3D DELETED${NC}"
 	@rm -rf $(LIBMLX_DIR)build/
-	@echo "${RED}MLX42 DELETED${NC}"
+	@echo "${RED}MLX42 BUILD DELETED${NC}"
 
+bonus: mlx $(BONUS_NAME)
 
-bonus: mlxb $(NAME_B)
+bonusclean:
+	@$(MAKE) clean -C $(LIBFT_DIR)
+	@rm -rf $(BONUS_OBJS_DIR)
+	@echo "${RED}CUB3D BONUS OBJECTS DELETED${NC}"
+	@$(MAKE) clean -C $(LIBMLX_DIR)build/
+	@echo "${RED}MLX42 CLEANED${NC}"
+	
+bonusfclean: bonusclean
+	@$(MAKE) fclean -C ./srcs/libft
+	@rm -f $(BONUS_NAME)
+	@echo "${RED}CUB3D DELETED${NC}"
+	@rm -rf $(LIBMLX_DIR)build/
+	@echo "${RED}MLX42 BUILD DELETED${NC}"
 
 re: fclean all
 
-.PHONY: all clean fclean bonus re
+.PHONY: all clean fclean bonus bonusclean bonusfclean re
