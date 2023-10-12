@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   zinit_data_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 08:54:57 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 13:15:59 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:31:38 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void	dup_map(t_data *data)
 
 	y = 0;
 	map_temp = ft_tabdup(&(data->map[data->player.start_map]));
+	if (!map_temp)
+	{
+		ft_freeall(data->map);
+		cub_exit(data, ERRMALLOC);
+	}
 	ft_freeall(data->map);
 	data->map = map_temp;
 	while (data->map[y])

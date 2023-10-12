@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 12:45:54 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:31:16 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define ERRWALL "The map isn't framed by wall\n"
 # define ERRTEXT "Texture initialization failed\n"
 # define ERRMAPINIT "Map initialization failed\n"
+# define ERRMALLOC "Malloc Error\n"
 
 //----------include
 # include <unistd.h>
