@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   movements_bonus.c                                  :+:      :+:    :+:   */
+/*   zmovements_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:09:54 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 10:58:21 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:28:57 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,14 @@ void	move_player(t_data *data, double move_speed)
 	if (move_speed < 0)
 		checkradius = -CHECKRADIUS;
 	if (data->map[(int)(data->ray.pos.x + data->ray.dir.x * (move_speed
-				+ checkradius))][(int)data->ray.pos.y] == '0')
+				+ checkradius))][(int)data->ray.pos.y] == '0'
+				|| data->map[(int)(data->ray.pos.x + data->ray.dir.x
+				* (move_speed + checkradius))][(int)data->ray.pos.y] == '3')
 		data->ray.pos.x += data->ray.dir.x * move_speed;
 	if (data->map[(int)data->ray.pos.x][(int)(data->ray.pos.y + data->ray.dir.y
-		* (move_speed + checkradius))] == '0')
+		* (move_speed + checkradius))] == '0' || data->map[(int)data->ray.pos.x]
+			[(int)(data->ray.pos.y + data->ray.dir.y
+		* (move_speed + checkradius))] == '3')
 		data->ray.pos.y += data->ray.dir.y * move_speed;
 }
 

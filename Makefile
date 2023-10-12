@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+         #
+#    By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 10:27:08 by emlamoth          #+#    #+#              #
-#    Updated: 2023/10/12 12:11:25 by fbouchar         ###   ########.fr        #
+#    Updated: 2023/10/12 12:21:34 by emlamoth         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS =	controls.c		\
 		minimap.c		\
 
 BONUS =	zcontrols_bonus.c		\
+		zdoor_bonus.c		\
 		zflood_fill_bonus.c		\
 		zinit_data_bonus.c		\
 		zinit_text_bonus.c		\

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*   zutils_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 08:54:03 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 10:58:47 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:26:35 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	track_window(t_data *data)
 	x = 0;
 	y = 0;
 	mlx_get_window_pos(data->mlx, &x, &y);
-	printf("X :%d\n", x);
-	printf("Y :%d\n", y);
 	if (data->param.w_pos_x != x || data->param.w_pos_y != y)
 	{
 		mlx_set_window_pos(data->mlx, data->param.w_pos_x, data->param.w_pos_y);

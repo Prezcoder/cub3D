@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 10:46:21 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:25:19 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 # define ROTATE_SPEED 0.000040
 # define MOUSE_SPEED 450
 # define CHECKRADIUS 0.5
-# define MINIHEIGHT 17
-# define MINIWIDTH 25
-# define MINISIZE 16
+# define MINIHEIGHT 9
+# define MINIWIDTH 15
+# define MINISIZE 24
 
 ////////////----------error message
 # define ERRARGC "Usage : ./cub3D <map.cub>\n"
@@ -221,6 +221,7 @@ void		drawline(t_data *data, mlx_texture_t *texture,
 void		choose_texture(t_data *data, int x);
 void		draw_vertline(t_data *data, int x);
 void		track_window(t_data *data);
+void		door(t_data *data);
 //----------minimap
 void		draw_minimap(t_data *data);
 void		draw_filled_circle(mlx_image_t *image, t_coor center, int radius,

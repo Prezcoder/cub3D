@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minimap_bonus.c                                    :+:      :+:    :+:   */
+/*   zminimap_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 11:03:50 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 10:58:17 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:30:27 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ void	logical_minimap(t_data *data, t_minimap *map, int x, int y)
 
 	cam_x = (int)data->ray.pos.y - MINIWIDTH / 2;
 	cam_y = (int)data->ray.pos.x - MINIHEIGHT / 2;
-	if ((y + cam_y >= 0) && (y + cam_y < data->param.nbline)
-		&& (x + cam_x >= 0) && (x + cam_x
-			< (int)ft_strlen(data->map[y + cam_y])))
+	if ((y + cam_y >= 0) && (y + cam_y < data->param.nbline) && (x + cam_x
+			>= 0) && (x + cam_x < (int)ft_strlen(data->map[y + cam_y])))
 	{
 		if (data->map[y + cam_y][x + cam_x] == '0')
 			draw_pixel_square(data->image.minimap, (t_coor){(x * MINISIZE)
@@ -50,7 +49,8 @@ void	logical_minimap(t_data *data, t_minimap *map, int x, int y)
 			draw_pixel_square(data->image.minimap, (t_coor){(x * MINISIZE)
 				+ map->pos_x, (y * MINISIZE) + map->pos_y}, (t_coor){MINISIZE,
 				MINISIZE}, map->wall_color);
-		else if (data->map[y + cam_y][x + cam_x] == '2')
+		else if (data->map[y + cam_y][x + cam_x] == '2'
+				|| data->map[y + cam_y][x + cam_x] == '3')
 			draw_pixel_square(data->image.minimap, (t_coor){(x * MINISIZE)
 				+ map->pos_x, (y * MINISIZE) + map->pos_y}, (t_coor){MINISIZE,
 				MINISIZE}, map->door_color);
