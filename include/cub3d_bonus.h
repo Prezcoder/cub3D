@@ -6,7 +6,7 @@
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:00:29 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 08:56:07 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:00:18 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ void		dup_map(t_data *data);
 void		init_data(t_data *data);
 int			init_map(t_data *data, char *path);
 void		init_game(t_data *data);
+void		create_windows(t_data *data);
 uint32_t	ft_color(int32_t r, int32_t g, int32_t b, int32_t a);
 // void		ft_hook(void *param);
 void		loop(void *param);

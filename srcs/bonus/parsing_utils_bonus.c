@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   parsing_utils_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 11:04:27 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/11 10:03:18 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 09:12:00 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d_bonus.h"
 
 void	free_param(t_data *data)
 {
@@ -23,7 +23,7 @@ void	free_param(t_data *data)
 	if (data->param.east)
 		ft_freenull(&data->param.east);
 	if (data->param.door)
-		ft_freenull(&data->param.door); //TODO enlever sans bonus
+		ft_freenull(&data->param.door);
 }
 
 void	cub_exit(t_data *data, char *msg)

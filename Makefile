@@ -6,7 +6,7 @@
 #    By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 10:27:08 by emlamoth          #+#    #+#              #
-#    Updated: 2023/10/12 08:56:32 by fbouchar         ###   ########.fr        #
+#    Updated: 2023/10/12 10:01:47 by fbouchar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,30 @@ SRCS =	controls.c		\
 		raycast_utils.c	\
 		minimap.c		\
 
+BONUS =	controls_bonus.c		\
+		flood_fill_bonus.c		\
+		init_data_bonus.c		\
+		init_text_bonus.c		\
+		utils_bonus.c			\
+		main_bonus.c			\
+		movements_bonus.c		\
+		parsing_bonus.c			\
+		parsing_utils_bonus.c	\
+		parsing_utils2_bonus.c	\
+		raycast_bonus.c			\
+		raycast_utils_bonus.c	\
+		minimap_bonus.c			\
+
 SRCS_DIR = ./srcs/
 OBJS_DIR = ./srcs/objs_cub3D/
 OBJS = $(SRCS:$(SCRS_DIR)%.c=$(OBJS_DIR)%.o)
 HEADERS	:= -I ./include -I $(LIBMLX_DIR)include/
+
+BONUS_DIR = ./srcs/bonus/
+BONUS_OBJS_DIR = ./srcs/bonus/objs_cub3D/
+OBJSB = $(BONUS:$(BONUS_DIR)%.c=$(BONUS_OBJS_DIR)%.o)
+HEADERS_BONUS	:= -I ./include -I $(LIBMLX_DIR)include/
+
 
 LIBFT_DIR = ./srcs/libft/
 LIBFT = ./srcs/libft/libft.a
@@ -35,7 +55,15 @@ LIBFT = ./srcs/libft/libft.a
 LIBMLX_DIR	:= ./MLX42/
 LIBMLX	:= $(LIBMLX_DIR)/build/libmlx42.a -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/"
 
+LIBFT_DIR_BONUS = ./srcs/libft/
+LIBFT_BONUS = ./srcs/libft/libft.a
+
+LIBMLX_DIR_BONUS	:= ./MLX42/
+LIBMLX_BONUS	:= $(LIBMLX_DIR_BONUS)/build/libmlx42.a -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/"
+
 NAME = cub3D
+
+NAMEB = cub3D_bonus
 
 CFLAGS = -Wall -Wextra -Werror
 
@@ -51,6 +79,10 @@ mlx: #dep
 	(cd $(LIBMLX_DIR) && cmake -B build)
 	make -C $(LIBMLX_DIR)build/
 
+mlxb: #dep
+	(cd $(LIBMLX_DIR_BONUS) && cmake -B build)
+	make -C $(LIBMLX_DIR_BONUS)build/
+
 dep:
 	brew install glfw
 	brew install cmake
@@ -58,11 +90,20 @@ dep:
 $(OBJS_DIR)%.o:$(SRCS_DIR)%.c
 	@mkdir -p $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -c -o $@ $<
+
+$(BONUS_OBJS_DIR)%.o:$(BONUS_DIR)%.c
+	@mkdir -p $(BONUS_OBJS_DIR)
+	@$(CC) $(CFLAGS) -c -o $@ $<
 	
 $(NAME): $(OBJS)
 	@$(MAKE) -C $(LIBFT_DIR)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBMLX) $(LIBFT) -o $(NAME)
 	@echo "${GREEN}CUB3D COMPILED${NC}"
+
+$(NAMEB): $(OBJSB)
+	@$(MAKE) -C $(LIBFT_DIR)
+	@$(CC) $(CFLAGS) $(HEADERS_BONUS) $(OBJSB) $(LIBMLX_BONUS) $(LIBFT_BONUS)  -o $(NAMEB)
+	@echo "${GREEN}CUB3D BONUS COMPILED${NC}"
 
 leak: CFLAGS += -g
 leak: all
@@ -84,7 +125,7 @@ fclean: clean
 	@echo "${RED}MLX42 DELETED${NC}"
 
 
-bonus: all
+bonus: mlxb $(NAMEB)
 
 re: fclean all
 

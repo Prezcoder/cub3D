@@ -1,40 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_text.c                                        :+:      :+:    :+:   */
+/*   init_text_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 13:46:44 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/11 10:37:52 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 09:11:40 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
-
-void	fill_array(mlx_texture_t *texture, uint32_t **ar)
-{
-	uint32_t	x;
-	uint32_t	y;
-	uint32_t	i;
-
-	i = 0;
-	y = 0;
-	while (y < texture->height - 1)
-	{
-		x = 0;
-		while (x < texture->width)
-		{
-			ar[y][x] = ft_color((uint32_t)texture->pixels[i],
-					(uint32_t)texture->pixels[i + 1],
-					(uint32_t)texture->pixels[i + 2],
-					(uint32_t)texture->pixels[i + 3]);
-			i += 4;
-			x++;
-		}
-		y++;
-	}
-}
+#include "../../include/cub3d_bonus.h"
 
 uint32_t	**texture_to_array(mlx_texture_t *texture)
 {
@@ -92,7 +68,7 @@ void	init_texture(t_data *data)
 {
 	if (data->param.door)
 	{
-		data->texture.door_tex = mlx_load_png(data->param.door); //TODO enlever sans bonus
+		data->texture.door_tex = mlx_load_png(data->param.door);
 		data->texture.north_tex = mlx_load_png(data->param.north);
 		data->texture.south_tex = mlx_load_png(data->param.south);
 		data->texture.east_tex = mlx_load_png(data->param.east);
@@ -108,7 +84,7 @@ void	init_texture(t_data *data)
 	data->texture.south = texture_to_array(data->texture.south_tex);
 	data->texture.east = texture_to_array(data->texture.east_tex);
 	data->texture.west = texture_to_array(data->texture.west_tex);
-	data->texture.door = texture_to_array(data->texture.door_tex); //TODO enlever sans bonus
+	data->texture.door = texture_to_array(data->texture.door_tex);
 	if (!data->texture.north || !data->texture.south 
 		|| !data->texture.west || !data->texture.east)
 	{
@@ -121,7 +97,7 @@ void	clean_texture(t_data *data)
 {
 	free_all_texture_array(data);
 	if (data->texture.door_tex)
-		mlx_delete_texture(data->texture.door_tex);//TODO enlever sans bonus
+		mlx_delete_texture(data->texture.door_tex);
 	if (data->texture.north_tex)
 		mlx_delete_texture(data->texture.north_tex);
 	if (data->texture.south_tex)

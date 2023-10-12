@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Raycast.c                                          :+:      :+:    :+:   */
+/*   raycast_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:02:49 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/12 08:47:03 by fbouchar         ###   ########.fr       */
+/*   Updated: 2023/10/12 09:13:38 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d_bonus.h"
 
 void	find_hit(t_data *data, mlx_texture_t *texture)
 {
 	double	hit;
 
-	if (data->texture.door_flag == 1) //TODO a enlever pour downgrade
+	if (data->texture.door_flag == 1)
 		texture = data->texture.door_tex;
 	hit = 0;
 	if (data->ray.side == 0 || data->ray.side == 1)
@@ -37,13 +37,13 @@ void	drawline(t_data *data, mlx_texture_t *texture, uint32_t **arr, int x)
 	double	pos;
 	int		tex_y;
 	int		j;
-	
-	if (data->texture.door_flag == 1) //TODO a enlever pour downgrade
+
+	if (data->texture.door_flag == 1)
 	{
 		texture = data->texture.door_tex;
 		arr = data->texture.door;
 		data->texture.door_flag = 0;
-	}//jusqu ici
+	}
 	dist = 1.0 * texture->height / data->ray.line_height;
 	pos = ((double) data->ray.draw_start - (double) WINHEIGHT / 2
 			+ (double) data->ray.line_height / 2) * dist;
@@ -95,23 +95,6 @@ void	draw_vertline(t_data *data, int x)
 		mlx_put_pixel(data->image.window, x, y++, data->param.floor);
 }
 
-void	track_window(t_data *data)
-{
-	int32_t	x;
-	int32_t	y;
-
-	x = 0;
-	y = 0;
-	mlx_get_window_pos(data->mlx, &x, &y);
-	printf("X :%d\n", x);
-	printf("Y :%d\n", y);
-	if (data->param.w_pos_x != x || data->param.w_pos_y != y)
-	{
-		mlx_set_window_pos(data->mlx, data->param.w_pos_x, data->param.w_pos_y);
-	}
-	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
-}
-
 void	loop(void *param)
 {
 	t_data	*data;
@@ -127,8 +110,8 @@ void	loop(void *param)
 		set_draw_range(data);
 		draw_vertline(data, x);
 		choose_texture(data, x);
-		key_binding(data);//TODO a enlever pour downgrade
-		mouse_tracking(data);//TODO a enlever pour downgrade
+		key_binding(data);
+		mouse_tracking(data);
 	}
 	center_dot(data->image.window);
 	mlx_key_hook(data->mlx, &ft_key_detect, data);

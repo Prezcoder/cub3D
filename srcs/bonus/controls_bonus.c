@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   controls.c                                         :+:      :+:    :+:   */
+/*   controls_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:52:39 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/11 19:03:27 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 09:10:41 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d_bonus.h"
 
 void	key_binding(t_data *data)
 {
@@ -36,7 +36,7 @@ void	key_binding(t_data *data)
 	}
 }
 
-void	mouse_tracking(t_data *data) // enlever pour downgrade
+void	mouse_tracking(t_data *data)
 {
 	int32_t	y;
 	int32_t	x;
@@ -62,7 +62,7 @@ void	mouse_tracking(t_data *data) // enlever pour downgrade
 		mlx_set_mouse_pos(data->mlx, WINWIDTH / 2, WINHEIGHT / 2);
 }
 
-void	open_door(t_data *data) //TODO enlever pour downgrade
+void	open_door(t_data *data)
 {
 	double	checkradius;
 
@@ -77,13 +77,13 @@ void	open_door(t_data *data) //TODO enlever pour downgrade
 				+ data->ray.dir.y * checkradius)] = '0';
 }
 
-void	ft_key_detect(mlx_key_data_t keydata, void *param) //TODO enlever pour downgrade
+void	ft_key_detect(mlx_key_data_t keydata, void *param)
 {
 	t_data	*data;
 
 	data = param;
 	if (keydata.action == MLX_PRESS && keydata.key == MLX_KEY_V)
-	{		
+	{
 		if (data->view == 0)
 			data->view = 1;
 		else

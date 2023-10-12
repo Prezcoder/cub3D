@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_data.c                                        :+:      :+:    :+:   */
+/*   init_data_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbouchar <fbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 08:54:57 by fbouchar          #+#    #+#             */
-/*   Updated: 2023/10/11 18:47:25 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 09:11:19 by fbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d_bonus.h"
 
 void	dup_map(t_data *data)
 {
@@ -94,7 +94,7 @@ int	init_map(t_data *data, char *path)
 
 void	init_game(t_data *data)
 {
-	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);//TODO a enlever pour downgrade
+	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
 	data->ray.pos.x = (double)data->player.pos_y / MINITILES + (0.5);
 	data->ray.pos.y = (double)data->player.pos_x / MINITILES + (0.5);
 	data->ray.cam_x = 0;
