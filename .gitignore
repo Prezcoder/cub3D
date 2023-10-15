@@ -3,6 +3,7 @@
 *.plist
 *.a
 *SYM/
+cub3d_bonus
 cub3d
 .vscode/
 .DS_Store

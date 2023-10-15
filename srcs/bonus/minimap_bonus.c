@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zminimap_bonus.c                                   :+:      :+:    :+:   */
+/*   minimap_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emman <emman@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 11:03:50 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/10/12 16:13:08 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/10/12 20:17:46 by emman            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,10 @@ void	draw_minimap(t_data *data)
 {
 	int	x;
 	int	y;
-	int	cam_x;
-	int	cam_y;
 
 	draw_pixel_square(data->image.minimap, (t_coor){data->minimap.pos_x - 5,
 		data->minimap.pos_y - 5}, (t_coor){MINISIZE * MINIWIDTH + 10, MINISIZE
 		* MINIHEIGHT + 10}, data->minimap.background_color);
-	cam_x = (int)data->ray.pos.y - MINIWIDTH / 2;
-	cam_y = (int)data->ray.pos.x - MINIHEIGHT / 2;
 	y = 0;
 	while (y < MINIHEIGHT)
 	{

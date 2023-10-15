@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+         #
+#    By: emman <emman@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 10:27:08 by emlamoth          #+#    #+#              #
-#    Updated: 2023/10/12 16:55:45 by emlamoth         ###   ########.fr        #
+#    Updated: 2023/10/15 11:19:33 by emman            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,19 +24,19 @@ SRCS =	controls.c		\
 		raycast_utils.c	\
 
 BONUS =	controls_bonus.c		\
-		door_bonus.c		\
+		door_bonus.c			\
 		flood_fill_bonus.c		\
 		init_data_bonus.c		\
 		init_text_bonus.c		\
 		utils_bonus.c			\
 		main_bonus.c			\
 		movements_bonus.c		\
-		parsing_bonus.c		\
+		parsing_bonus.c			\
 		parsing_utils_bonus.c	\
 		parsing_utils2_bonus.c	\
-		raycast_bonus.c		\
+		raycast_bonus.c			\
 		raycast_utils_bonus.c	\
-		minimap_bonus.c		\
+		minimap_bonus.c			\
 
 HEADERS	:= -I ./include/cub3d.h -I $(LIBMLX_DIR)include/
 SRCS_DIR = ./srcs/
@@ -92,7 +92,7 @@ $(BONUS_OBJS_DIR)%.o:$(BONUS_SRCS_DIR)%.c
 $(BONUS_NAME): $(BONUS_OBJS)
 	@$(MAKE) -C $(LIBFT_DIR)
 	@$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBMLX) $(LIBFT) -o $(BONUS_NAME)
-	@echo "${GREEN}CUB3D COMPILED${NC}"
+	@echo "${GREEN}CUB3D BONUS COMPILED${NC}"
 
 leak: CFLAGS += -g
 leak: all
@@ -125,7 +125,7 @@ bonusclean:
 bonusfclean: bonusclean
 	@$(MAKE) fclean -C ./srcs/libft
 	@rm -f $(BONUS_NAME)
-	@echo "${RED}CUB3D DELETED${NC}"
+	@echo "${RED}CUB3D BONUS DELETED${NC}"
 	@rm -rf $(LIBMLX_DIR)build/
 	@echo "${RED}MLX42 BUILD DELETED${NC}"
 
